@@ -3,21 +3,25 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEE792114FC9400C65879 /* AppDelegate.swift */; };
 		86CDEE812114FC9600C65879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE802114FC9600C65879 /* Assets.xcassets */; };
 		86CDEE842114FC9600C65879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE822114FC9600C65879 /* LaunchScreen.storyboard */; };
+		89C901FFFFE81A8F7DAEFF92 /* Pods_candy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184A8F48A21F66FCA25AE3CC /* Pods_candy.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184A8F48A21F66FCA25AE3CC /* Pods_candy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_candy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		683C089ADB629F3D50C0FD0F /* Pods-candy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-candy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-candy/Pods-candy.debug.xcconfig"; sourceTree = "<group>"; };
 		86CDEE762114FC9400C65879 /* candy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CDEE792114FC9400C65879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86CDEE802114FC9600C65879 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86CDEE832114FC9600C65879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86CDEE852114FC9600C65879 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1E1F83F1B4E2D10F3EBEBA8 /* Pods-candy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-candy.release.xcconfig"; path = "Pods/Target Support Files/Pods-candy/Pods-candy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -25,17 +29,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C901FFFFE81A8F7DAEFF92 /* Pods_candy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		405FFAE0C9A75E4ECC852A80 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				683C089ADB629F3D50C0FD0F /* Pods-candy.debug.xcconfig */,
+				A1E1F83F1B4E2D10F3EBEBA8 /* Pods-candy.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5C9D897EB37E2814B418C2F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				184A8F48A21F66FCA25AE3CC /* Pods_candy.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		86CDEE6D2114FC9400C65879 = {
 			isa = PBXGroup;
 			children = (
 				86CDEE782114FC9400C65879 /* candy */,
 				86CDEE772114FC9400C65879 /* Products */,
+				405FFAE0C9A75E4ECC852A80 /* Pods */,
+				5C9D897EB37E2814B418C2F5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,9 +89,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 86CDEE882114FC9600C65879 /* Build configuration list for PBXNativeTarget "candy" */;
 			buildPhases = (
+				2C5CDAD68622232D44553C2B /* [CP] Check Pods Manifest.lock */,
 				86CDEE722114FC9400C65879 /* Sources */,
 				86CDEE732114FC9400C65879 /* Frameworks */,
 				86CDEE742114FC9400C65879 /* Resources */,
+				06D29DBD22C24C736BE4D70F /* [CP] Embed Pods Frameworks */,
+				C08F5AD4B5619684CDA1FBD7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -90,11 +117,12 @@
 				TargetAttributes = {
 					86CDEE752114FC9400C65879 = {
 						CreatedOnToolsVersion = 9.4;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 86CDEE712114FC9400C65879 /* Build configuration list for PBXProject "candy" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -122,6 +150,64 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		06D29DBD22C24C736BE4D70F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-candy/Pods-candy-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RIBs/RIBs.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RIBs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-candy/Pods-candy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2C5CDAD68622232D44553C2B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-candy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C08F5AD4B5619684CDA1FBD7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-candy/Pods-candy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		86CDEE722114FC9400C65879 /* Sources */ = {
@@ -254,23 +340,20 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		86CDEE892114FC9600C65879 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 683C089ADB629F3D50C0FD0F /* Pods-candy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QFR976VMLD;
 				INFOPLIST_FILE = candy/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.perezErik.candy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -280,15 +363,13 @@
 		};
 		86CDEE8A2114FC9600C65879 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1E1F83F1B4E2D10F3EBEBA8 /* Pods-candy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QFR976VMLD;
 				INFOPLIST_FILE = candy/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.perezErik.candy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
