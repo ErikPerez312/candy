@@ -7,5 +7,6 @@ target 'candy' do
 
   # Pods for candy
   pod 'RIBs', '~> 0.9'
+  pod 'RxCocoa', '~> 4.0'
   pod 'SnapKit', '~> 4.0.0'
 end

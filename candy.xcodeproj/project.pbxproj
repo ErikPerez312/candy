@@ -7,20 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8642B1442115388E00C2D13B /* LoggedOutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B1402115388E00C2D13B /* LoggedOutRouter.swift */; };
+		8642B1452115388E00C2D13B /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B1412115388E00C2D13B /* LoggedOutViewController.swift */; };
+		8642B1462115388E00C2D13B /* LoggedOutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B1422115388E00C2D13B /* LoggedOutBuilder.swift */; };
+		8642B1472115388E00C2D13B /* LoggedOutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B1432115388E00C2D13B /* LoggedOutInteractor.swift */; };
+		8642B14921153B6200C2D13B /* RootComponent+LoggedOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B14821153B6200C2D13B /* RootComponent+LoggedOut.swift */; };
+		8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B14E211542C600C2D13B /* UIColor+Extensions.swift */; };
+		8642B1522115452400C2D13B /* KaedeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B1512115452400C2D13B /* KaedeTextField.swift */; };
+		8642B155211545D800C2D13B /* TextFieldEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B154211545D800C2D13B /* TextFieldEffects.swift */; };
+		8642B157211563BD00C2D13B /* CandyComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B156211563BC00C2D13B /* CandyComponents.swift */; };
 		86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEE792114FC9400C65879 /* AppDelegate.swift */; };
 		86CDEE812114FC9600C65879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE802114FC9600C65879 /* Assets.xcassets */; };
 		86CDEE842114FC9600C65879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE822114FC9600C65879 /* LaunchScreen.storyboard */; };
+		86CDEEA22115318000C65879 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEEA12115318000C65879 /* AppComponent.swift */; };
+		86CDEEA7211533F300C65879 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEEA3211533F300C65879 /* RootRouter.swift */; };
+		86CDEEA8211533F300C65879 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEEA4211533F300C65879 /* RootViewController.swift */; };
+		86CDEEA9211533F300C65879 /* RootBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEEA5211533F300C65879 /* RootBuilder.swift */; };
+		86CDEEAA211533F300C65879 /* RootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEEA6211533F300C65879 /* RootInteractor.swift */; };
 		89C901FFFFE81A8F7DAEFF92 /* Pods_candy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184A8F48A21F66FCA25AE3CC /* Pods_candy.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		184A8F48A21F66FCA25AE3CC /* Pods_candy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_candy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		683C089ADB629F3D50C0FD0F /* Pods-candy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-candy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-candy/Pods-candy.debug.xcconfig"; sourceTree = "<group>"; };
+		8642B1402115388E00C2D13B /* LoggedOutRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutRouter.swift; sourceTree = "<group>"; };
+		8642B1412115388E00C2D13B /* LoggedOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutViewController.swift; sourceTree = "<group>"; };
+		8642B1422115388E00C2D13B /* LoggedOutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutBuilder.swift; sourceTree = "<group>"; };
+		8642B1432115388E00C2D13B /* LoggedOutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutInteractor.swift; sourceTree = "<group>"; };
+		8642B14821153B6200C2D13B /* RootComponent+LoggedOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootComponent+LoggedOut.swift"; sourceTree = "<group>"; };
+		8642B14E211542C600C2D13B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		8642B1512115452400C2D13B /* KaedeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaedeTextField.swift; sourceTree = "<group>"; };
+		8642B154211545D800C2D13B /* TextFieldEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEffects.swift; sourceTree = "<group>"; };
+		8642B156211563BC00C2D13B /* CandyComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyComponents.swift; sourceTree = "<group>"; };
 		86CDEE762114FC9400C65879 /* candy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CDEE792114FC9400C65879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86CDEE802114FC9600C65879 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86CDEE832114FC9600C65879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86CDEE852114FC9600C65879 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		86CDEEA12115318000C65879 /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
+		86CDEEA3211533F300C65879 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
+		86CDEEA4211533F300C65879 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		86CDEEA5211533F300C65879 /* RootBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootBuilder.swift; sourceTree = "<group>"; };
+		86CDEEA6211533F300C65879 /* RootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootInteractor.swift; sourceTree = "<group>"; };
 		A1E1F83F1B4E2D10F3EBEBA8 /* Pods-candy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-candy.release.xcconfig"; path = "Pods/Target Support Files/Pods-candy/Pods-candy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,6 +81,51 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8642B13F2115387300C2D13B /* LoggedOut */ = {
+			isa = PBXGroup;
+			children = (
+				8642B1402115388E00C2D13B /* LoggedOutRouter.swift */,
+				8642B1412115388E00C2D13B /* LoggedOutViewController.swift */,
+				8642B1422115388E00C2D13B /* LoggedOutBuilder.swift */,
+				8642B1432115388E00C2D13B /* LoggedOutInteractor.swift */,
+			);
+			path = LoggedOut;
+			sourceTree = "<group>";
+		};
+		8642B14C211542AC00C2D13B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8642B14D211542B400C2D13B /* Extensions */,
+				8642B156211563BC00C2D13B /* CandyComponents.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		8642B14D211542B400C2D13B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8642B14E211542C600C2D13B /* UIColor+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8642B1502115451200C2D13B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8642B153211545BD00C2D13B /* KaedeTextField */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8642B153211545BD00C2D13B /* KaedeTextField */ = {
+			isa = PBXGroup;
+			children = (
+				8642B1512115452400C2D13B /* KaedeTextField.swift */,
+				8642B154211545D800C2D13B /* TextFieldEffects.swift */,
+			);
+			path = KaedeTextField;
+			sourceTree = "<group>";
+		};
 		86CDEE6D2114FC9400C65879 = {
 			isa = PBXGroup;
 			children = (
@@ -74,12 +147,37 @@
 		86CDEE782114FC9400C65879 /* candy */ = {
 			isa = PBXGroup;
 			children = (
-				86CDEE792114FC9400C65879 /* AppDelegate.swift */,
+				8642B1502115451200C2D13B /* Views */,
+				8642B14C211542AC00C2D13B /* Helpers */,
+				8642B13F2115387300C2D13B /* LoggedOut */,
+				86CDEE8B21152C0500C65879 /* Root */,
+				86CDEEA02115307E00C65879 /* AppStart */,
 				86CDEE802114FC9600C65879 /* Assets.xcassets */,
 				86CDEE822114FC9600C65879 /* LaunchScreen.storyboard */,
 				86CDEE852114FC9600C65879 /* Info.plist */,
 			);
 			path = candy;
+			sourceTree = "<group>";
+		};
+		86CDEE8B21152C0500C65879 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				86CDEEA3211533F300C65879 /* RootRouter.swift */,
+				86CDEEA4211533F300C65879 /* RootViewController.swift */,
+				86CDEEA5211533F300C65879 /* RootBuilder.swift */,
+				86CDEEA6211533F300C65879 /* RootInteractor.swift */,
+				8642B14821153B6200C2D13B /* RootComponent+LoggedOut.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		86CDEEA02115307E00C65879 /* AppStart */ = {
+			isa = PBXGroup;
+			children = (
+				86CDEE792114FC9400C65879 /* AppDelegate.swift */,
+				86CDEEA12115318000C65879 /* AppComponent.swift */,
+			);
+			path = AppStart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,12 +258,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-candy/Pods-candy-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/RIBs/RIBs.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RIBs.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
@@ -214,7 +314,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8642B157211563BD00C2D13B /* CandyComponents.swift in Sources */,
+				8642B155211545D800C2D13B /* TextFieldEffects.swift in Sources */,
+				86CDEEAA211533F300C65879 /* RootInteractor.swift in Sources */,
+				8642B1452115388E00C2D13B /* LoggedOutViewController.swift in Sources */,
 				86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */,
+				86CDEEA7211533F300C65879 /* RootRouter.swift in Sources */,
+				86CDEEA9211533F300C65879 /* RootBuilder.swift in Sources */,
+				8642B1442115388E00C2D13B /* LoggedOutRouter.swift in Sources */,
+				86CDEEA8211533F300C65879 /* RootViewController.swift in Sources */,
+				8642B1522115452400C2D13B /* KaedeTextField.swift in Sources */,
+				8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */,
+				8642B1472115388E00C2D13B /* LoggedOutInteractor.swift in Sources */,
+				86CDEEA22115318000C65879 /* AppComponent.swift in Sources */,
+				8642B14921153B6200C2D13B /* RootComponent+LoggedOut.swift in Sources */,
+				8642B1462115388E00C2D13B /* LoggedOutBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,11 +467,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QFR976VMLD;
 				INFOPLIST_FILE = candy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.perezErik.candy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -369,11 +484,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QFR976VMLD;
 				INFOPLIST_FILE = candy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.perezErik.candy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
