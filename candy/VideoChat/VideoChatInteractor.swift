@@ -1,5 +1,5 @@
 //
-//  HomeInteractor.swift
+//  VideoChatInteractor.swift
 //  candy
 //
 //  Created by Erik Perez on 8/6/18.
@@ -9,28 +9,27 @@
 import RIBs
 import RxSwift
 
-protocol HomeRouting: ViewableRouting {
+protocol VideoChatRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
-    func routeToVideoChat()
 }
 
-protocol HomePresentable: Presentable {
-    var listener: HomePresentableListener? { get set }
+protocol VideoChatPresentable: Presentable {
+    var listener: VideoChatPresentableListener? { get set }
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol HomeListener: class {
+protocol VideoChatListener: class {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
-final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteractable, HomePresentableListener {
+final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, VideoChatInteractable, VideoChatPresentableListener {
 
-    weak var router: HomeRouting?
-    weak var listener: HomeListener?
+    weak var router: VideoChatRouting?
+    weak var listener: VideoChatListener?
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: HomePresentable) {
+    override init(presenter: VideoChatPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -43,10 +42,5 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     override func willResignActive() {
         super.willResignActive()
         // TODO: Pause any business logic.
-    }
-    
-    func connect() {
-        // TODO: perform logic to connect with user
-        router?.routeToVideoChat()
     }
 }
