@@ -2,7 +2,7 @@
 //  RootViewController.swift
 //  candy
 //
-//  Created by Erik Perez on 8/3/18.
+//  Created by Erik Perez on 8/6/18.
 //  Copyright © 2018 Erik Perez. All rights reserved.
 //
 
@@ -16,26 +16,30 @@ protocol RootPresentableListener: class {
     // interactor class.
 }
 
-final class RootViewController: UINavigationController, RootPresentable, RootViewControllable {
+final class RootViewController: UIViewController, RootPresentable, RootViewControllable {
 
     weak var listener: RootPresentableListener?
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Method not supported")
-    }
-    
     override func viewDidLoad() {
-        // Hides Navigation Bar bottom hairline
-        navigationBar.setValue(true, forKey: "hidesShadow")
+        view.backgroundColor = .red
     }
     
-    // MARK: RootViewControllable
+    func present(viewController: ViewControllable, animated: Bool) {
+        present(viewController.uiviewController, animated: animated, completion: nil)
+    }
     
-    func present(viewController: ViewControllable) {
-        pushViewController(viewController.uiviewController, animated: true)
+    func dismiss(viewController: ViewControllable, animated: Bool) {
+        dismiss(animated: animated, completion: nil)
     }
 }
+
+extension RootViewController: LoggedOutViewControllable {
+//    func present(viewController: ViewControllable, animated: Bool) {
+//        present(viewController.uiviewController, animated: animated, completion: nil)
+//    }
+//
+//    func dismiss(viewController: ViewControllable, animated: Bool) {
+//        dismiss(animated: animated, completion: nil)
+//    }
+}
+

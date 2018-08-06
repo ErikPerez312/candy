@@ -1,8 +1,8 @@
 //
-//  LoggedOutViewController.swift
+//  LoginViewController.swift
 //  candy
 //
-//  Created by Erik Perez on 8/3/18.
+//  Created by Erik Perez on 8/6/18.
 //  Copyright © 2018 Erik Perez. All rights reserved.
 //
 
@@ -12,32 +12,23 @@ import RxCocoa
 import SnapKit
 import UIKit
 
-protocol LoggedOutPresentableListener: class {
-    // Declare properties and methods that the view controller can invoke to perform
+protocol LoginPresentableListener: class {
+    // TODO: Declare properties and methods that the view controller can invoke to perform
     // business logic, such as signIn(). This protocol is implemented by the corresponding
     // interactor class.
+    
     func login(withPhoneNumber phoneNumber: String?, password: String?)
-    func signUp()
+    func register()
 }
 
-final class LoggedOutViewController: UIViewController, LoggedOutPresentable, LoggedOutViewControllable {
-
-    weak var listener: LoggedOutPresentableListener?
+final class LoginViewController: UIViewController, LoginPresentable, LoginViewControllable {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Method not supported")
-    }
+    weak var listener: LoginPresentableListener?
     
     override func viewDidLoad() {
         view.backgroundColor = .candyBackgroundPink
-        navigationItem.titleView = CandyComponents.navigationBarTitleLabel(withTitle: "CANDY")
-        
-        let logoImageView = buildImageView()
-        let textFields = buildTextFields(withImageView: logoImageView)
+        let imageView = buildImageView()
+        let textFields = buildTextFields(withImageView: imageView)
         buildButtons(withPhoneNumberField: textFields.phoneNumber, passwordField: textFields.password)
     }
     
@@ -66,7 +57,6 @@ final class LoggedOutViewController: UIViewController, LoggedOutPresentable, Log
             textField.backgroundColor = .white
             textField.borderStyle = .roundedRect
             textField.placeholder = placeHolder ?? ""
-            textField.delegate = self
             return textField
         }
         let phoneNumberTextField = textFieldMaker("Phone number")
@@ -104,7 +94,7 @@ final class LoggedOutViewController: UIViewController, LoggedOutPresentable, Log
         signUpButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "New user? Register here"), for: .normal)
         signUpButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.listener?.signUp()
+                self?.listener?.register()
             })
             .disposed(by: bag)
         
@@ -122,11 +112,5 @@ final class LoggedOutViewController: UIViewController, LoggedOutPresentable, Log
             maker.height.equalTo(20).priority(1000)
             maker.bottom.lessThanOrEqualToSuperview().inset(50).priority(999)
         }
-    }
-}
-
-extension LoggedOutViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("should animate")
     }
 }

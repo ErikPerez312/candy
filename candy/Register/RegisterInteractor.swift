@@ -1,5 +1,5 @@
 //
-//  LoggedOutInteractor.swift
+//  RegisterInteractor.swift
 //  candy
 //
 //  Created by Erik Perez on 8/6/18.
@@ -9,25 +9,30 @@
 import RIBs
 import RxSwift
 
-protocol LoggedOutRouting: Routing {
+protocol RegisterRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
-    func cleanupViews()
-    func routeToRegister()
 }
 
-protocol LoggedOutListener: class {
+protocol RegisterPresentable: Presentable {
+    var listener: RegisterPresentableListener? { get set }
+    // TODO: Declare methods the interactor can invoke the presenter to present data.
+}
+
+protocol RegisterListener: class {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
-    func didLogin()
 }
 
-final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
+final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, RegisterInteractable, RegisterPresentableListener {
 
-    weak var router: LoggedOutRouting?
-    weak var listener: LoggedOutListener?
+    weak var router: RegisterRouting?
+    weak var listener: RegisterListener?
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init() {}
+    override init(presenter: RegisterPresentable) {
+        super.init(presenter: presenter)
+        presenter.listener = self
+    }
 
     override func didBecomeActive() {
         super.didBecomeActive()
@@ -36,16 +41,6 @@ final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
 
     override func willResignActive() {
         super.willResignActive()
-
-        router?.cleanupViews()
         // TODO: Pause any business logic.
-    }
-    
-    func register() {
-        router?.routeToRegister()
-    }
-    
-    func didLogin() {
-        listener?.didLogin()
     }
 }

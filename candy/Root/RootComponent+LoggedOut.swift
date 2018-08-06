@@ -2,7 +2,7 @@
 //  RootComponent+LoggedOut.swift
 //  candy
 //
-//  Created by Erik Perez on 8/3/18.
+//  Created by Erik Perez on 8/6/18.
 //  Copyright © 2018 Erik Perez. All rights reserved.
 //
 
@@ -16,6 +16,9 @@ protocol RootDependencyLoggedOut: Dependency {
 }
 
 extension RootComponent: LoggedOutDependency {
-
     // TODO: Implement properties to provide for LoggedOut scope.
+    
+    var loggedOutViewController: LoggedOutViewControllable {
+        return rootViewController
+    }
 }
