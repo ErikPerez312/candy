@@ -11,10 +11,11 @@ import RxSwift
 import UIKit
 
 protocol HomePresentableListener: class {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
+    // Declare properties and methods that the view controller can invoke to perform
     // business logic, such as signIn(). This protocol is implemented by the corresponding
     // interactor class.
     func connect()
+    func canceledConnection()
 }
 
 final class HomeViewController: UIViewController, HomePresentable, HomeViewControllable {
@@ -30,11 +31,15 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     }
     
     override func viewDidLoad() {
-        view.backgroundColor = UIColor.candyNavigationBarShadow
+        view.backgroundColor = .candyBackgroundPink
+        let navigationBar = navigationController?.navigationBar
         // Removes UINavigationBar bottom hairline
-        navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
-        buildActivityCard()
-        buildButtons()
+        navigationBar?.setValue(true, forKey: "hidesShadow")
+        navigationBar?.barTintColor = view.backgroundColor
+        navigationItem.titleView = CandyComponents.navigationBarTitleLabel(withTitle: "CANDY")
+        
+        let views = buildMainViews()
+        buildButtons(withAppearanceView: views.appearanceView, activityCard: views.activityCard)
     }
     
     func push(viewController: ViewControllable) {
@@ -50,18 +55,34 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     private let bag = DisposeBag()
     private var activityCard: HomeActivityCard!
     
-    private func buildActivityCard() {
+    private func buildMainViews() -> (appearanceView: UserAppearanceView, activityCard: HomeActivityCard) {
+        let appearanceView = UserAppearanceView(frame: .zero)
+        view.addSubview(appearanceView)
+        appearanceView.snp.makeConstraints { maker in
+            maker.height.equalTo(40)
+            maker.top.equalTo(view.snp.topMargin).offset(15)
+            maker.leading.trailing.equalToSuperview().inset(32)
+        }
+        
         let card = HomeActivityCard(frame: .zero)
         self.activityCard = card
         view.addSubview(card)
         card.snp.makeConstraints { maker in
-            maker.top.equalTo(view.snp.topMargin).offset(100)
-            maker.bottom.equalTo(view).inset(100)
-            maker.leading.trailing.equalTo(view).inset(32)
+            if UIScreen.main.bounds.height < 600 {
+                // Screen sizes smaller than iPhone-8
+                maker.height.equalTo(300)
+            } else {
+                maker.height.greaterThanOrEqualTo(400).priority(900)
+            }
+            maker.top.equalTo(appearanceView.snp.bottom).offset(20)
+            maker.leading.trailing.equalTo(appearanceView)
         }
+        return (appearanceView, card)
     }
     
-    private func buildButtons() {
+    private func buildButtons(withAppearanceView appearanceView: UserAppearanceView,
+                              activityCard: HomeActivityCard) {
+        
         let connectButton = UIButton(frame: .zero)
         connectButton.backgroundColor = .candyBackgroundBlue
         connectButton.layer.cornerRadius = 6
@@ -77,7 +98,23 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         connectButton.snp.makeConstraints { maker in
             maker.height.equalTo(45).priority(1000)
             maker.top.equalTo(activityCard.snp.bottom).offset(15)
-            maker.leading.trailing.equalToSuperview().inset(32)
+            maker.leading.trailing.equalTo(appearanceView)
+        }
+        
+        let cancelButton = UIButton(frame: .zero)
+        cancelButton.isHidden = connectButton.isEnabled
+        cancelButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Cancel"), for: .normal)
+        cancelButton.rx.tap
+            .subscribe(onNext:{ [weak self] in
+                self?.listener?.canceledConnection()
+            })
+            .disposed(by: bag)
+        view.addSubview(cancelButton)
+        cancelButton.snp.makeConstraints { maker in
+            maker.height.equalTo(20).priority(1000)
+            maker.top.equalTo(connectButton.snp.bottom).offset(20)
+            maker.bottom.lessThanOrEqualToSuperview().inset(25).priority(900)
+            maker.centerX.equalToSuperview()
         }
     }
     

@@ -49,4 +49,8 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         // TODO: perform logic to connect with user
         router?.routeToVideoChat()
     }
+    
+    func canceledConnection() {
+        print("canceled connce")
+    }
 }

@@ -42,6 +42,7 @@
 		861630592118F61A00B3EF33 /* VideoChatBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630552118F61A00B3EF33 /* VideoChatBuilder.swift */; };
 		8616305A2118F61A00B3EF33 /* VideoChatInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630562118F61A00B3EF33 /* VideoChatInteractor.swift */; };
 		8616305C2118F74D00B3EF33 /* HomeComponent+VideoChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616305B2118F74D00B3EF33 /* HomeComponent+VideoChat.swift */; };
+		8616305E2118FF8100B3EF33 /* UserAppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616305D2118FF8100B3EF33 /* UserAppearanceView.swift */; };
 		8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B14E211542C600C2D13B /* UIColor+Extensions.swift */; };
 		8642B1522115452400C2D13B /* KaedeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B1512115452400C2D13B /* KaedeTextField.swift */; };
 		8642B155211545D800C2D13B /* TextFieldEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B154211545D800C2D13B /* TextFieldEffects.swift */; };
@@ -91,6 +92,7 @@
 		861630552118F61A00B3EF33 /* VideoChatBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatBuilder.swift; sourceTree = "<group>"; };
 		861630562118F61A00B3EF33 /* VideoChatInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatInteractor.swift; sourceTree = "<group>"; };
 		8616305B2118F74D00B3EF33 /* HomeComponent+VideoChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeComponent+VideoChat.swift"; sourceTree = "<group>"; };
+		8616305D2118FF8100B3EF33 /* UserAppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAppearanceView.swift; sourceTree = "<group>"; };
 		8642B14E211542C600C2D13B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		8642B1512115452400C2D13B /* KaedeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaedeTextField.swift; sourceTree = "<group>"; };
 		8642B154211545D800C2D13B /* TextFieldEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEffects.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		8642B1502115451200C2D13B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8616305D2118FF8100B3EF33 /* UserAppearanceView.swift */,
 				861630442118EDD300B3EF33 /* ActivityCard */,
 				8642B153211545BD00C2D13B /* KaedeTextField */,
 			);
@@ -473,6 +476,7 @@
 				8616301E2118C33B00B3EF33 /* LoginViewController.swift in Sources */,
 				8616300D2118BA3C00B3EF33 /* RootBuilder.swift in Sources */,
 				8616301F2118C33B00B3EF33 /* LoginBuilder.swift in Sources */,
+				8616305E2118FF8100B3EF33 /* UserAppearanceView.swift in Sources */,
 				8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */,
 				8616302B2118C93600B3EF33 /* RegisterInteractor.swift in Sources */,
 				861630512118EEB400B3EF33 /* ActivityCardStatus.swift in Sources */,
