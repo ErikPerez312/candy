@@ -117,5 +117,4 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
             maker.centerX.equalToSuperview()
         }
     }
-    
 }

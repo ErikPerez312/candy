@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: Refactor
+
 class UserAppearanceView: UIView {
     private var titleLabel: UILabel!
     private var onlineUserCountLabel: UILabel!

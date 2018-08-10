@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import RIBs
+
+extension UIAlertController: ViewControllable {
+    public var uiviewController: UIViewController { return self }
+    
+    public convenience init(title: String, description: String?, preferredStyle: UIAlertControllerStyle) {
+        self.init(title: title, message: description, preferredStyle: preferredStyle)
+    }
+}

@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+// TODO: Refactor
+
 class BulletPoint: UIView {
     
     override init(frame: CGRect) {

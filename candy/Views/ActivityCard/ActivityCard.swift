@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+// TODO: Refactor
+
 class ActivityCard: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)

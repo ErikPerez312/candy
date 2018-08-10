@@ -9,4 +9,5 @@ target 'candy' do
   pod 'RIBs', '~> 0.9'
   pod 'RxCocoa', '~> 4.0'
   pod 'SnapKit', '~> 4.0.0'
+  pod 'KeychainSwift', '~> 11.0'
 end

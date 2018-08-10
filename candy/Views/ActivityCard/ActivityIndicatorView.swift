@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: Refactor
+
 class ActivityIndicatorView: UIView {
     var backgroundCircleLayer: CAShapeLayer!
     var circleLayer: CAShapeLayer!

@@ -12,17 +12,29 @@ class User: NSObject {
     
     // MARK: - Properties
     
-    var id: Int
-    var firstName: String
-    var lastName: String
-    var age: String
-    var phoneNumber: String
-    var gender: Int
-    var seeking: Int
+    let id: Int
+    let firstName: String
+    let lastName: String
+    let age: String
+    let phoneNumber: String
+    let gender: Int
+    let seeking: Int
     var token: String
     
     var fullName: String {
         return "\(firstName) \(lastName)"
+    }
+    
+    var dictionary: NSDictionary {
+        return ["id": self.id,
+                "first_name": self.firstName,
+                "last_name": self.lastName,
+                "age": self.age,
+                "phone_number": self.phoneNumber,
+                "gender": self.gender,
+                "seeking": self.seeking,
+                "token": "**Token saved in keychain**"
+        ] as NSDictionary
     }
     
     // MARK: - Methods

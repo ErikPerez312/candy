@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+// TODO: Refactor
+
+enum ActivityCardStatus {
+    case homeDefault, inactiveDay, connecting
+}
+
 class HomeActivityCard: ActivityCard {
     // MARK: Properties
     private var headerLabel = UILabel()
