@@ -14,8 +14,12 @@ protocol LoginRouting: ViewableRouting {
 }
 
 protocol LoginPresentable: Presentable {
-    var listener: LoginPresentableListener? { get set }
     // TODO: Declare methods the interactor can invoke the presenter to present data.
+    var listener: LoginPresentableListener? { get set }
+    
+    func presentAlert(withTitle title: String, description: String?)
+    func showActivityInidicator()
+    func hideActivityInidicator()
 }
 
 protocol LoginListener: class {
@@ -38,21 +42,77 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+        // Implement business logic here.
     }
 
     override func willResignActive() {
         super.willResignActive()
-        // TODO: Pause any business logic.
+        // Pause any business logic.
     }
     
     func login(withPhoneNumber phoneNumber: String?, password: String?) {
         print("\n-Attempted Login with phone: \(phoneNumber) and pass: \(password) ")
-        listener?.didLogin()
+        guard let number = phoneNumber,
+            !number.isEmptyOrWhitespace,
+            number.count == 10 else {
+                DispatchQueue.main.async {
+                    self.presenter.presentAlert(withTitle: "Invalid Phone Number",
+                                           description: "Please enter your 10 digit phone number")
+                }
+                return
+        }
+        guard let password = password,
+            !password.isEmptyOrWhitespace else {
+                DispatchQueue.main.async {
+                    self.presenter.presentAlert(withTitle: "Invalid Password",
+                                                 description: "Password can not be blank.")
+                }
+                return
+        }
+        
+        presenter.showActivityInidicator()
+        CandyAPI.signIn(withPhoneNumber: number, password: password) { [weak self] json, error in
+            DispatchQueue.main.async {
+                self?.presenter.hideActivityInidicator()
+            }
+            guard error == nil,
+                let validJSON = json else {
+                    DispatchQueue.main.async {
+                        self?.presenter.presentAlert(withTitle: "Oops, something went wrong",
+                                                     description: "Please try again later")
+                    }
+                return
+            }
+            if let user = User(json: validJSON) {
+                print("Successful login with user: \(user.description)")
+                self?.cacheUser(user)
+                KeychainHelper.save(value: user.token, as: .authToken)
+                self?.listener?.didLogin()
+            } else {
+                let title = validJSON["error"] as? String ?? "Oops, Something went wrong."
+                DispatchQueue.main.async {
+                    self?.presenter.presentAlert(withTitle: title, description: nil)
+                }
+            }
+        }
     }
     
     func register() {
         print("Should signup")
         listener?.register()
+    }
+    
+    // MARK: - Private
+    
+    private func cacheUser(_ user: User) {
+        let userFileURL = cachedFileURL("user.plist")
+        user.dictionary.write(to: userFileURL, atomically: true)
+    }
+    
+    private func cachedFileURL(_ fileName: String) -> URL {
+        return FileManager.default
+            .urls(for: .cachesDirectory, in: .allDomainsMask)
+            .first!
+            .appendingPathComponent(fileName)
     }
 }

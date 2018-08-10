@@ -29,12 +29,51 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
         view.backgroundColor = .candyBackgroundPink
         let imageView = buildImageView()
         let textFields = buildTextFields(withImageView: imageView)
-        buildButtons(withPhoneNumberField: textFields.phoneNumber, passwordField: textFields.password)
+        let loginButton = buildButtons(withPhoneNumberField: textFields.phoneNumber,
+                                         passwordField: textFields.password)
+        buildActivityIndicator(withButton: loginButton)
+//        showActivityInidicator()
+    }
+    
+    deinit {
+        print("\n* deinitialized Login ViewController*\n")
+    }
+    
+    func present(viewController: ViewControllable, animated: Bool) {
+        self.present(viewController.uiviewController, animated: animated) {
+            print("\n* did present alert controller *\n")
+        }
+    }
+    
+    func dismiss(viewController: ViewControllable, animated: Bool) {
+        self.dismiss(animated: animated) {
+            print("\n* did dismiss alert controller *\n")
+        }
+    }
+    
+    func presentAlert(withTitle title: String, description: String?) {
+        let alertController = UIAlertController(title: title, message: description, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showActivityInidicator() {
+        loginButton?.isEnabled = false
+        activityIndicator?.isHidden = false
+        activityIndicator?.startAnimating()
+    }
+    
+    func hideActivityInidicator() {
+        activityIndicator?.stopAnimating()
+        loginButton?.isEnabled = true
     }
     
     // MARK: - Private
     
     private let bag = DisposeBag()
+    private var activityIndicator: UIActivityIndicatorView?
+    private var loginButton: UIButton?
     
     private func buildImageView() -> UIImageView {
         let logoImage = UIImage(named: "candy-logo") ?? nil
@@ -78,9 +117,12 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
         return (phoneNumberTextField, passwordTextField)
     }
     
-    private func buildButtons(withPhoneNumberField phoneNumberField: UITextField, passwordField: UITextField) {
+    private func buildButtons(withPhoneNumberField phoneNumberField: UITextField,
+                              passwordField: UITextField) -> UIButton {
         let loginButton = UIButton(frame: .zero)
+        self.loginButton = loginButton
         loginButton.setTitle("Login", for: .normal)
+        loginButton.setTitle("", for: .disabled)
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.backgroundColor = .candyBackgroundBlue
         loginButton.layer.cornerRadius = 6
@@ -111,6 +153,19 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
             maker.leading.trailing.equalTo(loginButton).inset(20)
             maker.height.equalTo(20).priority(1000)
             maker.bottom.lessThanOrEqualToSuperview().inset(50).priority(999)
+        }
+        return loginButton
+    }
+    
+    private func buildActivityIndicator(withButton button: UIButton) {
+        let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        indicator.activityIndicatorViewStyle = .white
+        indicator.isHidden = true
+        self.activityIndicator = indicator
+        
+        view.addSubview(indicator)
+        indicator.snp.makeConstraints { maker in
+            maker.centerX.centerY.equalTo(button)
         }
     }
 }

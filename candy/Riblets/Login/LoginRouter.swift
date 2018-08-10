@@ -28,4 +28,8 @@ final class LoginRouter: ViewableRouter<LoginInteractable, LoginViewControllable
     override func didLoad() {
         print("\n* didLoad Login*\n")
     }
+    
+    deinit {
+        print("\n* deinitialized Login*\n")
+    }
 }
