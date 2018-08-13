@@ -10,11 +10,11 @@ import RIBs
 import RxSwift
 
 protocol LoginRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    // Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
 protocol LoginPresentable: Presentable {
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
+    //  Declare methods the interactor can invoke the presenter to present data.
     var listener: LoginPresentableListener? { get set }
     
     func presentAlert(withTitle title: String, description: String?)
@@ -23,7 +23,7 @@ protocol LoginPresentable: Presentable {
 }
 
 protocol LoginListener: class {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    // Declare methods the interactor can invoke to communicate with other RIBs.
     func register()
     func didLogin()
 }
@@ -33,7 +33,7 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
     weak var router: LoginRouting?
     weak var listener: LoginListener?
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
+    // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
     override init(presenter: LoginPresentable) {
         super.init(presenter: presenter)

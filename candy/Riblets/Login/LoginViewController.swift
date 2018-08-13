@@ -95,7 +95,11 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
             let textField = KaedeTextField(frame: .zero)
             textField.backgroundColor = .white
             textField.borderStyle = .roundedRect
-            textField.placeholder = placeHolder ?? ""
+            textField.font = UIFont(name: "Avenir-Heavy", size: 15)
+            textField.textColor = .candyBackgroundBlue
+            textField.placeholder = placeHolder
+            textField.placeholderColor = .candyBackgroundBlue
+            textField.placeholderLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
             return textField
         }
         let phoneNumberTextField = textFieldMaker("Phone number")
