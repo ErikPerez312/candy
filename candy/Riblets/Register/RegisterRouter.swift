@@ -19,7 +19,7 @@ protocol RegisterViewControllable: ViewControllable {
 
 final class RegisterRouter: ViewableRouter<RegisterInteractable, RegisterViewControllable>, RegisterRouting {
 
-    // TODO: Constructor inject child builder protocols to allow building children.
+    // Constructor inject child builder protocols to allow building children.
     override init(interactor: RegisterInteractable, viewController: RegisterViewControllable) {
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self

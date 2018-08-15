@@ -9,9 +9,6 @@
 import Foundation
 
 class User: NSObject {
-    
-    // MARK: - Properties
-    
     let id: Int
     let firstName: String
     let lastName: String
@@ -24,7 +21,6 @@ class User: NSObject {
     var fullName: String {
         return "\(firstName) \(lastName)"
     }
-    
     var dictionary: NSDictionary {
         return ["id": self.id,
                 "first_name": self.firstName,

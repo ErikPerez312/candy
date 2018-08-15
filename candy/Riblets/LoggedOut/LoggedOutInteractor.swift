@@ -13,6 +13,7 @@ protocol LoggedOutRouting: Routing {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
     func cleanupViews()
     func routeToRegister()
+    func routeToLogin()
 }
 
 protocol LoggedOutListener: class {
@@ -47,5 +48,9 @@ final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
     
     func didLogin() {
         listener?.didLogin()
+    }
+    
+    func didCancelRegistration() {
+        router?.routeToLogin()
     }
 }

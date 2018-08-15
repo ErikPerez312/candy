@@ -50,6 +50,7 @@
 		8657544E211BD16700AF1F9B /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544D211BD16700AF1F9B /* Resource.swift */; };
 		86575450211BD1AE00AF1F9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544F211BD1AE00AF1F9B /* User.swift */; };
 		86575452211BD3AB00AF1F9B /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86575451211BD3AB00AF1F9B /* KeychainHelper.swift */; };
+		8687CA6B212229C9006B5C41 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8687CA6A212229C9006B5C41 /* Statement.swift */; };
 		86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEE792114FC9400C65879 /* AppDelegate.swift */; };
 		86CDEE812114FC9600C65879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE802114FC9600C65879 /* Assets.xcassets */; };
 		86CDEE842114FC9600C65879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE822114FC9600C65879 /* LaunchScreen.storyboard */; };
@@ -105,6 +106,7 @@
 		8657544D211BD16700AF1F9B /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		8657544F211BD1AE00AF1F9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		86575451211BD3AB00AF1F9B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		8687CA6A212229C9006B5C41 /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		86CDEE762114FC9400C65879 /* candy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CDEE792114FC9400C65879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86CDEE802114FC9600C65879 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -172,8 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				861630242118C93600B3EF33 /* RegisterRouter.swift */,
-				861630252118C93600B3EF33 /* RegisterViewController.swift */,
 				861630262118C93600B3EF33 /* RegisterBuilder.swift */,
+				861630252118C93600B3EF33 /* RegisterViewController.swift */,
 				861630272118C93600B3EF33 /* RegisterInteractor.swift */,
 			);
 			path = Register;
@@ -207,6 +209,7 @@
 			children = (
 				8657544F211BD1AE00AF1F9B /* User.swift */,
 				86D79CD8211CD9F700765C30 /* UserError.swift */,
+				8687CA6A212229C9006B5C41 /* Statement.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				8625D66B211DFFB900621FA8 /* UIAlertController+RIBs.swift in Sources */,
 				861630592118F61A00B3EF33 /* VideoChatBuilder.swift in Sources */,
 				86575452211BD3AB00AF1F9B /* KeychainHelper.swift in Sources */,
+				8687CA6B212229C9006B5C41 /* Statement.swift in Sources */,
 				8616300C2118BA3C00B3EF33 /* RootViewController.swift in Sources */,
 				8657544C211BD0FF00AF1F9B /* CandyAPI.swift in Sources */,
 				861630152118BC3500B3EF33 /* LoggedOutInteractor.swift in Sources */,

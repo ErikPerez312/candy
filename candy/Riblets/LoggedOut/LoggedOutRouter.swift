@@ -14,7 +14,7 @@ protocol LoggedOutInteractable: Interactable, LoginListener, RegisterListener {
 }
 
 protocol LoggedOutViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy. Since
+    // Declare methods the router invokes to manipulate the view hierarchy. Since
     // this RIB does not own its own view, this protocol is conformed to by one of this
     // RIB's ancestor RIBs' view.
     func present(viewController: ViewControllable, animated: Bool)
@@ -42,7 +42,7 @@ final class LoggedOutRouter: Router<LoggedOutInteractable>, LoggedOutRouting {
     }
 
     func cleanupViews() {
-        // TODO: Since this router does not own its view, it needs to cleanup the views
+        // Since this router does not own its view, it needs to cleanup the views
         // it may have added to the view hierarchy, when its interactor is deactivated.
         if let currentChild = currentChild {
             viewController.dismiss(viewController: currentChild.viewControllable, animated: true)
@@ -53,8 +53,14 @@ final class LoggedOutRouter: Router<LoggedOutInteractable>, LoggedOutRouting {
         print("Should route to register")
         detachCurrentChild()
         let register = registerBuilder.build(withListener: interactor)
+        attachChild(register)
         currentChild = register
         viewController.present(viewController: register.viewControllable, animated: true)
+    }
+    
+    func routeToLogin() {
+        detachCurrentChild()
+        attachLogin()
     }
 
     // MARK: - Private

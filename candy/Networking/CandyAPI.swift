@@ -30,8 +30,10 @@ class CandyAPI {
     }
     
     static func requestVerificationCode(withPhoneNumber phoneNumber: String,
-                                        completionHandler handler: @escaping CompletionHandler) {
-        request(withResource: .requestVerificationCode(withNumber: phoneNumber), completionHandler: handler)
+                                        completionHandler handler: CompletionHandler?) {
+        let defaultHandler: (JSONDictionary?, Error?) -> Void = { json, error in
+        }
+        request(withResource: .requestVerificationCode(withNumber: phoneNumber), completionHandler: handler ?? defaultHandler)
     }
     
     static func verifyVerificationCode(withPhoneNumber phoneNumber: String,
