@@ -75,9 +75,9 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         textField?.becomeFirstResponder()
     }
     
-    func presentAlert(withTitle title: String, description: String?) {
+    func presentAlert(withTitle title: String, description: String?, handler: ((UIAlertAction) -> Void)?) {
         let alertController = UIAlertController(title: title, message: description, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: handler)
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }

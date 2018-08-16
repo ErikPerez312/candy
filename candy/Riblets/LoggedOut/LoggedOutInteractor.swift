@@ -19,6 +19,7 @@ protocol LoggedOutRouting: Routing {
 protocol LoggedOutListener: class {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
     func didLogin()
+    func didRegister()
 }
 
 final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
@@ -36,10 +37,9 @@ final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
     }
 
     override func willResignActive() {
+        // Pause any business logic.
         super.willResignActive()
-
         router?.cleanupViews()
-        // TODO: Pause any business logic.
     }
     
     func register() {
@@ -52,5 +52,9 @@ final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
     
     func didCancelRegistration() {
         router?.routeToLogin()
+    }
+    
+    func didRegister() {
+        listener?.didRegister()
     }
 }

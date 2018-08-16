@@ -49,4 +49,9 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
         print("should route to logged in ")
         router?.routeToLoggedIn()
     }
+    
+    func didRegister() {
+        print("\n* did Register in root Interactor ")
+        router?.routeToLoggedIn()
+    }
 }

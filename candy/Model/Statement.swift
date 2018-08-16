@@ -38,7 +38,7 @@ struct Statement {
         let lastName = Statement(statement: "What is your last name?", key: .lastName)
         let age = Statement(statement: "What is your age?", key: .age)
         let gender = Statement(statement: "What is your gender?", key: .gender)
-        let seeking = Statement(statement: "Who are you seeking?", key: .seeking)
+        let seeking = Statement(statement: "Interested in", key: .seeking)
         let password = Statement(statement: "Enter a password", key: .password)
         let phoneNumber = Statement(statement: "Enter your phone number", key: .phoneNumber)
         let phoneVerification = Statement(statement: "Enter code", key: .phoneVerification)
