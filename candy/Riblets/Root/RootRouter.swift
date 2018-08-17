@@ -14,13 +14,14 @@ protocol RootInteractable: Interactable, LoggedOutListener, HomeListener {
 }
 
 protocol RootViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy.
+    // Declare methods the router invokes to manipulate the view hierarchy.
     func present(viewController: ViewControllable, animated: Bool)
+    func dismiss(viewController: ViewControllable, animated: Bool)
 }
 
 final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, RootRouting {
 
-    // TODO: Constructor inject child builder protocols to allow building children.
+    // Constructor inject child builder protocols to allow building children.
     init(interactor: RootInteractable,
                   viewController: RootViewControllable,
                   loggedOutBuilder: LoggedOutBuildable,
@@ -34,11 +35,10 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
     
     override func didLoad() {
         print("\n* didLoad Root *\n")
-        attachLogin()
+        attachLoggedOut()
     }
     
-    // TODO: Update method name in children to represent deletion of 'LoggedIn' rib.
-    func routeToLoggedIn() {
+    func routeToHome() {
         if let loggedOut = self.loggedOut {
             detachChild(loggedOut)
             self.loggedOut = nil
@@ -51,6 +51,15 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
         viewController.present(viewController: navigationController, animated: true)
     }
     
+    func routeToLoggedOut() {
+        if let home = home {
+            detachChild(home)
+            viewController.dismiss(viewController: home.viewControllable, animated: true)
+            self.home = nil
+        }
+        attachLoggedOut()
+    }
+    
     // MARK: - Private
     
     private let loggedOutBuilder: LoggedOutBuildable
@@ -59,7 +68,7 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
     private var home: ViewableRouting?
     private var loggedOut: Routing?
     
-    private func attachLogin() {
+    private func attachLoggedOut() {
         let loggedOut = loggedOutBuilder.build(withListener: interactor)
         attachChild(loggedOut)
         self.loggedOut = loggedOut

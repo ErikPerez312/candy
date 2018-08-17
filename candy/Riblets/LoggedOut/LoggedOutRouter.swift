@@ -23,7 +23,7 @@ protocol LoggedOutViewControllable: ViewControllable {
 
 final class LoggedOutRouter: Router<LoggedOutInteractable>, LoggedOutRouting {
 
-    // TODO: Constructor inject child builder protocols to allow building children.
+    // Constructor inject child builder protocols to allow building children.
     init(interactor: LoggedOutInteractable,
          viewController: LoggedOutViewControllable,
          loginBuilder: LoginBuildable,

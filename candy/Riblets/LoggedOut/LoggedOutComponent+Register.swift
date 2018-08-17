@@ -9,13 +9,11 @@
 import RIBs
 
 /// The dependencies needed from the parent scope of LoggedOut to provide for the Register scope.
-// TODO: Update LoggedOutDependency protocol to inherit this protocol.
 protocol LoggedOutDependencyRegister: Dependency {
-    // TODO: Declare dependencies needed from the parent scope of LoggedOut to provide dependencies
+    // Declare dependencies needed from the parent scope of LoggedOut to provide dependencies
     // for the Register scope.
 }
 
 extension LoggedOutComponent: RegisterDependency {
-
-    // TODO: Implement properties to provide for Register scope.
+    // Implement properties to provide for Register scope.
 }

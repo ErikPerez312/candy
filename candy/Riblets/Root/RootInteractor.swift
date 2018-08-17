@@ -10,17 +10,18 @@ import RIBs
 import RxSwift
 
 protocol RootRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
-    func routeToLoggedIn()
+    // Declare methods the interactor can invoke to manage sub-tree via the router.
+    func routeToHome()
+    func routeToLoggedOut()
 }
 
 protocol RootPresentable: Presentable {
+    // Declare methods the interactor can invoke the presenter to present data.
     var listener: RootPresentableListener? { get set }
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
 protocol RootListener: class {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    // Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
 final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteractable, RootPresentableListener {
@@ -28,7 +29,7 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
     weak var router: RootRouting?
     weak var listener: RootListener?
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
+    // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
     override init(presenter: RootPresentable) {
         super.init(presenter: presenter)
@@ -37,21 +38,36 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+        //  Implement business logic here.
+        print("\n* Running didBecomeActive(:) on RootInteractor")
+        // TODO: Uncomment when Login/Register Ribs are completed
+//        routeToInitialRib()
     }
 
     override func willResignActive() {
         super.willResignActive()
-        // TODO: Pause any business logic.
+        // Pause any business logic.
     }
     
     func didLogin() {
         print("should route to logged in ")
-        router?.routeToLoggedIn()
+        router?.routeToHome()
     }
     
     func didRegister() {
         print("\n* did Register in root Interactor ")
-        router?.routeToLoggedIn()
+        router?.routeToHome()
+    }
+    
+    // MARK: - Private
+    
+    private func routeToInitialRib() {
+        guard let _ = KeychainHelper.fetch(.authToken) else {
+            print("\n* Should route to LoggedOut")
+            router?.routeToLoggedOut()
+            return
+        }
+        print("\n* Should route to LoggedIn")
+        router?.routeToHome()
     }
 }

@@ -9,13 +9,12 @@
 import RIBs
 
 protocol RegisterDependency: Dependency {
-    // TODO: Declare the set of dependencies required by this RIB, but cannot be
+    // Declare the set of dependencies required by this RIB, but cannot be
     // created by this RIB.
 }
 
 final class RegisterComponent: Component<RegisterDependency> {
-
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+    // Declare 'fileprivate' dependencies that are only used by this RIB.
 }
 
 // MARK: - Builder

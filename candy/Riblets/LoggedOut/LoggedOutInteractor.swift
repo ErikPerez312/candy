@@ -10,14 +10,14 @@ import RIBs
 import RxSwift
 
 protocol LoggedOutRouting: Routing {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    // Declare methods the interactor can invoke to manage sub-tree via the router.
     func cleanupViews()
     func routeToRegister()
     func routeToLogin()
 }
 
 protocol LoggedOutListener: class {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    // Declare methods the interactor can invoke to communicate with other RIBs.
     func didLogin()
     func didRegister()
 }
@@ -27,13 +27,13 @@ final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
     weak var router: LoggedOutRouting?
     weak var listener: LoggedOutListener?
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
+    // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
     override init() {}
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+        // Implement business logic here.
     }
 
     override func willResignActive() {

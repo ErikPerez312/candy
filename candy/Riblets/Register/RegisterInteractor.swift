@@ -66,7 +66,7 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
         
         switch statement.key {
         case .phoneNumber:
-            if entry.count < 10 {
+            if entry.count != 10 {
                 presenter.presentAlert(withTitle: "Invalid Entry",
                                        description: "Please enter your 10 digit phone number", handler: nil)
                 return
@@ -92,11 +92,9 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
             presenter.presentAlert(withTitle: "Oops", description: "Something went wrong on our end.", handler: nil)
             return
         }
-        guard let code = code, !code.isEmptyOrWhitespace else {
-            presenter.presentAlert(withTitle: "Invalid Entry", description: "Code Can't be blank.", handler: nil)
-            return
-        }
-        guard code.count == 5 else {
+        guard let code = code,
+            !code.isEmptyOrWhitespace,
+            code.count == 5 else {
             presenter.presentAlert(withTitle: "Invalid Entry", description: "Please enter the 5 digit code.", handler: nil)
             return
         }

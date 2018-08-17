@@ -8,14 +8,14 @@
 
 import RIBs
 
-protocol LoggedOutDependency: Dependency {
-    // TODO: Declare the set of dependencies required by this RIB, but won't be
+protocol LoggedOutDependency: LoggedOutDependencyLogin, LoggedOutDependencyRegister {
+    // Declare the set of dependencies required by this RIB, but won't be
     // created by this RIB.
     var loggedOutViewController: LoggedOutViewControllable { get }
 }
 
 final class LoggedOutComponent: Component<LoggedOutDependency> {
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+    // Declare 'fileprivate' dependencies that are only used by this RIB.
     
     fileprivate var loggedOutViewController: LoggedOutViewControllable {
         return dependency.loggedOutViewController

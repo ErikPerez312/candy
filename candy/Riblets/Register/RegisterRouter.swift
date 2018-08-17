@@ -14,7 +14,7 @@ protocol RegisterInteractable: Interactable {
 }
 
 protocol RegisterViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy.
+    // Declare methods the router invokes to manipulate the view hierarchy.
 }
 
 final class RegisterRouter: ViewableRouter<RegisterInteractable, RegisterViewControllable>, RegisterRouting {

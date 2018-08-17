@@ -86,7 +86,6 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
             if let user = User(json: validJSON) {
                 print("Successful login with user: \(user.description)")
                 self?.cacheUser(user)
-                KeychainHelper.save(value: user.token, as: .authToken)
                 self?.listener?.didLogin()
             } else {
                 let title = validJSON["error"] as? String ?? "Oops, Something went wrong."
@@ -105,6 +104,7 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
     // MARK: - Private
     
     private func cacheUser(_ user: User) {
+        KeychainHelper.save(value: user.token, as: .authToken)
         let userFileURL = cachedFileURL("user.plist")
         user.dictionary.write(to: userFileURL, atomically: true)
     }

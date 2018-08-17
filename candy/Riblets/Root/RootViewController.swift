@@ -11,9 +11,7 @@ import RxSwift
 import UIKit
 
 protocol RootPresentableListener: class {
-    // TODO: Declare properties and methods that the view controller can invoke to perform
-    // business logic, such as signIn(). This protocol is implemented by the corresponding
-    // interactor class.
+    // This protocol is implemented by the corresponding interactor class.
 }
 
 final class RootViewController: UIViewController, RootPresentable, RootViewControllable {
@@ -34,12 +32,6 @@ final class RootViewController: UIViewController, RootPresentable, RootViewContr
 }
 
 extension RootViewController: LoggedOutViewControllable {
-//    func present(viewController: ViewControllable, animated: Bool) {
-//        present(viewController.uiviewController, animated: animated, completion: nil)
-//    }
-//
-//    func dismiss(viewController: ViewControllable, animated: Bool) {
-//        dismiss(animated: animated, completion: nil)
-//    }
+    // Necessary conformance due to LoggedOut Rib's lack of a view.
 }
 
