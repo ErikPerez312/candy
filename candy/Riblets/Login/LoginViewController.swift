@@ -102,7 +102,9 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
             return textField
         }
         let phoneNumberTextField = textFieldMaker("Phone number")
+        phoneNumberTextField.keyboardType = .numberPad
         let passwordTextField = textFieldMaker("Password")
+        passwordTextField.isSecureTextEntry = true
         
         view.addSubview(phoneNumberTextField)
         view.addSubview(passwordTextField)

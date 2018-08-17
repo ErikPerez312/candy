@@ -19,30 +19,8 @@ protocol RegisterPresentableListener: class {
     func verifyUserEntry(forStatement statement: Statement?, entry: String?)
     func verifyVerificationCode(_ code: String?)
     func cancelRegistration()
+    func resendVerificationCode()
 }
-
-extension RegisterViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        guard let statement = statement else { return nil }
-        return statement.key.values?[row] ?? nil
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        textField?.text = statement?.key.values?[row]
-    }
-}
-
-extension RegisterViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        guard let statement = statement else { return 0 }
-        return statement.key.values?.count ?? 0
-    }
-}
-
 
 final class RegisterViewController: UIViewController, RegisterPresentable, RegisterViewControllable {
     
@@ -82,7 +60,7 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func present(statement: Statement) {
+    func present(statement: Statement, progress: Float) {
         let refreshInputView: () -> Void = {
             self.textField?.resignFirstResponder()
             self.textField?.becomeFirstResponder()
@@ -94,6 +72,9 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         verifyCodeButton?.isEnabled = statement.key == .phoneVerification
         disclaimerLabel?.isHidden = !(statement.key == .phoneVerification)
         disclaimerLabel?.isEnabled = statement.key == .phoneVerification
+        resendCodeButton?.isHidden = !(statement.key == .phoneVerification)
+        resendCodeButton?.isEnabled = statement.key == .phoneVerification
+        progressView?.setProgress(progress, animated: true)
         
         textField?.text = ""
         textField?.tintColor = .candyBackgroundBlue
@@ -140,7 +121,9 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     private var textField: UITextField?
     private var pickerView: UIPickerView?
     private var verifyCodeButton: UIButton?
+    private var resendCodeButton: UIButton?
     private var activityIndicator: UIActivityIndicatorView?
+    private var progressView: UIProgressView?
     
     private func buildCancelButton() -> UIButton {
         let button = UIButton(frame: .zero)
@@ -169,7 +152,12 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         view.addSubview(label)
         label.snp.makeConstraints { maker in
             maker.height.equalTo(label.font.pointSize + 5)
-            maker.top.equalTo(button.snp.bottom).offset(40)
+            if UIScreen.main.bounds.height < 600 {
+                // Screen sizes smaller than iPhone-8
+                maker.top.equalTo(button.snp.bottom).offset(15)
+            } else {
+                maker.top.equalTo(button.snp.bottom).offset(40)
+            }
             maker.leading.trailing.equalToSuperview().inset(32)
         }
         
@@ -202,6 +190,7 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     
     private func buildProgessViews(withLabel label: UILabel, textField: UITextField) -> UILabel {
         let progressView = UIProgressView(progressViewStyle: .bar)
+        self.progressView = progressView
         progressView.trackTintColor = .candyNavigationBarShadow
         progressView.progressTintColor = .candyProgressBarPink
         progressView.setProgress(0.5, animated: true)
@@ -213,6 +202,7 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         }
         
         let currentEntryCountLabel = UILabel(frame: .zero)
+        currentEntryCountLabel.isHidden = true
         currentEntryCountLabel.font = UIFont(name: "Avenir-Black", size: 13.0)!
         currentEntryCountLabel.text = "3/6"
         currentEntryCountLabel.textAlignment = .right
@@ -244,11 +234,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
             maker.leading.trailing.equalTo(label)
             maker.top.equalTo(label).offset(40)
         }
-        let resendCodeButton = UIButton(frame: .zero)
-        resendCodeButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Resend Code"), for: .normal)
-//        resendCodeButton.snp.makeConstraints { maker in
-//
-//        }
         
         let disclaimer = UILabel(frame: .zero)
         self.disclaimerLabel = disclaimer
@@ -262,9 +247,24 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         view.addSubview(disclaimer)
         disclaimer.snp.makeConstraints { maker in
             maker.top.equalTo(verifyCodeButton.snp.bottom).offset(10)
-            maker.bottom.lessThanOrEqualToSuperview().priority(999)
             maker.leading.trailing.equalTo(label)
         }
+        
+        let resendCodeButton = UIButton(frame: .zero)
+        self.resendCodeButton = resendCodeButton
+        resendCodeButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.listener?.resendVerificationCode()
+            })
+            .disposed(by: bag)
+        view.addSubview(resendCodeButton)
+        resendCodeButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Resend Code"), for: .normal)
+                resendCodeButton.snp.makeConstraints { maker in
+                    maker.height.equalTo(30)
+                    maker.centerX.equalToSuperview()
+                    maker.top.equalTo(disclaimer.snp.bottom).offset(15)
+                    maker.bottom.lessThanOrEqualToSuperview().priority(999)
+                }
         return verifyCodeButton
     }
     
@@ -285,5 +285,27 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         indicator.snp.makeConstraints { maker in
             maker.centerX.centerY.equalTo(button)
         }
+    }
+}
+
+extension RegisterViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard let statement = statement else { return nil }
+        return statement.key.values?[row] ?? nil
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        textField?.text = statement?.key.values?[row]
+    }
+}
+
+extension RegisterViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        guard let statement = statement else { return 0 }
+        return statement.key.values?.count ?? 0
     }
 }

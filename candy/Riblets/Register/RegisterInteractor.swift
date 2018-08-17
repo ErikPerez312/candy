@@ -18,7 +18,7 @@ protocol RegisterPresentable: Presentable {
     var listener: RegisterPresentableListener? { get set }
     
     func presentAlert(withTitle title: String, description: String?, handler: ((UIAlertAction) -> Void)?)
-    func present(statement: Statement)
+    func present(statement: Statement, progress: Float)
     func showActivityIndicator()
     func hideActivityIndicator()
 }
@@ -44,7 +44,7 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        presenter.present(statement: statements[currentStatementIndex])
+        presenter.present(statement: statements[currentStatementIndex], progress: 0)
         print("\n* did activate register interactor")
     }
 
@@ -80,7 +80,8 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
             userEntries[statement.key.rawValue] = entry
         }
         currentStatementIndex += 1
-        presenter.present(statement: statements[currentStatementIndex])
+        let progress = Float(currentStatementIndex) / Float(statements.count)
+        presenter.present(statement: statements[currentStatementIndex], progress: progress)
     }
     
     func requestVerificationCode(withPhoneNumber phoneNumber: String) {
@@ -121,6 +122,16 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
                 self?.register(withUserObject: userObject)
             }
         }
+    }
+    
+    func resendVerificationCode() {
+        guard let phoneNumber = userEntries["phoneNumber"] as? String else {
+            presenter.presentAlert(withTitle: "Oops", description: "Something went wrong on our side") { [weak self] _ in
+                self?.presenter.listener?.cancelRegistration()
+            }
+            return
+        }
+        requestVerificationCode(withPhoneNumber: phoneNumber)
     }
     
     func cancelRegistration() {
