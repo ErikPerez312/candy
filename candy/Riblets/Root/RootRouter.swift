@@ -35,7 +35,6 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
     
     override func didLoad() {
         print("\n* didLoad Root *\n")
-        attachLoggedOut()
     }
     
     func routeToHome() {
@@ -57,7 +56,9 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
             viewController.dismiss(viewController: home.viewControllable, animated: true)
             self.home = nil
         }
-        attachLoggedOut()
+        let loggedOut = loggedOutBuilder.build(withListener: interactor)
+        attachChild(loggedOut)
+        self.loggedOut = loggedOut
     }
     
     // MARK: - Private
@@ -67,10 +68,4 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
     
     private var home: ViewableRouting?
     private var loggedOut: Routing?
-    
-    private func attachLoggedOut() {
-        let loggedOut = loggedOutBuilder.build(withListener: interactor)
-        attachChild(loggedOut)
-        self.loggedOut = loggedOut
-    }
 }

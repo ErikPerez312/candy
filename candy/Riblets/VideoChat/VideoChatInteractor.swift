@@ -10,16 +10,16 @@ import RIBs
 import RxSwift
 
 protocol VideoChatRouting: ViewableRouting {
-    // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
+    // Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
 protocol VideoChatPresentable: Presentable {
     var listener: VideoChatPresentableListener? { get set }
-    // TODO: Declare methods the interactor can invoke the presenter to present data.
+    // Declare methods the interactor can invoke the presenter to present data.
 }
 
 protocol VideoChatListener: class {
-    // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
+    // Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
 final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, VideoChatInteractable, VideoChatPresentableListener {
@@ -27,7 +27,7 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     weak var router: VideoChatRouting?
     weak var listener: VideoChatListener?
 
-    // TODO: Add additional dependencies to constructor. Do not perform any logic
+    // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
     override init(presenter: VideoChatPresentable) {
         super.init(presenter: presenter)
@@ -36,11 +36,16 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // TODO: Implement business logic here.
+        // Implement business logic here.
     }
 
     override func willResignActive() {
         super.willResignActive()
-        // TODO: Pause any business logic.
+        // Pause any business logic.
+    }
+    
+    // MARK: ChatTimerDelegate
+    func timerDidEnd() {
+        // TODO: Return to home
     }
 }

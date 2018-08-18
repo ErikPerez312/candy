@@ -14,14 +14,14 @@ protocol HomeInteractable: Interactable, VideoChatListener {
 }
 
 protocol HomeViewControllable: ViewControllable {
-    // TODO: Declare methods the router invokes to manipulate the view hierarchy.
+    // Declare methods the router invokes to manipulate the view hierarchy.
     func push(viewController: ViewControllable)
     func presentModally(viewController: ViewControllable)
 }
 
 final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, HomeRouting {
 
-    // TODO: Constructor inject child builder protocols to allow building children.
+    // Constructor inject child builder protocols to allow building children.
     init(interactor: HomeInteractable,
                   viewController: HomeViewControllable,
                   videoChatBuilder: VideoChatBuildable) {
@@ -42,5 +42,4 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     private let videoChatBuilder: VideoChatBuildable
     
     private var currentChild: ViewableRouting?
-    
 }

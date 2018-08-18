@@ -40,8 +40,7 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
         super.didBecomeActive()
         //  Implement business logic here.
         print("\n* Running didBecomeActive(:) on RootInteractor")
-        // TODO: Uncomment when Login/Register Ribs are completed
-//        routeToInitialRib()
+        routeToInitialRib()
     }
 
     override func willResignActive() {
