@@ -30,7 +30,7 @@ final class RegisterBuilder: Builder<RegisterDependency>, RegisterBuildable {
     }
 
     func build(withListener listener: RegisterListener) -> RegisterRouting {
-        let component = RegisterComponent(dependency: dependency)
+        let _ = RegisterComponent(dependency: dependency)
         let viewController = RegisterViewController()
         let interactor = RegisterInteractor(presenter: viewController)
         interactor.listener = listener

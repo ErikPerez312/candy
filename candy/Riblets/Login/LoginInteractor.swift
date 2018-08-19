@@ -51,7 +51,7 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
     }
     
     func login(withPhoneNumber phoneNumber: String?, password: String?) {
-        print("\n-Attempted Login with phone: \(phoneNumber) and pass: \(password) ")
+        print("\n-Attempted Login with phone: \(phoneNumber ?? "none") and pass: \(password ?? "none") ")
         guard let number = phoneNumber,
             !number.isEmptyOrWhitespace,
             number.count == 10 else {

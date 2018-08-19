@@ -18,6 +18,12 @@ class CandyAPI {
     typealias JSONDictionary = [String: Any]
     typealias CompletionHandler = (JSONDictionary?, Error?) -> Void
     
+    static let webSocketURL = URL(string: "wss://video-dating.herokuapp.com/cable")!
+
+    static var webSocketOrigin: String {
+        return baseURLString
+    }
+    
     static func signIn(withPhoneNumber phoneNumber: String, password: String,
                        completionHandler handler: @escaping CompletionHandler) {
         request(withResource: .logIn(withPhoneNumber: phoneNumber, password: password),

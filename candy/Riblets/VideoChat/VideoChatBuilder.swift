@@ -30,7 +30,7 @@ final class VideoChatBuilder: Builder<VideoChatDependency>, VideoChatBuildable {
     }
 
     func build(withListener listener: VideoChatListener) -> VideoChatRouting {
-        let component = VideoChatComponent(dependency: dependency)
+        let _ = VideoChatComponent(dependency: dependency)
         let viewController = VideoChatViewController()
         let interactor = VideoChatInteractor(presenter: viewController)
         interactor.listener = listener

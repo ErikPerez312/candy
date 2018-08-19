@@ -16,6 +16,8 @@ protocol HomePresentableListener: class {
     // interactor class.
     func connect()
     func canceledConnection()
+    func viewWillAppear()
+    func viewWillDisappear()
 }
 
 final class HomeViewController: UIViewController, HomePresentable, HomeViewControllable {
@@ -42,6 +44,15 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         buildButtons(withAppearanceView: views.appearanceView, activityCard: views.activityCard)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        listener?.viewWillAppear()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        listener?.viewWillDisappear()
+    }
+    
     func push(viewController: ViewControllable) {
         navigationController?.pushViewController(viewController.uiviewController, animated: true)
     }
@@ -50,13 +61,19 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         present(viewController.uiviewController, animated: true, completion: nil)
     }
     
+    func presentAppearanceCount(_ count: Int) {
+        appearanceView?.updateOnlineUserCountLabel(with: count)
+    }
+    
     // MARK: - Private
     
     private let bag = DisposeBag()
     private var activityCard: HomeActivityCard!
+    private var appearanceView: UserAppearanceView?
     
     private func buildMainViews() -> (appearanceView: UserAppearanceView, activityCard: HomeActivityCard) {
         let appearanceView = UserAppearanceView(frame: .zero)
+        self.appearanceView = appearanceView
         view.addSubview(appearanceView)
         appearanceView.snp.makeConstraints { maker in
             maker.height.equalTo(40)
