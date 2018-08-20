@@ -52,6 +52,7 @@
 		8657544E211BD16700AF1F9B /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544D211BD16700AF1F9B /* Resource.swift */; };
 		86575450211BD1AE00AF1F9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544F211BD1AE00AF1F9B /* User.swift */; };
 		86575452211BD3AB00AF1F9B /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86575451211BD3AB00AF1F9B /* KeychainHelper.swift */; };
+		8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8662337B212A5F0F00425F92 /* TwilioHandler.swift */; };
 		8687CA6B212229C9006B5C41 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8687CA6A212229C9006B5C41 /* Statement.swift */; };
 		86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEE792114FC9400C65879 /* AppDelegate.swift */; };
 		86CDEE812114FC9600C65879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE802114FC9600C65879 /* Assets.xcassets */; };
@@ -110,6 +111,7 @@
 		8657544D211BD16700AF1F9B /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		8657544F211BD1AE00AF1F9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		86575451211BD3AB00AF1F9B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		8662337B212A5F0F00425F92 /* TwilioHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwilioHandler.swift; sourceTree = "<group>"; };
 		8687CA6A212229C9006B5C41 /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		86CDEE762114FC9400C65879 /* candy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CDEE792114FC9400C65879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				8657544F211BD1AE00AF1F9B /* User.swift */,
 				86D79CD8211CD9F700765C30 /* UserError.swift */,
 				8687CA6A212229C9006B5C41 /* Statement.swift */,
+				8662337B212A5F0F00425F92 /* TwilioHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -223,8 +226,8 @@
 			children = (
 				861630532118F61A00B3EF33 /* VideoChatRouter.swift */,
 				861630542118F61A00B3EF33 /* VideoChatViewController.swift */,
-				861630552118F61A00B3EF33 /* VideoChatBuilder.swift */,
 				861630562118F61A00B3EF33 /* VideoChatInteractor.swift */,
+				861630552118F61A00B3EF33 /* VideoChatBuilder.swift */,
 			);
 			path = VideoChat;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */,
 				8616302B2118C93600B3EF33 /* RegisterInteractor.swift in Sources */,
 				8616304A2118EE1500B3EF33 /* BulletPoint.swift in Sources */,
+				8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */,
 				861630412118D83000B3EF33 /* UINavigationController+RIBs.swift in Sources */,
 				86D79CDB211CF33A00765C30 /* String+Extensions.swift in Sources */,
 				861630432118DA8100B3EF33 /* RootComponent+Home.swift in Sources */,
