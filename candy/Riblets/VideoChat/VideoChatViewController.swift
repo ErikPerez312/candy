@@ -11,36 +11,72 @@ import RxSwift
 import UIKit
 import TwilioVideo
 
-protocol VideoChatPresentableListener: class, ChatTimerDelegate {
+protocol VideoChatPresentableListener: ChatTimerDelegate, TwilioHandlerDelegate {
     // Declare properties and methods that the view controller can invoke to perform
     // business logic, such as signIn(). This protocol is implemented by the corresponding
     // interactor class.
 }
 
 final class VideoChatViewController: UIViewController, VideoChatPresentable, VideoChatViewControllable {
-
+    
     weak var listener: VideoChatPresentableListener?
     
-    override func viewDidLoad() {
+    init() {
+        super.init(nibName: nil, bundle: nil)
         buildChatViews()
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("Method not supported")
+    }
+    
+    override func viewDidLoad() {
+//        buildChatViews()
+    }
+    
+    func showLocalVideoTrack(_ videoTrack: TVIVideoTrack) {
+        videoTrack.addRenderer(localUserView)
+    }
+    
+    func removeLocalVideoTrack(_ videoTrack: TVIVideoTrack) {
+        videoTrack.removeRenderer(localUserView)
+    }
+    
+    func showRemoteVideoTrack(_ videoTrack: TVIVideoTrack) {
+        videoTrack.addRenderer(remoteUserView)
+    }
+    
+    func removeRemoteVideoTrack(_ videoTrack: TVIVideoTrack) {
+        videoTrack.removeRenderer(remoteUserView)
+    }
+    
+    func setUpCamera() {
+        localUserView.shouldMirror = true
+    }
+    
     // MARK: - Private
+    
+    private var localUserView: TVIVideoView!
+    private var remoteUserView: TVIVideoView!
+    
     private var chatTimer: ChatTimer?
     
     private func buildChatViews() {
         let remoteUserView = TVIVideoView()
+        self.remoteUserView = remoteUserView
         remoteUserView.backgroundColor = .green
+        remoteUserView.contentMode = .scaleAspectFill
         view.addSubview(remoteUserView)
         remoteUserView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
         
-        let localPreview = TVIVideoView()
-        localPreview.backgroundColor = .gray
-        localPreview.layer.cornerRadius = 8
-        view.addSubview(localPreview)
-        localPreview.snp.makeConstraints { maker in
+        let localUserView = TVIVideoView()
+        self.localUserView = localUserView
+        localUserView.backgroundColor = .gray
+        localUserView.layer.cornerRadius = 8
+        view.addSubview(localUserView)
+        localUserView.snp.makeConstraints { maker in
             maker.size.equalTo(CGSize(width: 130, height: 160))
             maker.top.equalTo(view.snp.topMargin)
             maker.leading.equalToSuperview().offset(8)

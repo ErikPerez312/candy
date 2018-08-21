@@ -12,7 +12,8 @@ import ActionCableClient
 
 protocol HomeRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
-    func routeToVideoChat()
+    func routeToVideoChat(withRoomName roomName: String, roomToken: String)
+    func routeToHome()
 }
 
 protocol HomePresentable: Presentable {
@@ -20,6 +21,7 @@ protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
     
     func presentAppearanceCount(_ count: Int)
+    func updateActivityCardStatus(isActiveDay: Bool)
 }
 
 protocol HomeListener: class {
@@ -51,7 +53,17 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func connect() {
         // TODO: perform logic to connect with user
-        router?.routeToVideoChat()
+        
+        guard appearanceChannel != nil else {
+            print("\n** appearanceChannel is nil")
+            return
+        }
+        guard chatChannel != nil else {
+            print("\n** chatChannel is nil")
+            return
+        }
+        appearanceChannel?.action("appear")
+        chatChannel?.action("connect")
     }
     
     func canceledConnection() {
@@ -65,13 +77,35 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         removeActiveApplicationObservers()
     }
     
+    func callEnded() {
+        router?.routeToHome()
+    }
+    
     // MARK: - Private
     
     private var client: ActionCableClient?
     private var appearanceChannel: Channel?
+    private var chatChannel: Channel?
+    
+    private var isActiveDay: Bool {
+        // TODO: This should be done in backend
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        let currentDateString = dateFormatter.string(from: date)
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let time = hour - 12
+        let isTimeValid = time >= 7 && time < 9
+        
+        return (currentDateString == "Friday" || currentDateString == "Saturday") && isTimeValid == true
+    }
     
     private func setUpClient() {
-        guard let userToken = KeychainHelper.fetch(.authToken) else { return }
+        guard let userToken = KeychainHelper.fetch(.authToken) else {
+            // TODO: If token not found, we should send to login screen
+            return
+        }
         let candyClient = ActionCableClient(url: CandyAPI.webSocketURL)
         self.client = candyClient
         candyClient.headers = ["Authorization": userToken]
@@ -79,6 +113,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         candyClient.connect()
         candyClient.onConnected = {
             self.buildAppearanceChannel(withClient: candyClient)
+            self.buildChatChannel(withClient: candyClient)
         }
         candyClient.onDisconnected = { (error: ConnectionError?) in
             self.appearanceChannel?.action("away", with: nil)
@@ -103,6 +138,21 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         }
     }
     
+    private func buildChatChannel(withClient client: ActionCableClient) {
+        let channel = client.create("ChatChannel")
+        self.chatChannel = channel
+        channel.onReceive = { [weak self] (data: Any?, error: Error?) in
+            guard let data = data,
+                let chatRoom = data as? [String: String],
+                let roomName = chatRoom["room_name"],
+                let token = chatRoom["twilio_token"] else {
+                    return
+            }
+            print("\n** did receive room info from chatchannel", chatRoom)
+            self?.router?.routeToVideoChat(withRoomName: roomName, roomToken: token)
+        }
+    }
+    
     private func addActiveApplicationObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationWillResignActive),
@@ -124,7 +174,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     @objc private func applicationWillResignActive() {
         client?.disconnect()
-//        updateActivityCardUI()
+        presenter.updateActivityCardStatus(isActiveDay: isActiveDay)
     }
     
     @objc private func applicationWillBecomeActive() {

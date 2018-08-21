@@ -17,6 +17,7 @@ protocol HomeViewControllable: ViewControllable {
     // Declare methods the router invokes to manipulate the view hierarchy.
     func push(viewController: ViewControllable)
     func presentModally(viewController: ViewControllable)
+    func dismissModally(viewController: ViewControllable)
 }
 
 final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, HomeRouting {
@@ -31,15 +32,25 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
         interactor.router = self
     }
     
-    func routeToVideoChat() {
-        let videoChat = videoChatBuilder.build(withListener: interactor)
+    func routeToVideoChat(withRoomName roomName: String, roomToken: String) {
+        let videoChat = videoChatBuilder.build(withListener: interactor,
+                                               roomName: roomName,
+                                               roomToken: roomToken)
         attachChild(videoChat)
+        self.videoChat = videoChat
         viewController.presentModally(viewController: videoChat.viewControllable)
+    }
+    
+    func routeToHome() {
+        if let videoChat = videoChat {
+            viewController.dismissModally(viewController: videoChat.viewControllable)
+        }
     }
     
     // MARK: Private
     
     private let videoChatBuilder: VideoChatBuildable
     
-    private var currentChild: ViewableRouting?
+    private var videoChat: ViewableRouting?
+    
 }

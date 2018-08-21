@@ -8,29 +8,42 @@
 
 import RIBs
 import RxSwift
+import TwilioVideo
 
 protocol VideoChatRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
 protocol VideoChatPresentable: Presentable {
-    var listener: VideoChatPresentableListener? { get set }
     // Declare methods the interactor can invoke the presenter to present data.
+    
+    var listener: VideoChatPresentableListener? { get set }
+    
+    func showLocalVideoTrack(_ videoTrack: TVIVideoTrack)
+    func removeLocalVideoTrack(_ videoTrack: TVIVideoTrack)
+    func showRemoteVideoTrack(_ videoTrack: TVIVideoTrack)
+    func removeRemoteVideoTrack(_ videoTrack: TVIVideoTrack)
+    func setUpCamera()
 }
 
 protocol VideoChatListener: class {
     // Declare methods the interactor can invoke to communicate with other RIBs.
+    func callEnded()
 }
 
 final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, VideoChatInteractable, VideoChatPresentableListener {
-
+    
     weak var router: VideoChatRouting?
     weak var listener: VideoChatListener?
 
     // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: VideoChatPresentable) {
+    init(presenter: VideoChatPresentable, roomName: String, roomToken: String) {
+        self.roomName = roomName
+        self.roomToken = roomToken
+        self.twilioHandler = TwilioHandler(roomName: roomName, roomToken: roomToken)
         super.init(presenter: presenter)
+        twilioHandler.delegate = self
         presenter.listener = self
     }
 
@@ -45,7 +58,49 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     }
     
     // MARK: ChatTimerDelegate
+    
     func timerDidEnd() {
-        // TODO: Return to home
+        print("timer did end")
+//        listener?.callEnded()
     }
+    
+    // MARK: TwilioHandlerDelegate
+    
+    func addRenderer(forLocalVideoTrack videoTrack: TVIVideoTrack) {
+        presenter.showLocalVideoTrack(videoTrack)
+    }
+    
+    func removeRenderer(forLocalVideoTrack videoTrack: TVIVideoTrack) {
+        presenter.removeLocalVideoTrack(videoTrack)
+    }
+    
+    func addRenderer(forRemoteVideoTrack videoTrack: TVIVideoTrack) {
+        presenter.showRemoteVideoTrack(videoTrack)
+    }
+    
+    func removeRenderer(forRemoteVideoTrack videoTrack: TVIVideoTrack) {
+        presenter.removeRemoteVideoTrack(videoTrack)
+    }
+    
+    func didStartCapturingLocalCamera() {
+        presenter.setUpCamera()
+    }
+    
+    func disconnectedFromRoomWithError(_ error: Error?) {
+        return
+    }
+    
+    func remoteParticipantDidDisconnect() {
+        return
+    }
+    
+ 
+    
+    // MARK: - Private
+    
+    private var roomName: String
+    private var roomToken: String
+    private var twilioHandler: TwilioHandler
+    
 }
+

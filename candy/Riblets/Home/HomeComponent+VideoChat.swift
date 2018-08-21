@@ -16,6 +16,5 @@ protocol HomeDependencyVideoChat: Dependency {
 }
 
 extension HomeComponent: VideoChatDependency {
-
     // TODO: Implement properties to provide for VideoChat scope.
 }

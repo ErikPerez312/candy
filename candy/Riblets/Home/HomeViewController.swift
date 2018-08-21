@@ -61,14 +61,22 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         present(viewController.uiviewController, animated: true, completion: nil)
     }
     
+    func dismissModally(viewController: ViewControllable) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func presentAppearanceCount(_ count: Int) {
         appearanceView?.updateOnlineUserCountLabel(with: count)
+    }
+    
+    func updateActivityCardStatus(isActiveDay: Bool) {
+        // TODO: Complete implemenation
     }
     
     // MARK: - Private
     
     private let bag = DisposeBag()
-    private var activityCard: HomeActivityCard!
+    private var activityCard: HomeActivityCard?
     private var appearanceView: UserAppearanceView?
     
     private func buildMainViews() -> (appearanceView: UserAppearanceView, activityCard: HomeActivityCard) {
