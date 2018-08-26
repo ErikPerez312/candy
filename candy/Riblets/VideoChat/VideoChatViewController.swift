@@ -20,7 +20,14 @@ protocol VideoChatPresentableListener: ChatTimerDelegate, TwilioHandlerDelegate 
 
 final class VideoChatViewController: UIViewController, VideoChatPresentable, VideoChatViewControllable {
     
-    weak var listener: VideoChatPresentableListener?
+    weak var listener: VideoChatPresentableListener? {
+        didSet {
+            // 'listener' is nil at instantiation.
+            // Set chatTimer delegate once we have a listener
+            guard let interactor = listener else { return }
+            chatTimer?.delegate = interactor
+        }
+    }
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -29,10 +36,6 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("Method not supported")
-    }
-    
-    override func viewDidLoad() {
-//        buildChatViews()
     }
     
     func showLocalVideoTrack(_ videoTrack: TVIVideoTrack) {
@@ -54,6 +57,7 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     private var remoteUserView: TVIVideoView!
     
     private var chatTimer: ChatTimer?
+    private var questionsView: QuestionsView?
     
     private func buildChatViews() {
         let remoteUserView = TVIVideoView()
@@ -65,10 +69,10 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
             maker.edges.equalToSuperview()
         }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(localPreviewViewPressed))
+        let endCallGesture = UITapGestureRecognizer(target: self, action: #selector(localPreviewViewPressed))
         let localUserView = TVIVideoView()
         localUserView.shouldMirror = true
-        localUserView.addGestureRecognizer(tapGesture)
+        localUserView.addGestureRecognizer(endCallGesture)
         self.localUserView = localUserView
         localUserView.backgroundColor = .gray
         localUserView.layer.cornerRadius = 8
@@ -79,7 +83,10 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
             maker.leading.equalToSuperview().offset(8)
         }
         
+        let nextQuestionGesture = UITapGestureRecognizer(target: self, action: #selector(questionsViewPressed))
         let questionsView = QuestionsView()
+        self.questionsView = questionsView
+        questionsView.addGestureRecognizer(nextQuestionGesture)
         view.addSubview(questionsView)
         questionsView.snp.makeConstraints { maker in
             maker.height.equalTo(70)
@@ -88,8 +95,8 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
         }
         
         let timer = ChatTimer()
+        self.chatTimer = timer
         view.addSubview(timer)
-        timer.delegate = listener
         timer.snp.makeConstraints { maker in
             maker.width.height.equalTo(96)
             maker.bottom.equalTo(questionsView.snp.top).offset(-10)
@@ -99,5 +106,9 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     
     @objc private func localPreviewViewPressed() {
         listener?.shouldEndCall()
+    }
+    
+    @objc private func questionsViewPressed() {
+        questionsView?.updateQuestionLabel()
     }
 }

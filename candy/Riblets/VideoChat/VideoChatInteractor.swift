@@ -84,7 +84,7 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     }
     
     func errorDidOcurr(withMessage message: String, error: Error?) {
-        print("\n Error Message: \(message), Error: \(error)")
+        print("\n Error Message: \(message), Error: \(String(describing: error))")
         shouldEndCall()
     }
     
@@ -99,4 +99,3 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     private var twilioHandler: TwilioHandler
     
 }
-

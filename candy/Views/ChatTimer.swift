@@ -11,13 +11,13 @@ import UIKit
 
 // TODO: Refactor
 
-protocol ChatTimerDelegate {
+protocol ChatTimerDelegate: class {
     func timerDidEnd()
 }
 
 class ChatTimer: UIView {
     // MARK: - Properties
-    var delegate: ChatTimerDelegate?
+    weak var delegate: ChatTimerDelegate?
     private var timer: Timer!
     private var totalTime = 120
     private var label: UILabel!
