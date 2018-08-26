@@ -53,10 +53,12 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         listener?.viewWillDisappear()
     }
     
+    // MARK: HomeViewControllable
+    
     func push(viewController: ViewControllable) {
         navigationController?.pushViewController(viewController.uiviewController, animated: true)
     }
-    
+
     func presentModally(viewController: ViewControllable) {
         present(viewController.uiviewController, animated: true, completion: nil)
     }
@@ -64,6 +66,8 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     func dismissModally(viewController: ViewControllable) {
         dismiss(animated: true, completion: nil)
     }
+    
+    // MARK: HomePresentable
     
     func presentAppearanceCount(_ count: Int) {
         appearanceView?.updateOnlineUserCountLabel(with: count)

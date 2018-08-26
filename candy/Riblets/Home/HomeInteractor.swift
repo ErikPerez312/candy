@@ -51,9 +51,10 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         // Pause any business logic.
     }
     
+    // MARK: HomePresentableListener
+    
     func connect() {
         // TODO: perform logic to connect with user
-        
         guard appearanceChannel != nil else {
             print("\n** appearanceChannel is nil")
             return

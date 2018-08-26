@@ -15,6 +15,7 @@ protocol VideoChatPresentableListener: ChatTimerDelegate, TwilioHandlerDelegate 
     // Declare properties and methods that the view controller can invoke to perform
     // business logic, such as signIn(). This protocol is implemented by the corresponding
     // interactor class.
+    func shouldEndCall()
 }
 
 final class VideoChatViewController: UIViewController, VideoChatPresentable, VideoChatViewControllable {
@@ -44,6 +45,7 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     
     func showRemoteVideoTrack(_ videoTrack: TVIVideoTrack) {
         videoTrack.addRenderer(remoteUserView)
+        chatTimer?.startTimer()
     }
     
     func removeRemoteVideoTrack(_ videoTrack: TVIVideoTrack) {
@@ -72,6 +74,8 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
         }
         
         let localUserView = TVIVideoView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(localPreviewViewPressed))
+        localUserView.addGestureRecognizer(tapGesture)
         self.localUserView = localUserView
         localUserView.backgroundColor = .gray
         localUserView.layer.cornerRadius = 8
@@ -98,5 +102,9 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
             maker.bottom.equalTo(questionsView.snp.top).offset(-10)
             maker.trailing.equalToSuperview().inset(8)
         }
+    }
+    
+    @objc private func localPreviewViewPressed() {
+        listener?.shouldEndCall()
     }
 }

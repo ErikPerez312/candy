@@ -43,7 +43,9 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     
     func routeToHome() {
         if let videoChat = videoChat {
+            detachChild(videoChat)
             viewController.dismissModally(viewController: videoChat.viewControllable)
+            self.videoChat = nil
         }
     }
     

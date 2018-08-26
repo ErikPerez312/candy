@@ -18,6 +18,7 @@ protocol TwilioHandlerDelegate: class {
     
     func didStartCapturingLocalCamera()
     func disconnectedFromRoomWithError(_ error: Error?)
+    func roomConnectionFailed()
     func remoteParticipantDidDisconnect()
 }
 
@@ -25,31 +26,33 @@ class TwilioHandler: NSObject {
     
     weak var delegate: TwilioHandlerDelegate? {
         didSet {
+            // We only want to connect to chatroom once we have a delegate.
             guard let _ = delegate else { return }
             let localMedia = prepareLocalMedia()
             connectToRoom(withName: roomName, token: roomToken, localMedia: localMedia)
         }
     }
     
-    var roomName: String
-    var roomToken: String
-    
     init(roomName: String, roomToken: String) {
         self.roomName = roomName
         self.roomToken = roomToken
     }
     
+    func disconnectFromRoom() {
+        cleanUpRemoteParticipant()
+        room?.disconnect()
+    }
+    
     // MARK: - Private
     
+    private let roomName: String
+    private let roomToken: String
     private var room: TVIRoom?
     private var remoteUser: TVIParticipant?
-    //    private var videoTrack: TVIVideoTrack?
-    //    private var audioTrack: TVIAudioTrack?
-    //    private var camera: TVICameraCapturer?
     
     private func prepareLocalMedia() -> (videoTracks: [TVILocalVideoTrack], audioTracks: [TVILocalAudioTrack]){
-        let camera = TVICameraCapturer(source: .frontCamera, delegate: self)
-        guard let videoTrack = TVILocalVideoTrack(capturer: camera!, enabled: true, constraints: nil),
+        let camera = TVICameraCapturer(source: .frontCamera, delegate: self)!
+        guard let videoTrack = TVILocalVideoTrack(capturer: camera, enabled: true, constraints: nil),
             let audioTrack = TVILocalAudioTrack(options: nil, enabled: true) else {
                 return ([TVILocalVideoTrack](), [TVILocalAudioTrack]())
         }
@@ -69,10 +72,8 @@ class TwilioHandler: NSObject {
         self.room = TwilioVideo.connect(with: connectOptions, delegate: self)
     }
     
-    private func cleanupRemoteParticipant() {
-        guard let remoteUser = remoteUser else {
-            return
-        }
+    private func cleanUpRemoteParticipant() {
+        guard let remoteUser = remoteUser else { return }
         if let videoTrack = remoteUser.videoTracks.first {
             delegate?.removeRenderer(forRemoteVideoTrack: videoTrack)
         }
@@ -81,35 +82,29 @@ class TwilioHandler: NSObject {
     
 }
 
+// MARK: TVIParticipantDelegate
+
 extension TwilioHandler: TVIParticipantDelegate {
-    public func participant(_ participant: TVIParticipant, addedVideoTrack videoTrack: TVIVideoTrack) {
-        // Remote Participant has offered to share the video Track.
+    
+    func participant(_ participant: TVIParticipant, addedVideoTrack videoTrack: TVIVideoTrack) {
         guard remoteUser == participant else {
             return
         }
         delegate?.addRenderer(forRemoteVideoTrack: videoTrack)
     }
     
-    public func participant(_ participant: TVIParticipant, removedVideoTrack videoTrack: TVIVideoTrack) {
-        // Remote user stopped sharing the video track
+    func participant(_ participant: TVIParticipant, removedVideoTrack videoTrack: TVIVideoTrack) {
         guard remoteUser == participant  else {
             return
         }
         delegate?.removeRenderer(forRemoteVideoTrack: videoTrack)
     }
-    
-    public func participant(_ participant: TVIParticipant, addedAudioTrack audioTrack: TVIAudioTrack) {
-        // remote user offered to share the audio track
-        //        guard remoteUser == participant  else { return }
-    }
-    
-    public func participant(_ participant: TVIParticipant, removedAudioTrack audioTrack: TVIAudioTrack) {
-        // remote user stoped sharing audio track
-        //        guard remoteUser == participant  else { return }
-    }
 }
 
+// MARK: TVIRoomDelegate
+
 extension TwilioHandler: TVIRoomDelegate {
+    
     func didConnect(to room: TVIRoom) {
         // user joined participants room
         print("\n *  did connect to room")
@@ -118,9 +113,15 @@ extension TwilioHandler: TVIRoomDelegate {
         remoteUser?.delegate = self
     }
     
-    func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {
+    func room(_ room: TVIRoom, didFailToConnectWithError error: Error) {
         print("TwilioHandlerError:", error)
-        cleanupRemoteParticipant()
+        // TODO: Should alert delegate of error
+        self.room = nil
+    }
+    
+    func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {
+        print("TwilioHandlerError:", error as Any )
+        cleanUpRemoteParticipant()
         delegate?.disconnectedFromRoomWithError(error)
         self.room = nil
     }
@@ -134,21 +135,16 @@ extension TwilioHandler: TVIRoomDelegate {
     
     func room(_ room: TVIRoom, participantDidDisconnect participant: TVIParticipant) {
         guard remoteUser == participant else { return }
-        cleanupRemoteParticipant()
-        //        chatTimer.endTimer()
-        room.disconnect()
+        cleanUpRemoteParticipant()
         delegate?.remoteParticipantDidDisconnect()
-    }
-    
-    func room(_ room: TVIRoom, didFailToConnectWithError error: Error) {
-        print("TwilioHandlerError:", error)
-        self.room = nil
     }
 }
 
+// MARK: TVICameraCapturerDelegate
+
 extension TwilioHandler: TVICameraCapturerDelegate {
+    
     func cameraCapturer(_ capturer: TVICameraCapturer, didStartWith source: TVICameraCaptureSource) {
         delegate?.didStartCapturingLocalCamera()
-        //        localVideoPreviewView.shouldMirror = true
     }
 }

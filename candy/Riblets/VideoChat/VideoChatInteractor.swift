@@ -57,10 +57,19 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
         // Pause any business logic.
     }
     
+    // MARK: VideoChatPresentableListener
+    func shouldEndCall() {
+        //TODO: should disconnect and dissmiss.
+        twilioHandler.disconnectFromRoom()
+        listener?.callEnded()
+    }
+    
     // MARK: ChatTimerDelegate
     
     func timerDidEnd() {
         print("timer did end")
+        shouldEndCall()
+//        twilioHandler.disconnectFromRoom()
 //        listener?.callEnded()
     }
     
@@ -90,11 +99,13 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
         return
     }
     
-    func remoteParticipantDidDisconnect() {
+    func roomConnectionFailed() {
         return
     }
     
- 
+    func remoteParticipantDidDisconnect() {
+        shouldEndCall()
+    }
     
     // MARK: - Private
     
