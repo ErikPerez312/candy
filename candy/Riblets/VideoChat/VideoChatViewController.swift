@@ -39,10 +39,6 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
         videoTrack.addRenderer(localUserView)
     }
     
-    func removeLocalVideoTrack(_ videoTrack: TVIVideoTrack) {
-        videoTrack.removeRenderer(localUserView)
-    }
-    
     func showRemoteVideoTrack(_ videoTrack: TVIVideoTrack) {
         videoTrack.addRenderer(remoteUserView)
         chatTimer?.startTimer()
@@ -50,10 +46,6 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     
     func removeRemoteVideoTrack(_ videoTrack: TVIVideoTrack) {
         videoTrack.removeRenderer(remoteUserView)
-    }
-    
-    func setUpCamera() {
-        localUserView.shouldMirror = true
     }
     
     // MARK: - Private
@@ -73,8 +65,9 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
             maker.edges.equalToSuperview()
         }
         
-        let localUserView = TVIVideoView()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(localPreviewViewPressed))
+        let localUserView = TVIVideoView()
+        localUserView.shouldMirror = true
         localUserView.addGestureRecognizer(tapGesture)
         self.localUserView = localUserView
         localUserView.backgroundColor = .gray

@@ -11,14 +11,10 @@ import TwilioVideo
 
 protocol TwilioHandlerDelegate: class {
     func addRenderer(forLocalVideoTrack videoTrack: TVIVideoTrack)
-    func removeRenderer(forLocalVideoTrack videoTrack: TVIVideoTrack)
-    
     func addRenderer(forRemoteVideoTrack videoTrack: TVIVideoTrack)
     func removeRenderer(forRemoteVideoTrack videoTrack: TVIVideoTrack)
     
-    func didStartCapturingLocalCamera()
-    func disconnectedFromRoomWithError(_ error: Error?)
-    func roomConnectionFailed()
+    func errorDidOcurr(withMessage message: String, error: Error?)
     func remoteParticipantDidDisconnect()
 }
 
@@ -114,15 +110,12 @@ extension TwilioHandler: TVIRoomDelegate {
     }
     
     func room(_ room: TVIRoom, didFailToConnectWithError error: Error) {
-        print("TwilioHandlerError:", error)
-        // TODO: Should alert delegate of error
+        delegate?.errorDidOcurr(withMessage: "Failed to connect to room", error: error)
         self.room = nil
     }
     
-    func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {
-        print("TwilioHandlerError:", error as Any )
-        cleanUpRemoteParticipant()
-        delegate?.disconnectedFromRoomWithError(error)
+    func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {        cleanUpRemoteParticipant()
+        delegate?.errorDidOcurr(withMessage: "Disconnected from room", error: error)
         self.room = nil
     }
     
@@ -145,6 +138,6 @@ extension TwilioHandler: TVIRoomDelegate {
 extension TwilioHandler: TVICameraCapturerDelegate {
     
     func cameraCapturer(_ capturer: TVICameraCapturer, didStartWith source: TVICameraCaptureSource) {
-        delegate?.didStartCapturingLocalCamera()
+        // Can customize camera here
     }
 }

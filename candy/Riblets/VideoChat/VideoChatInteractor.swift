@@ -20,10 +20,8 @@ protocol VideoChatPresentable: Presentable {
     var listener: VideoChatPresentableListener? { get set }
     
     func showLocalVideoTrack(_ videoTrack: TVIVideoTrack)
-    func removeLocalVideoTrack(_ videoTrack: TVIVideoTrack)
     func showRemoteVideoTrack(_ videoTrack: TVIVideoTrack)
     func removeRemoteVideoTrack(_ videoTrack: TVIVideoTrack)
-    func setUpCamera()
 }
 
 protocol VideoChatListener: class {
@@ -58,8 +56,8 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     }
     
     // MARK: VideoChatPresentableListener
+    
     func shouldEndCall() {
-        //TODO: should disconnect and dissmiss.
         twilioHandler.disconnectFromRoom()
         listener?.callEnded()
     }
@@ -69,18 +67,12 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     func timerDidEnd() {
         print("timer did end")
         shouldEndCall()
-//        twilioHandler.disconnectFromRoom()
-//        listener?.callEnded()
     }
     
     // MARK: TwilioHandlerDelegate
     
     func addRenderer(forLocalVideoTrack videoTrack: TVIVideoTrack) {
         presenter.showLocalVideoTrack(videoTrack)
-    }
-    
-    func removeRenderer(forLocalVideoTrack videoTrack: TVIVideoTrack) {
-        presenter.removeLocalVideoTrack(videoTrack)
     }
     
     func addRenderer(forRemoteVideoTrack videoTrack: TVIVideoTrack) {
@@ -91,16 +83,9 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
         presenter.removeRemoteVideoTrack(videoTrack)
     }
     
-    func didStartCapturingLocalCamera() {
-        presenter.setUpCamera()
-    }
-    
-    func disconnectedFromRoomWithError(_ error: Error?) {
-        return
-    }
-    
-    func roomConnectionFailed() {
-        return
+    func errorDidOcurr(withMessage message: String, error: Error?) {
+        print("\n Error Message: \(message), Error: \(error)")
+        shouldEndCall()
     }
     
     func remoteParticipantDidDisconnect() {
