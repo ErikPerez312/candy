@@ -76,6 +76,7 @@ class CandyAPI {
                 handler(result, nil)
             }.resume()
         } catch {
+            // Catches possible errors thrown by buildURL(withBaseURLString:resource:)
             handler(nil, error)
         }
     }
@@ -87,7 +88,7 @@ class CandyAPI {
         }
         components.queryItems = try? resource.parameters.map { key, value in
             guard let v = value as? CustomStringConvertible else {
-                throw CandyAPIError.invalidURL(resource.path)
+                throw CandyAPIError.invalidParameter(key, value)
             }
             return URLQueryItem(name: key, value: v.description)
         }

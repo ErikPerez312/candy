@@ -8,16 +8,6 @@
 
 import Foundation
 import UIKit
-//
-//  Resource.swift
-//  video-dating
-//
-//  Created by Erik Perez on 3/26/18.
-//  Copyright © 2018 Erik Perez. All rights reserved.
-//
-
-import Foundation
-import UIKit
 
 enum HTTPRequest: String {
     case post = "POST"
@@ -102,5 +92,4 @@ enum Resource {
             return nil
         }
     }
-    
 }
