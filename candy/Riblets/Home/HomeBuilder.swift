@@ -8,7 +8,7 @@
 
 import RIBs
 
-protocol HomeDependency: Dependency {
+protocol HomeDependency: HomeDependencyVideoChat, HomeDependencyPermissions {
     // TODO: Declare the set of dependencies required by this RIB, but cannot be
     // created by this RIB.
 }
@@ -35,10 +35,12 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let viewController = HomeViewController()
         let interactor = HomeInteractor(presenter: viewController)
         let videoChatBuilder = VideoChatBuilder(dependency: component)
+        let permissionsBuilder = PermissionsBuilder(dependency: component)
         
         interactor.listener = listener
         return HomeRouter(interactor: interactor,
                           viewController: viewController,
-                          videoChatBuilder: videoChatBuilder)
+                          videoChatBuilder: videoChatBuilder,
+                          permissionsBuilder: permissionsBuilder)
     }
 }

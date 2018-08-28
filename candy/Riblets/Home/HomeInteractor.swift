@@ -14,6 +14,7 @@ protocol HomeRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
     func routeToVideoChat(withRoomName roomName: String, roomToken: String)
     func routeToHome()
+    func routeToPermissions()
 }
 
 protocol HomePresentable: Presentable {
@@ -55,16 +56,9 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func connect() {
         // TODO: perform logic to connect with user
-        guard appearanceChannel != nil else {
-            print("\n** appearanceChannel is nil")
-            return
-        }
-        guard chatChannel != nil else {
-            print("\n** chatChannel is nil")
-            return
-        }
-        appearanceChannel?.action("appear")
-        chatChannel?.action("connect")
+        router?.routeToPermissions()
+//        appearanceChannel?.action("appear")
+//        chatChannel?.action("connect")
     }
     
     func canceledConnection() {

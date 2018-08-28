@@ -8,7 +8,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, VideoChatListener {
+protocol HomeInteractable: Interactable, VideoChatListener, PermissionsListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -25,9 +25,11 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     // Constructor inject child builder protocols to allow building children.
     init(interactor: HomeInteractable,
                   viewController: HomeViewControllable,
-                  videoChatBuilder: VideoChatBuildable) {
+                  videoChatBuilder: VideoChatBuildable,
+                  permissionsBuilder: PermissionsBuildable) {
         
         self.videoChatBuilder = videoChatBuilder
+        self.permissionsBuilder = permissionsBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -37,22 +39,32 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
                                                roomName: roomName,
                                                roomToken: roomToken)
         attachChild(videoChat)
-        self.videoChat = videoChat
+        self.currentChild = videoChat
         viewController.presentModally(viewController: videoChat.viewControllable)
     }
     
+    func routeToPermissions() {
+        let permissions = permissionsBuilder.build(withListener: interactor)
+        attachChild(permissions)
+        viewController.presentModally(viewController: permissions.viewControllable)
+    }
+    
     func routeToHome() {
-        if let videoChat = videoChat {
-            detachChild(videoChat)
-            viewController.dismissModally(viewController: videoChat.viewControllable)
-            self.videoChat = nil
-        }
+        detachCurrentChild()
     }
     
     // MARK: Private
     
     private let videoChatBuilder: VideoChatBuildable
+    private let permissionsBuilder: PermissionsBuildable
     
-    private var videoChat: ViewableRouting?
+    private var currentChild: ViewableRouting?
+    
+    private func detachCurrentChild() {
+        guard let currentChild = currentChild else { return }
+        detachChild(currentChild)
+        self.currentChild = nil
+        viewController.dismissModally(viewController: currentChild.viewControllable)
+    }
     
 }
