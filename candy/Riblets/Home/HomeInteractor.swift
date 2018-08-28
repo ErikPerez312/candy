@@ -55,7 +55,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     // MARK: HomePresentableListener
     
     func connect() {
-        // TODO: perform logic to connect with user
+        // TODO: add check for authorized permissions before attempting to connect.
         router?.routeToPermissions()
 //        appearanceChannel?.action("appear")
 //        chatChannel?.action("connect")
@@ -73,6 +73,12 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     }
     
     func callEnded() {
+        router?.routeToHome()
+    }
+    
+    // MARK: PermissionsListener
+    
+    func shouldRouteToHome() {
         router?.routeToHome()
     }
     

@@ -46,6 +46,7 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     func routeToPermissions() {
         let permissions = permissionsBuilder.build(withListener: interactor)
         attachChild(permissions)
+        self.currentChild = permissions
         viewController.presentModally(viewController: permissions.viewControllable)
     }
     

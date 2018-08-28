@@ -312,8 +312,8 @@
 			isa = PBXGroup;
 			children = (
 				8679ED6121346A2D003125D6 /* PermissionsRouter.swift */,
-				8679ED6221346A2D003125D6 /* PermissionsViewController.swift */,
 				8679ED6321346A2D003125D6 /* PermissionsBuilder.swift */,
+				8679ED6221346A2D003125D6 /* PermissionsViewController.swift */,
 				8679ED6421346A2D003125D6 /* PermissionsInteractor.swift */,
 			);
 			path = Permissions;

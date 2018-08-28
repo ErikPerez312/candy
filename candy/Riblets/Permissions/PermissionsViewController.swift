@@ -16,8 +16,8 @@ protocol PermissionsPresentableListener: class {
     // Declare properties and methods that the view controller can invoke to perform
     // business logic, such as signIn(). This protocol is implemented by the corresponding
     // interactor class.
-    func requestCameraAccess()
-    func requestMicrophoneAccess()
+    func requestAccess(forMediaType mediaType: AVMediaType)
+    func didPressCloseButton()
 }
 
 final class PermissionsViewController: UIViewController, PermissionsPresentable, PermissionsViewControllable {
@@ -40,7 +40,35 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
         fatalError("Method not supported")
     }
     
+    // MARK: PermissionsPresentable
+    
+    func presentAlert(withTitle title: String, message: String?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func presentDeniedPermissionsAlert(withTitle title: String, message: String?, handler: ((UIAlertAction) -> Void)?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: handler)
+        let laterAction = UIAlertAction(title: "Later", style: .default, handler: nil)
+        alertController.addAction(settingsAction)
+        alertController.addAction(laterAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func updateUIForAuthorizationStatus(forCamera camera: AVAuthorizationStatus, microphone: AVAuthorizationStatus) {
+        cameraAccessButton?.isEnabled = !(camera == .authorized)
+        microphoneAccessButton?.isEnabled = !(microphone == .authorized)
+        cameraAccessButton?.backgroundColor = (camera == .authorized) ? .candyBackgroundBlue : .white
+        microphoneAccessButton?.backgroundColor = (microphone == .authorized) ? .candyBackgroundBlue : .white
+    }
+    
     // MARK: - Private
+    
+    private var cameraAccessButton: UIButton?
+    private var microphoneAccessButton: UIButton?
     
     private let bag = DisposeBag()
     private let cameraAccessStatus: AVAuthorizationStatus
@@ -77,6 +105,7 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
         }
         
         let closeButton = UIButton()
+        closeButton.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
         closeButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Close"), for: .normal)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
@@ -94,7 +123,6 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
             button.layer.cornerRadius = 5.0
             button.layer.borderWidth = 2.0
             button.layer.borderColor = UIColor.candyBackgroundBlue.cgColor
-            
             button.titleLabel?.font = UIFont(name: "Avenir-black", size: 14)
             button.setTitle("ALLOW \(title)", for: .normal)
             button.setTitle("\(title) ALLOWED", for: .disabled)
@@ -102,33 +130,35 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
             button.setTitleColor(.white, for: .disabled)
             return button
         }
-        
         let cameraButton = buttonMaker("CAMERA")
-        cameraButton.rx.tap
-            .subscribe(onNext: {
-                self.listener?.requestCameraAccess()
-            })
-            .disposed(by: bag)
+        self.cameraAccessButton = cameraButton
+        cameraButton.addTarget(self, action: #selector(cameraButtonPressed), for: .touchUpInside)
         let microphoneButton = buttonMaker("MICROPHONE")
-        microphoneButton.rx.tap
-            .subscribe(onNext: {
-                self.listener?.requestMicrophoneAccess()
-            })
-            .disposed(by: bag)
+        self.microphoneAccessButton = microphoneButton
+        microphoneButton.addTarget(self, action: #selector(microphoneButtonPressed), for: .touchUpInside)
         
+        updateUIForAuthorizationStatus(forCamera: cameraAccessStatus, microphone: microphoneAccessStatus)
         view.addSubview(cameraButton)
-        view.addSubview(microphoneButton
-        )
+        view.addSubview(microphoneButton)
         cameraButton.snp.makeConstraints { maker in
             maker.height.equalTo(30)
             maker.leading.trailing.equalTo(card).inset(50)
             maker.top.equalTo(label.snp.bottom).offset(30)
         }
-        
         microphoneButton.snp.makeConstraints { maker in
             maker.height.leading.trailing.equalTo(cameraButton)
             maker.top.equalTo(cameraButton.snp.bottom).offset(15)
         }
+    }
+    
+    @objc private func closeButtonPressed() {
+        listener?.didPressCloseButton()
+    }
+    @objc private func cameraButtonPressed() {
+        listener?.requestAccess(forMediaType: .video)
+    }
+    @objc private func microphoneButtonPressed() {
+        listener?.requestAccess(forMediaType: .audio)
     }
 }
 
