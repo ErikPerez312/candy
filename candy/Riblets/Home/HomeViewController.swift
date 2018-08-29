@@ -73,8 +73,13 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         appearanceView?.updateOnlineUserCountLabel(with: count)
     }
     
-    func updateActivityCardStatus(isActiveDay: Bool) {
-        // TODO: Complete implemenation
+    func updateActivityCard(withStatus status: ActivityCardStatus) {
+        guard let connectButton = self.connectButton else { return }
+        connectButton.isHidden = (status == .inactiveDay) ? true : false
+        connectButton.isEnabled = status == .homeDefault
+        cancelButton?.isHidden = connectButton.isEnabled
+        cancelButton?.isEnabled = !connectButton.isEnabled
+        activityCard?.updateUIForStatus(status)
     }
     
     // MARK: - Private
@@ -82,6 +87,8 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     private let bag = DisposeBag()
     private var activityCard: HomeActivityCard?
     private var appearanceView: UserAppearanceView?
+    private var connectButton: UIButton?
+    private var cancelButton: UIButton?
     
     private func buildMainViews() -> (appearanceView: UserAppearanceView, activityCard: HomeActivityCard) {
         let appearanceView = UserAppearanceView(frame: .zero)
@@ -113,16 +120,12 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
                               activityCard: HomeActivityCard) {
         
         let connectButton = UIButton(frame: .zero)
+        self.connectButton = connectButton
         connectButton.backgroundColor = .candyBackgroundBlue
         connectButton.layer.cornerRadius = 6
         connectButton.setTitle("Connect", for: .normal)
         connectButton.setTitle("Connecting", for: .disabled)
-        connectButton.rx.tap
-            .subscribe(onNext:{ [weak self] in
-                self?.listener?.connect()
-            })
-            .disposed(by: bag)
-        
+        connectButton.addTarget(self, action: #selector(connectButtonPressed), for: .touchUpInside)
         view.addSubview(connectButton)
         connectButton.snp.makeConstraints { maker in
             maker.height.equalTo(45).priority(1000)
@@ -131,13 +134,10 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         }
         
         let cancelButton = UIButton(frame: .zero)
+        self.cancelButton = cancelButton
         cancelButton.isHidden = connectButton.isEnabled
         cancelButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Cancel"), for: .normal)
-        cancelButton.rx.tap
-            .subscribe(onNext:{ [weak self] in
-                self?.listener?.canceledConnection()
-            })
-            .disposed(by: bag)
+        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { maker in
             maker.height.equalTo(20).priority(1000)
@@ -145,5 +145,13 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
             maker.bottom.lessThanOrEqualToSuperview().inset(25).priority(900)
             maker.centerX.equalToSuperview()
         }
+    }
+    
+    @objc private func connectButtonPressed() {
+        listener?.connect()
+    }
+    
+    @objc private func cancelButtonPressed() {
+        listener?.canceledConnection()
     }
 }

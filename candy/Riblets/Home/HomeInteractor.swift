@@ -22,7 +22,7 @@ protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
     
     func presentAppearanceCount(_ count: Int)
-    func updateActivityCardStatus(isActiveDay: Bool)
+    func updateActivityCard(withStatus status: ActivityCardStatus)
 }
 
 protocol HomeListener: class {
@@ -55,17 +55,19 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             router?.routeToPermissions()
             return
         }
+        presenter.updateActivityCard(withStatus: .connecting)
         appearanceChannel?.action("appear")
         chatChannel?.action("connect")
     }
     
-    func canceledConnection() {
-        // TODO: Implement canceled attempt to chat logic.
-        print("canceled connection")
+    @objc func canceledConnection() {
+        appearanceChannel?.action("away")
+        presenter.updateActivityCard(withStatus: .homeDefault)
     }
     
     func viewWillAppear() {
         addActiveApplicationObservers()
+//        presenter.updateActivityCard(withStatus: isActiveDay ? .homeDefault : .inactiveDay)
     }
     func viewWillDisappear() {
         removeActiveApplicationObservers()
@@ -90,7 +92,8 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     private let isRequiredMediaAccessGranted: Bool
     
     private var isActiveDay: Bool {
-        // TODO: Refactor: This should be done in backend
+        // TODO: Refactor - This should be done in backend to
+        // prevent manual datetime change within settings.
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
@@ -176,7 +179,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     @objc private func applicationWillResignActive() {
         client?.disconnect()
-        presenter.updateActivityCardStatus(isActiveDay: isActiveDay)
     }
     
     @objc private func applicationWillBecomeActive() {
