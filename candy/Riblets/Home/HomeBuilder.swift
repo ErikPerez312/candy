@@ -7,15 +7,26 @@
 //
 
 import RIBs
+import AVFoundation
 
 protocol HomeDependency: HomeDependencyVideoChat, HomeDependencyPermissions {
-    // TODO: Declare the set of dependencies required by this RIB, but cannot be
+    // Declare the set of dependencies required by this RIB, but cannot be
     // created by this RIB.
 }
 
 final class HomeComponent: Component<HomeDependency> {
-
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+    // Declare 'fileprivate' dependencies that are only used by this RIB.
+    
+    var cameraAccessStatus: AVAuthorizationStatus {
+        return AVCaptureDevice.authorizationStatus(for: .video)
+    }
+    var microphoneAccessStatus: AVAuthorizationStatus {
+        return AVCaptureDevice.authorizationStatus(for: .audio)
+    }
+    
+    fileprivate var isRequiredMediaAccessGranted: Bool {
+        return cameraAccessStatus == .authorized && microphoneAccessStatus == .authorized
+    }
 }
 
 // MARK: - Builder
@@ -33,7 +44,8 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
     func build(withListener listener: HomeListener) -> HomeRouting {
         let component = HomeComponent(dependency: dependency)
         let viewController = HomeViewController()
-        let interactor = HomeInteractor(presenter: viewController)
+        let interactor = HomeInteractor(presenter: viewController,
+                                        isRequiredMediaAccessGranted: component.isRequiredMediaAccessGranted)
         let videoChatBuilder = VideoChatBuilder(dependency: component)
         let permissionsBuilder = PermissionsBuilder(dependency: component)
         

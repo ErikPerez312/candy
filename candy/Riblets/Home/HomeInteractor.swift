@@ -36,7 +36,8 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
 
     // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: HomePresentable) {
+    init(presenter: HomePresentable, isRequiredMediaAccessGranted: Bool) {
+        self.isRequiredMediaAccessGranted = isRequiredMediaAccessGranted
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -46,23 +47,21 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         // Implement business logic here.
         setUpClient()
     }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // Pause any business logic.
-    }
     
     // MARK: HomePresentableListener
     
     func connect() {
-        // TODO: add check for authorized permissions before attempting to connect.
-        router?.routeToPermissions()
-//        appearanceChannel?.action("appear")
-//        chatChannel?.action("connect")
+        guard isRequiredMediaAccessGranted else {
+            router?.routeToPermissions()
+            return
+        }
+        appearanceChannel?.action("appear")
+        chatChannel?.action("connect")
     }
     
     func canceledConnection() {
-        print("canceled connce")
+        // TODO: Implement canceled attempt to chat logic.
+        print("canceled connection")
     }
     
     func viewWillAppear() {
@@ -88,8 +87,10 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     private var appearanceChannel: Channel?
     private var chatChannel: Channel?
     
+    private let isRequiredMediaAccessGranted: Bool
+    
     private var isActiveDay: Bool {
-        // TODO: This should be done in backend
+        // TODO: Refactor: This should be done in backend
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"

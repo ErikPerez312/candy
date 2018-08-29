@@ -18,11 +18,11 @@ protocol HomeDependencyPermissions: Dependency {
 
 extension HomeComponent: PermissionsDependency {
     // Implement properties to provide for Permissions scope.
-    var cameraAccessStatus: AVAuthorizationStatus {
-        return AVCaptureDevice.authorizationStatus(for: .video)
-    }
-    
-    var microphoneAccessStatus: AVAuthorizationStatus {
-        return AVCaptureDevice.authorizationStatus(for: .audio)
-    }
+//    var cameraAccessStatus: AVAuthorizationStatus {
+//        return AVCaptureDevice.authorizationStatus(for: .video)
+//    }
+//    
+//    var microphoneAccessStatus: AVAuthorizationStatus {
+//        return AVCaptureDevice.authorizationStatus(for: .audio)
+//    }
 }
