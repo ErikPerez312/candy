@@ -39,7 +39,6 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
     override func didBecomeActive() {
         super.didBecomeActive()
         //  Implement business logic here.
-        print("\n* Running didBecomeActive(:) on RootInteractor")
         routeToInitialRib()
     }
 
@@ -49,24 +48,20 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
     }
     
     func didLogin() {
-        print("should route to logged in ")
         router?.routeToHome()
     }
     
     func didRegister() {
-        print("\n* did Register in root Interactor ")
         router?.routeToHome()
     }
     
     // MARK: - Private
     
     private func routeToInitialRib() {
-        guard let _ = KeychainHelper.fetch(.authToken) else {
-            print("\n* Should route to LoggedOut")
+        guard UserDefaults.standard.bool(forKey: "isLoggedIn") else {
             router?.routeToLoggedOut()
             return
         }
-        print("\n* Should route to LoggedIn")
         router?.routeToHome()
     }
 }

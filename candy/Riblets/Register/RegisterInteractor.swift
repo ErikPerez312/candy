@@ -187,6 +187,7 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
             .appendingPathComponent("user.plist")
         KeychainHelper.save(value: user.token, as: .authToken)
         KeychainHelper.save(value: "\(user.id)", as: .userID)
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
         user.dictionary.write(to: userFileURL, atomically: true)
     }
 }

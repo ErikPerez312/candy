@@ -105,6 +105,7 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
     
     private func cacheUser(_ user: User) {
         KeychainHelper.save(value: user.token, as: .authToken)
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
         let userFileURL = cachedFileURL("user.plist")
         user.dictionary.write(to: userFileURL, atomically: true)
     }
