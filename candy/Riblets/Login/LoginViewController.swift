@@ -27,27 +27,19 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
     
     override func viewDidLoad() {
         view.backgroundColor = .candyBackgroundPink
-        let imageView = buildImageView()
-        let textFields = buildTextFields(withImageView: imageView)
+        let logoLabel = buildLogoViews()
+        let textFields = buildTextFields(withLogoLabel: logoLabel)
         let loginButton = buildButtons(withPhoneNumberField: textFields.phoneNumber,
                                          passwordField: textFields.password)
         buildActivityIndicator(withButton: loginButton)
     }
     
-    deinit {
-        print("\n* deinitialized Login ViewController*\n")
-    }
-    
     func present(viewController: ViewControllable, animated: Bool) {
-        self.present(viewController.uiviewController, animated: animated) {
-            print("\n* did present alert controller *\n")
-        }
+        self.present(viewController.uiviewController, animated: animated, completion: nil)
     }
     
     func dismiss(viewController: ViewControllable, animated: Bool) {
-        self.dismiss(animated: animated) {
-            print("\n* did dismiss alert controller *\n")
-        }
+        self.dismiss(animated: animated, completion: nil)
     }
     
     func presentAlert(withTitle title: String, description: String?) {
@@ -68,15 +60,39 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
         loginButton?.isEnabled = true
     }
     
+    // MARK: TextfieldDelegate
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard !didAnimate else { return }
+        didAnimate = true
+        UIView.animate(withDuration: 0.4) {
+            self.logoImageView?.alpha = 0.0
+        }
+        UIView.animate(withDuration: 1.0) {
+            self.logoLabel?.snp.remakeConstraints { maker in
+                maker.top.equalToSuperview().offset(60)
+                maker.leading.trailing.equalToSuperview()
+            }
+            self.logoLabel?.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     // MARK: - Private
     
     private let bag = DisposeBag()
+    
+    private var didAnimate = false
+    
     private var activityIndicator: UIActivityIndicatorView?
+    private var logoLabel: UILabel?
+    private var logoImageView: UIImageView?
     private var loginButton: UIButton?
     
-    private func buildImageView() -> UIImageView {
+    private func buildLogoViews() -> UILabel {
         let logoImage = UIImage(named: "candy-logo") ?? nil
         let imageView = UIImageView(frame: .zero)
+        self.logoImageView = imageView
         imageView.image = logoImage
         view.addSubview(imageView)
         
@@ -86,12 +102,25 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
             maker.centerX.equalTo(view.snp.centerX)
             maker.width.equalTo(imageView.snp.height).multipliedBy(1/1).priority(800)
         }
-        return imageView
+        
+        let logoLabel = UILabel()
+        self.logoLabel = logoLabel
+        logoLabel.font = UIFont(name: "Avenir-black", size: 35)
+        logoLabel.textColor = .candyBackgroundBlue
+        logoLabel.text = "candy"
+        logoLabel.textAlignment = .center
+        view.addSubview(logoLabel)
+        logoLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(imageView.snp.bottom).inset(10)
+            maker.leading.trailing.equalToSuperview()
+        }
+        return logoLabel
     }
     
-    private func buildTextFields(withImageView imageView: UIImageView) -> (phoneNumber: UITextField, password: UITextField){
+    private func buildTextFields(withLogoLabel logoLabel: UILabel) -> (phoneNumber: UITextField, password: UITextField){
         let textFieldMaker: (String?) -> UITextField = { placeHolder in
             let textField = KaedeTextField(frame: .zero)
+            textField.delegate = self
             textField.backgroundColor = .white
             textField.borderStyle = .roundedRect
             textField.font = UIFont(name: "Avenir-Heavy", size: 15)
@@ -110,7 +139,7 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
         view.addSubview(passwordTextField)
         
         phoneNumberTextField.snp.makeConstraints { maker in
-            maker.top.equalTo(imageView.snp.bottom).offset(20)
+            maker.top.equalTo(logoLabel.snp.bottom).offset(20)
             maker.leading.trailing.equalTo(view).inset(32)
             maker.height.equalTo(45)
         }

@@ -114,7 +114,8 @@ extension TwilioHandler: TVIRoomDelegate {
         self.room = nil
     }
     
-    func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {        cleanUpRemoteParticipant()
+    func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {
+        cleanUpRemoteParticipant()
         delegate?.errorDidOcurr(withMessage: "Disconnected from room", error: error)
         self.room = nil
     }

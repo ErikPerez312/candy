@@ -13,7 +13,7 @@ protocol LoginRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
-protocol LoginPresentable: Presentable {
+protocol LoginPresentable: Presentable, UITextFieldDelegate {
     //  Declare methods the interactor can invoke the presenter to present data.
     var listener: LoginPresentableListener? { get set }
     
