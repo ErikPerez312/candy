@@ -24,8 +24,4 @@ final class RegisterRouter: ViewableRouter<RegisterInteractable, RegisterViewCon
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
-    
-    override func didLoad() {
-        print("\n* didLoad Register*\n")
-    }
 }

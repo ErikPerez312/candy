@@ -33,9 +33,7 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
         interactor.router = self
     }
     
-    override func didLoad() {
-        print("\n* didLoad Root *\n")
-    }
+    // MARK: RootRouting
     
     func routeToHome() {
         if let loggedOut = self.loggedOut {

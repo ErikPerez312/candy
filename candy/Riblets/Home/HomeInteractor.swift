@@ -67,7 +67,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func viewWillAppear() {
         addActiveApplicationObservers()
-//        presenter.updateActivityCard(withStatus: isActiveDay ? .homeDefault : .inactiveDay)
+        presenter.updateActivityCard(withStatus: isActiveDay ? .homeDefault : .inactiveDay)
     }
     func viewWillDisappear() {
         removeActiveApplicationObservers()

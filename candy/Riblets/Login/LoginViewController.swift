@@ -34,13 +34,7 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
         buildActivityIndicator(withButton: loginButton)
     }
     
-    func present(viewController: ViewControllable, animated: Bool) {
-        self.present(viewController.uiviewController, animated: animated, completion: nil)
-    }
-    
-    func dismiss(viewController: ViewControllable, animated: Bool) {
-        self.dismiss(animated: animated, completion: nil)
-    }
+    // MARK: LoginPresentable
     
     func presentAlert(withTitle title: String, description: String?) {
         let alertController = UIAlertController(title: title, message: description, preferredStyle: .alert)
@@ -166,23 +160,23 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
             })
             .disposed(by: bag)
         
-        let signUpButton = UIButton(frame: .zero)
-        signUpButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "New user? Register here"), for: .normal)
-        signUpButton.rx.tap
+        let registerButton = UIButton(frame: .zero)
+        registerButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "New user? Register here"), for: .normal)
+        registerButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.listener?.register()
             })
             .disposed(by: bag)
         
         view.addSubview(loginButton)
-        view.addSubview(signUpButton)
+        view.addSubview(registerButton)
         
         loginButton.snp.makeConstraints { maker in
             maker.top.equalTo(passwordField.snp.bottom).offset(20)
             maker.leading.trailing.equalTo(phoneNumberField)
             maker.height.equalTo(phoneNumberField)
         }
-        signUpButton.snp.makeConstraints { maker in
+        registerButton.snp.makeConstraints { maker in
             maker.top.equalTo(loginButton.snp.bottom).offset(30)
             maker.leading.trailing.equalTo(loginButton).inset(20)
             maker.height.equalTo(20).priority(1000)

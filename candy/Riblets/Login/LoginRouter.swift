@@ -24,12 +24,4 @@ final class LoginRouter: ViewableRouter<LoginInteractable, LoginViewControllable
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
-    
-    override func didLoad() {
-        print("\n* didLoad Login*\n")
-    }
-    
-    deinit {
-        print("\n* deinitialized Login*\n")
-    }
 }

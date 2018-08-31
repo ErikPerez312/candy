@@ -103,7 +103,6 @@ extension TwilioHandler: TVIRoomDelegate {
     
     func didConnect(to room: TVIRoom) {
         // user joined participants room
-        print("\n *  did connect to room")
         guard room.participants.count > 0 else { return }
         remoteUser = room.participants[0]
         remoteUser?.delegate = self
@@ -122,7 +121,6 @@ extension TwilioHandler: TVIRoomDelegate {
     
     func room(_ room: TVIRoom, participantDidConnect participant: TVIParticipant) {
         guard remoteUser == nil else { return }
-        print("\n * participant did connect")
         remoteUser = participant
         remoteUser?.delegate = self
     }

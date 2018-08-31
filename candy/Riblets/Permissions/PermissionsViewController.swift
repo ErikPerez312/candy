@@ -161,4 +161,3 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
         listener?.requestAccess(forMediaType: .audio)
     }
 }
-

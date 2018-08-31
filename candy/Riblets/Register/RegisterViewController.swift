@@ -28,7 +28,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        print("\n* initialized RegisterVC")
         // When instantiating these components in viewDidLoad(:), it causes viewDidLoad(:) to be called
         // after the interactors didBecomeActive(:). - Figure out why
         let cancelButton = buildCancelButton()
@@ -44,7 +43,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     }
     
     override func viewDidLoad() {
-        print("\n* viewDidLoad(:) called for RegisterVC")
         view.backgroundColor = .candyBackgroundPink
     }
     
@@ -52,6 +50,8 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         super.viewDidAppear(animated)
         textField?.becomeFirstResponder()
     }
+    
+    // MARK: RegisterPresentable
     
     func presentAlert(withTitle title: String, description: String?, handler: ((UIAlertAction) -> Void)?) {
         let alertController = UIAlertController(title: title, message: description, preferredStyle: .alert)

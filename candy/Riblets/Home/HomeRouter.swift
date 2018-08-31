@@ -34,6 +34,8 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
         interactor.router = self
     }
     
+    // MARK: HomeRouting
+    
     func routeToVideoChat(withRoomName roomName: String, roomToken: String) {
         let videoChat = videoChatBuilder.build(withListener: interactor,
                                                roomName: roomName,
@@ -67,5 +69,4 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
         self.currentChild = nil
         viewController.dismissModally(viewController: currentChild.viewControllable)
     }
-    
 }

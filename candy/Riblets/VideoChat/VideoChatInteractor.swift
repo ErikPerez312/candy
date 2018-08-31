@@ -65,7 +65,6 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     // MARK: ChatTimerDelegate
     
     func timerDidEnd() {
-        print("timer did end")
         shouldEndCall()
     }
     
@@ -97,5 +96,4 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     private var roomName: String
     private var roomToken: String
     private var twilioHandler: TwilioHandler
-    
 }
