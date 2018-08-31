@@ -44,16 +44,6 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
         twilioHandler.delegate = self
         presenter.listener = self
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // Pause any business logic.
-    }
     
     // MARK: VideoChatPresentableListener
     

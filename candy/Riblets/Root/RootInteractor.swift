@@ -41,11 +41,6 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
         //  Implement business logic here.
         routeToInitialRib()
     }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // Pause any business logic.
-    }
     
     func didLogin() {
         router?.routeToHome()
