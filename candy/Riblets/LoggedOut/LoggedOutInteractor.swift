@@ -31,11 +31,6 @@ final class LoggedOutInteractor: Interactor, LoggedOutInteractable {
     // in constructor.
     override init() {}
 
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // Implement business logic here.
-    }
-
     override func willResignActive() {
         // Pause any business logic.
         super.willResignActive()

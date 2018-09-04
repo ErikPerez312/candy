@@ -32,6 +32,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var launchRouter: LaunchRouting?
 
 }
-
-
-

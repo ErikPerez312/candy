@@ -38,6 +38,8 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
         fatalError("Method not supported")
     }
     
+    // MARK: VideoChatPresentable
+    
     func showLocalVideoTrack(_ videoTrack: TVIVideoTrack) {
         videoTrack.addRenderer(localUserView)
     }

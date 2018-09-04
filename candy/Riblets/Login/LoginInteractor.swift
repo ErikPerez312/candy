@@ -39,16 +39,6 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
         super.init(presenter: presenter)
         presenter.listener = self
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // Pause any business logic.
-    }
     
     func login(withPhoneNumber phoneNumber: String?, password: String?) {
         print("\n-Attempted Login with phone: \(phoneNumber ?? "none") and pass: \(password ?? "none") ")

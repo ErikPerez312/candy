@@ -9,12 +9,11 @@
 import RIBs
 
 /// The dependencies needed from the parent scope of Home to provide for the VideoChat scope.
-// TODO: Update HomeDependency protocol to inherit this protocol.
 protocol HomeDependencyVideoChat: Dependency {
-    // TODO: Declare dependencies needed from the parent scope of Home to provide dependencies
+    // Declare dependencies needed from the parent scope of Home to provide dependencies
     // for the VideoChat scope.
 }
 
 extension HomeComponent: VideoChatDependency {
-    // TODO: Implement properties to provide for VideoChat scope.
+    // Implement properties to provide for VideoChat scope.
 }

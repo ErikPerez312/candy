@@ -39,20 +39,14 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
     override init(presenter: RegisterPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
-        print("\n* did init register interactor")
     }
 
     override func didBecomeActive() {
         super.didBecomeActive()
         presenter.present(statement: statements[currentStatementIndex], progress: 0)
-        print("\n* did activate register interactor")
     }
-
-    override func willResignActive() {
-        super.willResignActive()
-        //  Pause any business logic.
-        print("\n* did activate register interactor")
-    }
+    
+    // MARK: RegisterPresentableListener
     
     func verifyUserEntry(forStatement statement: Statement?, entry: String?) {
         guard let statement = statement else {

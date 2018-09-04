@@ -19,8 +19,10 @@ final class RootViewController: UIViewController, RootPresentable, RootViewContr
     weak var listener: RootPresentableListener?
     
     override func viewDidLoad() {
-        view.backgroundColor = .red
+        view.backgroundColor = .candyBackgroundPink
     }
+    
+    // MARK: RootViewControllable
     
     func present(viewController: ViewControllable, animated: Bool) {
         present(viewController.uiviewController, animated: animated, completion: nil)
@@ -34,4 +36,3 @@ final class RootViewController: UIViewController, RootPresentable, RootViewContr
 extension RootViewController: LoggedOutViewControllable {
     // Necessary conformance due to LoggedOut Rib's lack of a view.
 }
-

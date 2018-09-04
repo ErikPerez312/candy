@@ -44,16 +44,6 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
         twilioHandler.delegate = self
         presenter.listener = self
     }
-
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // Implement business logic here.
-    }
-
-    override func willResignActive() {
-        super.willResignActive()
-        // Pause any business logic.
-    }
     
     // MARK: VideoChatPresentableListener
     
@@ -65,7 +55,6 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     // MARK: ChatTimerDelegate
     
     func timerDidEnd() {
-        print("timer did end")
         shouldEndCall()
     }
     
@@ -97,5 +86,4 @@ final class VideoChatInteractor: PresentableInteractor<VideoChatPresentable>, Vi
     private var roomName: String
     private var roomToken: String
     private var twilioHandler: TwilioHandler
-    
 }
