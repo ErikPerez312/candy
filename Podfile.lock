@@ -1,0 +1,45 @@
+PODS:
+  - ActionCableClient (0.2.3):
+    - Starscream (~> 2.0.0)
+  - KeychainSwift (11.0.0)
+  - RIBs (0.9.1):
+    - RxSwift (~> 4.0)
+  - RxCocoa (4.2.0):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.2.0)
+  - SnapKit (4.0.0)
+  - Starscream (2.0.4)
+  - TwilioVideo (1.4.0)
+
+DEPENDENCIES:
+  - ActionCableClient
+  - KeychainSwift (~> 11.0)
+  - RIBs (~> 0.9)
+  - RxCocoa (~> 4.0)
+  - SnapKit (~> 4.0.0)
+  - TwilioVideo (~> 1.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ActionCableClient
+    - KeychainSwift
+    - RIBs
+    - RxCocoa
+    - RxSwift
+    - SnapKit
+    - Starscream
+    - TwilioVideo
+
+SPEC CHECKSUMS:
+  ActionCableClient: c8a466410d31bfa14e7a9c209b539c1e2d026a5f
+  KeychainSwift: bea6bd9f98af7b8d7ca4aa79fe105c00fab532db
+  RIBs: 879184fbca567425c488d6b3d14a9c5abfbf9d47
+  RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
+  RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Starscream: df5974ee928b157c8eda8af8de7c620276b7dfcc
+  TwilioVideo: d2c6c2d0e3aa058ef10e9639c1f864129205dfca
+
+PODFILE CHECKSUM: 64bab38602f6510b65e51cddcf8a501fe99f4d99
+
+COCOAPODS: 1.5.3

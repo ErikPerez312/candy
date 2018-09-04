@@ -22,8 +22,10 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Use your camera to video chat with people</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Use your microphone to speak with people during a video chat</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
