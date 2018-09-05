@@ -48,6 +48,7 @@
 		8642B1522115452400C2D13B /* KaedeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B1512115452400C2D13B /* KaedeTextField.swift */; };
 		8642B155211545D800C2D13B /* TextFieldEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B154211545D800C2D13B /* TextFieldEffects.swift */; };
 		8642B157211563BD00C2D13B /* CandyComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8642B156211563BC00C2D13B /* CandyComponents.swift */; };
+		8648CB4921406415001C150A /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8648CB4821406415001C150A /* Questions.swift */; };
 		8657544C211BD0FF00AF1F9B /* CandyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544B211BD0FF00AF1F9B /* CandyAPI.swift */; };
 		8657544E211BD16700AF1F9B /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544D211BD16700AF1F9B /* Resource.swift */; };
 		86575450211BD1AE00AF1F9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544F211BD1AE00AF1F9B /* User.swift */; };
@@ -112,6 +113,7 @@
 		8642B1512115452400C2D13B /* KaedeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaedeTextField.swift; sourceTree = "<group>"; };
 		8642B154211545D800C2D13B /* TextFieldEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldEffects.swift; sourceTree = "<group>"; };
 		8642B156211563BC00C2D13B /* CandyComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyComponents.swift; sourceTree = "<group>"; };
+		8648CB4821406415001C150A /* Questions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
 		8657544B211BD0FF00AF1F9B /* CandyAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyAPI.swift; sourceTree = "<group>"; };
 		8657544D211BD16700AF1F9B /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		8657544F211BD1AE00AF1F9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				86D79CD8211CD9F700765C30 /* UserError.swift */,
 				8687CA6A212229C9006B5C41 /* Statement.swift */,
 				8662337B212A5F0F00425F92 /* TwilioHandler.swift */,
+				8648CB4821406415001C150A /* Questions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				8616302B2118C93600B3EF33 /* RegisterInteractor.swift in Sources */,
 				8616304A2118EE1500B3EF33 /* BulletPoint.swift in Sources */,
 				8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */,
+				8648CB4921406415001C150A /* Questions.swift in Sources */,
 				861630412118D83000B3EF33 /* UINavigationController+RIBs.swift in Sources */,
 				86D79CDB211CF33A00765C30 /* String+Extensions.swift in Sources */,
 				861630432118DA8100B3EF33 /* RootComponent+Home.swift in Sources */,
