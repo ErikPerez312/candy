@@ -70,7 +70,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     // MARK: HomePresentable
     
     func presentAppearanceCount(_ count: Int) {
-        appearanceView?.updateOnlineUserCountLabel(with: count)
+        appearanceView?.updateUserCountLabel(withCount: count)
     }
     
     func updateActivityCard(withStatus status: ActivityCardStatus) {
