@@ -9,32 +9,23 @@
 import Foundation
 import UIKit
 
-// TODO: Refactor
-
 protocol ChatTimerDelegate: class {
     func timerDidEnd()
 }
 
 class ChatTimer: UIView {
-    // MARK: - Properties
-    weak var delegate: ChatTimerDelegate?
-    private var timer: Timer!
-    private var totalTime = 120
-    private var label: UILabel!
     
-    // MARK: - Methods
+    weak var delegate: ChatTimerDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpView()
-        setUpLabel()
-        addConstraintsToLabel()
+        buildLabel()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setUpView()
-        setUpLabel()
-        addConstraintsToLabel()
+        fatalError("Message not supported")
     }
     
     func startTimer() {
@@ -45,17 +36,23 @@ class ChatTimer: UIView {
                                      repeats: true)
     }
     
-    func endTimer() {
-        timer.invalidate()
-        delegate?.timerDidEnd()
-    }
+    // MARK: - Private
+    
+    private var timer: Timer!
+    private var totalTime = 120
+    private var timerLabel: UILabel?
     
     @objc private func updateTime() {
-        label.text = "\(totalTime)"
+        timerLabel?.text = "\(totalTime)"
         if totalTime == 0 {
             endTimer()
         }
         totalTime -= 1
+    }
+    
+    private func endTimer() {
+        timer.invalidate()
+        delegate?.timerDidEnd()
     }
     
     private func setUpView() {
@@ -63,21 +60,18 @@ class ChatTimer: UIView {
         backgroundColor = .candyBackgroundBlue
     }
     
-    private func setUpLabel() {
-        label = UILabel(frame: CGRect.zero)
-        label.font = UIFont.init(name: "Avenir-Black", size: 36)
+    private func buildLabel() {
+        let label = UILabel()
+        self.timerLabel = label
+        label.font = UIFont(name: "Avenir-Black", size: 36)
         label.textColor = .white
         label.textAlignment = .center
         label.numberOfLines = 1
-        label.text = "120"
+        label.text = "\(totalTime)"
         self.addSubview(label)
-    }
-    
-    private func addConstraintsToLabel() {
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        label.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        
+        label.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
     }
 }
