@@ -34,8 +34,6 @@
 		861630412118D83000B3EF33 /* UINavigationController+RIBs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630402118D83000B3EF33 /* UINavigationController+RIBs.swift */; };
 		861630432118DA8100B3EF33 /* RootComponent+Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630422118DA8100B3EF33 /* RootComponent+Home.swift */; };
 		861630462118EE0100B3EF33 /* HomeActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630452118EE0100B3EF33 /* HomeActivityCard.swift */; };
-		861630482118EE0D00B3EF33 /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630472118EE0D00B3EF33 /* ActivityCard.swift */; };
-		8616304A2118EE1500B3EF33 /* BulletPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630492118EE1500B3EF33 /* BulletPoint.swift */; };
 		8616304C2118EE5B00B3EF33 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616304B2118EE5B00B3EF33 /* ActivityIndicatorView.swift */; };
 		861630572118F61A00B3EF33 /* VideoChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630532118F61A00B3EF33 /* VideoChatRouter.swift */; };
 		861630582118F61A00B3EF33 /* VideoChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630542118F61A00B3EF33 /* VideoChatViewController.swift */; };
@@ -99,8 +97,6 @@
 		861630402118D83000B3EF33 /* UINavigationController+RIBs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+RIBs.swift"; sourceTree = "<group>"; };
 		861630422118DA8100B3EF33 /* RootComponent+Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootComponent+Home.swift"; sourceTree = "<group>"; };
 		861630452118EE0100B3EF33 /* HomeActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeActivityCard.swift; sourceTree = "<group>"; };
-		861630472118EE0D00B3EF33 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
-		861630492118EE1500B3EF33 /* BulletPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletPoint.swift; sourceTree = "<group>"; };
 		8616304B2118EE5B00B3EF33 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		861630532118F61A00B3EF33 /* VideoChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatRouter.swift; sourceTree = "<group>"; };
 		861630542118F61A00B3EF33 /* VideoChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatViewController.swift; sourceTree = "<group>"; };
@@ -216,8 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				861630452118EE0100B3EF33 /* HomeActivityCard.swift */,
-				861630472118EE0D00B3EF33 /* ActivityCard.swift */,
-				861630492118EE1500B3EF33 /* BulletPoint.swift */,
 				8616304B2118EE5B00B3EF33 /* ActivityIndicatorView.swift */,
 			);
 			path = ActivityCard;
@@ -540,7 +534,6 @@
 				861630132118BC3500B3EF33 /* LoggedOutRouter.swift in Sources */,
 				8679ED6721346A2D003125D6 /* PermissionsBuilder.swift in Sources */,
 				861630462118EE0100B3EF33 /* HomeActivityCard.swift in Sources */,
-				861630482118EE0D00B3EF33 /* ActivityCard.swift in Sources */,
 				861630172118C00800B3EF33 /* RootComponent+LoggedOut.swift in Sources */,
 				8642B1522115452400C2D13B /* KaedeTextField.swift in Sources */,
 				861630222118C48500B3EF33 /* LoggedOutComponent+Login.swift in Sources */,
@@ -550,7 +543,6 @@
 				8616305E2118FF8100B3EF33 /* UserAppearanceView.swift in Sources */,
 				8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */,
 				8616302B2118C93600B3EF33 /* RegisterInteractor.swift in Sources */,
-				8616304A2118EE1500B3EF33 /* BulletPoint.swift in Sources */,
 				8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */,
 				8648CB4921406415001C150A /* Questions.swift in Sources */,
 				861630412118D83000B3EF33 /* UINavigationController+RIBs.swift in Sources */,
