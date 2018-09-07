@@ -62,7 +62,6 @@
 		86CDEE812114FC9600C65879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE802114FC9600C65879 /* Assets.xcassets */; };
 		86CDEE842114FC9600C65879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE822114FC9600C65879 /* LaunchScreen.storyboard */; };
 		86CDEEA22115318000C65879 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEEA12115318000C65879 /* AppComponent.swift */; };
-		86D79CD9211CD9F700765C30 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D79CD8211CD9F700765C30 /* UserError.swift */; };
 		86D79CDB211CF33A00765C30 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D79CDA211CF33A00765C30 /* String+Extensions.swift */; };
 		89C901FFFFE81A8F7DAEFF92 /* Pods_candy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 184A8F48A21F66FCA25AE3CC /* Pods_candy.framework */; };
 /* End PBXBuildFile section */
@@ -127,7 +126,6 @@
 		86CDEE832114FC9600C65879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86CDEE852114FC9600C65879 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86CDEEA12115318000C65879 /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
-		86D79CD8211CD9F700765C30 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		86D79CDA211CF33A00765C30 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		A1E1F83F1B4E2D10F3EBEBA8 /* Pods-candy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-candy.release.xcconfig"; path = "Pods/Target Support Files/Pods-candy/Pods-candy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -221,7 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				8657544F211BD1AE00AF1F9B /* User.swift */,
-				86D79CD8211CD9F700765C30 /* UserError.swift */,
 				8687CA6A212229C9006B5C41 /* Statement.swift */,
 				8662337B212A5F0F00425F92 /* TwilioHandler.swift */,
 				8648CB4821406415001C150A /* Questions.swift */,
@@ -526,7 +523,6 @@
 				861630292118C93600B3EF33 /* RegisterViewController.swift in Sources */,
 				8616305C2118F74D00B3EF33 /* HomeComponent+VideoChat.swift in Sources */,
 				861630582118F61A00B3EF33 /* VideoChatViewController.swift in Sources */,
-				86D79CD9211CD9F700765C30 /* UserError.swift in Sources */,
 				8642B155211545D800C2D13B /* TextFieldEffects.swift in Sources */,
 				86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */,
 				8616303F2118D5D600B3EF33 /* HomeInteractor.swift in Sources */,

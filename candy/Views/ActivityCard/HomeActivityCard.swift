@@ -74,7 +74,7 @@ class HomeActivityCard: UIView {
         switch status {
         case .homeDefault:
             headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "RULES").attributedText
-            footerLabel?.attributedText = CandyComponents.avenirAttributedString(title: "PRESS CONNECT BELOW TO START CHATTING")
+            footerLabel?.attributedText = CandyComponents.attributedString(title: "PRESS CONNECT BELOW TO START CHATTING")
         case .inactiveDay:
             headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "COMEBACK LATER").attributedText
             bodyLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "CANDY IS AVAILABLE ON FRIDAYS AND SATURDAYS BETWEEN 7-9PM LOCAL TIME").attributedText
@@ -111,7 +111,7 @@ class HomeActivityCard: UIView {
         
         rules.forEach { rule in
             let label = UILabel()
-            label.attributedText = CandyComponents.avenirAttributedString(title: rule)
+            label.attributedText = CandyComponents.attributedString(title: rule)
             let bulletPoint = UIView()
             bulletPoint.layer.cornerRadius = 5
             bulletPoint.backgroundColor = .candyBackgroundBlue

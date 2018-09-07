@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 protocol ChatTimerDelegate: class {
     func timerDidEnd()
@@ -24,7 +25,6 @@ class ChatTimer: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
         fatalError("Message not supported")
     }
     
@@ -38,12 +38,12 @@ class ChatTimer: UIView {
     
     // MARK: - Private
     
-    private var timer: Timer!
+    private var timer: Timer?
     private var totalTime = 120
-    private var timerLabel: UILabel?
+    private var countDownLabel: UILabel?
     
     @objc private func updateTime() {
-        timerLabel?.text = "\(totalTime)"
+        countDownLabel?.text = "\(totalTime)"
         if totalTime == 0 {
             endTimer()
         }
@@ -51,7 +51,7 @@ class ChatTimer: UIView {
     }
     
     private func endTimer() {
-        timer.invalidate()
+        timer?.invalidate()
         delegate?.timerDidEnd()
     }
     
@@ -62,7 +62,7 @@ class ChatTimer: UIView {
     
     private func buildLabel() {
         let label = UILabel()
-        self.timerLabel = label
+        self.countDownLabel = label
         label.font = UIFont(name: "Avenir-Black", size: 36)
         label.textColor = .white
         label.textAlignment = .center

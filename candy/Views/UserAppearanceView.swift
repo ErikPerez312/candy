@@ -9,8 +9,6 @@
 import UIKit
 import SnapKit
 
-// TODO: Refactor
-
 class UserAppearanceView: UIView {
     
     override init(frame: CGRect) {
@@ -25,7 +23,7 @@ class UserAppearanceView: UIView {
     }
     
     func updateUserCountLabel(withCount count: Int) {
-        onlineUserCountLabel?.attributedText = CandyComponents.avenirAttributedString(title: "\(count)")
+        onlineUserCountLabel?.attributedText = CandyComponents.attributedString(title: "\(count)")
     }
     
     // MARK: - Private

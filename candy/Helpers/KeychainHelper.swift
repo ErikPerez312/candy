@@ -17,7 +17,6 @@ enum KeychainProperty: String {
 }
 
 class KeychainHelper {
-    private static let shared = KeychainSwift()
     
     static func save(value: String, as property: KeychainProperty) {
         shared.set(value, forKey: property.rawValue, withAccess: .accessibleAlwaysThisDeviceOnly)
@@ -30,4 +29,8 @@ class KeychainHelper {
     static func remove(_ property: KeychainProperty) {
         shared.delete(property.rawValue)
     }
+    
+    // MARK: - Private
+    
+    private static let shared = KeychainSwift()
 }
