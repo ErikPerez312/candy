@@ -74,12 +74,16 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     }
     
     func updateActivityCard(withStatus status: ActivityCardStatus) {
-        guard let connectButton = self.connectButton else { return }
-        connectButton.isHidden = (status == .inactiveDay) ? true : false
-        connectButton.isEnabled = status == .homeDefault
-        cancelButton?.isHidden = connectButton.isEnabled
-        cancelButton?.isEnabled = !connectButton.isEnabled
         activityCard?.updateUIForStatus(status)
+        // connectButton should be visible-disabled on 'connecting' status,
+        // visible-enabled on 'homeDefault' status, and hidden-disabled on
+        // 'inactiveDay' status.
+        connectButton?.isHidden = status == .inactiveDay
+        connectButton?.isEnabled = status == .homeDefault
+        // cancelButton should be visible-enabled on 'connecting', and
+        // hidden-disabled on any other status.
+        cancelButton?.isHidden = status != .connecting
+        cancelButton?.isEnabled = status == .connecting
     }
     
     // MARK: - Private

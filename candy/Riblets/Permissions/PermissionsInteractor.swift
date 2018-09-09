@@ -20,7 +20,7 @@ protocol PermissionsPresentable: Presentable {
     
     func presentAlert(withTitle title: String, message: String?)
     func presentDeniedPermissionsAlert(withTitle title: String, message: String?, handler: ((UIAlertAction) -> Void)?)
-    func updateUIForAuthorizationStatus(forCamera camera: AVAuthorizationStatus,
+    func updateUIWithAuthorizationStatus(forCamera camera: AVAuthorizationStatus,
                                         microphone: AVAuthorizationStatus)
 }
 
@@ -39,6 +39,7 @@ final class PermissionsInteractor: PresentableInteractor<PermissionsPresentable>
     override init(presenter: PermissionsPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
+        presenter.updateUIWithAuthorizationStatus(forCamera: cameraAccessStatus, microphone: microphoneAccessStatus)
     }
     
     // MARK: PermissionsPresentableListener
@@ -57,7 +58,7 @@ final class PermissionsInteractor: PresentableInteractor<PermissionsPresentable>
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: mediaType) { (didAuthorize) in
                 DispatchQueue.main.async {
-                    self.presenter.updateUIForAuthorizationStatus(forCamera: self.cameraAccessStatus,
+                    self.presenter.updateUIWithAuthorizationStatus(forCamera: self.cameraAccessStatus,
                                                                   microphone: self.microphoneAccessStatus)
                 }
                 if !didAuthorize {
@@ -85,6 +86,8 @@ final class PermissionsInteractor: PresentableInteractor<PermissionsPresentable>
     
     // MARK: - Private
     
+    // Authorization status checks shouldn't be dependencies created by parent
+    // b/c an updated authorization status check is needed everytime.
     private var cameraAccessStatus: AVAuthorizationStatus {
         return AVCaptureDevice.authorizationStatus(for: .video)
     }
