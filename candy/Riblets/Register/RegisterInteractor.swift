@@ -144,7 +144,10 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
                 self?.defaultErrorAlertBehavior()
                 return
             }
-            if let _ = json["phone_number"] {
+            // TODO: Find better solution. When a number is already registered,
+            // a json response containing one key-value pair is returned. The key
+            // is "phone_number". The value is "has already been taken".
+            if json.count == 1 {
                 DispatchQueue.main.async {
                     let errorDescription = "An account with that phone number already exists."
                     self?.presenter.hideActivityIndicator()
@@ -159,6 +162,7 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
                 self?.defaultErrorAlertBehavior()
                 return
             }
+            print("\n* Successfully registered User: \n\(user.description)\n")
             self?.cacheUser(user)
             DispatchQueue.main.async {
                 self?.presenter.hideActivityIndicator()
@@ -167,6 +171,7 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
         }
     }
     
+    /// Stops activityIndicator animation and presents default UIAlert on main thread.
     private func defaultErrorAlertBehavior() {
         DispatchQueue.main.async { [weak self] in
             self?.presenter.hideActivityIndicator()
@@ -182,6 +187,7 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
         KeychainHelper.save(value: user.token, as: .authToken)
         KeychainHelper.save(value: "\(user.id)", as: .userID)
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        user.dictionary.write(to: userFileURL, atomically: true)
+        let didSaveUserToFile = user.dictionary.write(to: userFileURL, atomically: true)
+        print("\n* didSaveUserToFile: \(didSaveUserToFile)")
     }
 }
