@@ -7,24 +7,14 @@
 //
 
 import RIBs
-import AVFoundation
 
 protocol PermissionsDependency: Dependency {
     // Declare the set of dependencies required by this RIB, but cannot be
     // created by this RIB.
-    var cameraAccessStatus: AVAuthorizationStatus { get }
-    var microphoneAccessStatus: AVAuthorizationStatus { get }
 }
 
 final class PermissionsComponent: Component<PermissionsDependency> {
     // Declare 'fileprivate' dependencies that are only used by this RIB.
-    fileprivate var cameraAccessStatus: AVAuthorizationStatus {
-        return dependency.cameraAccessStatus
-    }
-    
-    fileprivate var microphoneAccessStatus: AVAuthorizationStatus {
-        return dependency.microphoneAccessStatus
-    }
 }
 
 // MARK: - Builder
@@ -40,9 +30,8 @@ final class PermissionsBuilder: Builder<PermissionsDependency>, PermissionsBuild
     }
 
     func build(withListener listener: PermissionsListener) -> PermissionsRouting {
-        let component = PermissionsComponent(dependency: dependency)
-        let viewController = PermissionsViewController(cameraAccessStatus: component.cameraAccessStatus,
-                                                       microphoneAccessStatus: component.microphoneAccessStatus)
+        let _ = PermissionsComponent(dependency: dependency)
+        let viewController = PermissionsViewController()
         let interactor = PermissionsInteractor(presenter: viewController)
         interactor.listener = listener
         return PermissionsRouter(interactor: interactor, viewController: viewController)

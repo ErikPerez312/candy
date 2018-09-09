@@ -17,5 +17,4 @@ protocol HomeDependencyPermissions: Dependency {
 
 extension HomeComponent: PermissionsDependency {
     // Implement properties to provide for Permissions scope.
-    
 }
