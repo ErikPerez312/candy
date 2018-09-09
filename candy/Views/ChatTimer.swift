@@ -25,7 +25,7 @@ class ChatTimer: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("Message not supported")
+        fatalError("Method not supported")
     }
     
     func startTimer() {

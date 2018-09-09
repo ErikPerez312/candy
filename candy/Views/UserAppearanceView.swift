@@ -49,8 +49,7 @@ class UserAppearanceView: UIView {
         
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(20)
-            maker.top.equalToSuperview().offset(10)
-            maker.bottom.equalToSuperview().inset(10)
+            maker.top.bottom.equalToSuperview().inset(10)
         }
         
         let userCountLabel = UILabel()
@@ -61,8 +60,7 @@ class UserAppearanceView: UIView {
         
         userCountLabel.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(15)
-            maker.top.equalToSuperview().offset(10)
-            maker.bottom.equalToSuperview().inset(10)
+            maker.top.bottom.equalToSuperview().inset(10)
         }
     }
 }

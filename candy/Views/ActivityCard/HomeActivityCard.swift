@@ -63,7 +63,7 @@ class HomeActivityCard: UIView {
     
     private var connectingIndicator: ActivityIndicatorView?
     
-    private var rules = [
+    private let rules = [
         "BE RESPECTFUL",
         "BE YOURSELF",
         "ASK QUESTIONS",

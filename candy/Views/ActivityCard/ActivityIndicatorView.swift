@@ -54,9 +54,7 @@ class ActivityIndicatorView: UIView {
     private func animateCircle() {
         // We want to animate the rotation property of the layer
         let animation = CABasicAnimation(keyPath: "transform.rotation")
-        // .keyPath = #kayPath(cashapelayer.strokeend)
         
-        // Set the animation duration appropriately
         animation.duration = 1.0
         animation.repeatCount = .infinity
         
