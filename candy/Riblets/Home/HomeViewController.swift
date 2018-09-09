@@ -70,7 +70,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     // MARK: HomePresentable
     
     func presentAppearanceCount(_ count: Int) {
-        appearanceView?.updateOnlineUserCountLabel(with: count)
+        appearanceView?.updateUserCountLabel(withCount: count)
     }
     
     func updateActivityCard(withStatus status: ActivityCardStatus) {
@@ -136,7 +136,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         let cancelButton = UIButton(frame: .zero)
         self.cancelButton = cancelButton
         cancelButton.isHidden = connectButton.isEnabled
-        cancelButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Cancel"), for: .normal)
+        cancelButton.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "Cancel"), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchUpInside)
         view.addSubview(cancelButton)
         cancelButton.snp.makeConstraints { maker in

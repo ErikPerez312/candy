@@ -106,7 +106,7 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
         
         let closeButton = UIButton()
         closeButton.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
-        closeButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Close"), for: .normal)
+        closeButton.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "Close"), for: .normal)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(card).inset(4)

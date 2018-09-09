@@ -127,7 +127,7 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     
     private func buildCancelButton() -> UIButton {
         let button = UIButton(frame: .zero)
-        button.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Cancel"), for: .normal)
+        button.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "Cancel"), for: .normal)
         button.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.textField?.resignFirstResponder()
@@ -258,7 +258,7 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
             })
             .disposed(by: bag)
         view.addSubview(resendCodeButton)
-        resendCodeButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Resend Code"), for: .normal)
+        resendCodeButton.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "Resend Code"), for: .normal)
                 resendCodeButton.snp.makeConstraints { maker in
                     maker.height.equalTo(30)
                     maker.centerX.equalToSuperview()

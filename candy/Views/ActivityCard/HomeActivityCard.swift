@@ -8,167 +8,165 @@
 
 import Foundation
 import UIKit
-
-// TODO: Refactor
+import SnapKit
 
 enum ActivityCardStatus {
     case homeDefault, inactiveDay, connecting
 }
 
-class HomeActivityCard: ActivityCard {
-    // MARK: Properties
-    private var headerLabel = UILabel()
-    private var bodyLabel = UILabel()
-    private var footerLabel = UILabel()
-    private var ruleLabels = [UILabel]()
-    private var bulletPoints = [BulletPoint]()
-    private var rulesStackView: UIStackView!
+class HomeActivityCard: UIView {
     
-    var connectingActivityIndicator = ActivityIndicatorView()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setUpView()
+        buildLabels()
+        buildActivityIndicator()
+        buildRules(withRules: rules)
+        updateUIForStatus(.homeDefault)
+    }
     
-    private var rules = [
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("Method not supported")
+    }
+    
+    func updateUIForStatus(_ status: ActivityCardStatus) {
+        switch status {
+        case .homeDefault:
+            rulesStackView?.isHidden = false
+            footerLabel?.isHidden = false
+            bodyLabel?.isHidden = true
+            connectingIndicator?.isHidden = true
+            connectingIndicator?.endAnimation()
+        case .inactiveDay:
+            rulesStackView?.isHidden = true
+            footerLabel?.isHidden = true
+            bodyLabel?.isHidden = false
+            connectingIndicator?.isHidden = true
+            connectingIndicator?.endAnimation()
+        case .connecting:
+            rulesStackView?.isHidden = true
+            bodyLabel?.isHidden = true
+            footerLabel?.isHidden = false
+            headerLabel?.isHidden = false
+            connectingIndicator?.isHidden = false
+            connectingIndicator?.startAnimation()
+        }
+        updateLabelsTexts(forStatus: status)
+    }
+    
+    // MARK: - Private
+    
+    private var headerLabel: UILabel?
+    private var bodyLabel: UILabel?
+    private var footerLabel:UILabel?
+    private var rulesStackView: UIStackView?
+    
+    private var connectingIndicator: ActivityIndicatorView?
+    
+    private let rules = [
         "BE RESPECTFUL",
         "BE YOURSELF",
         "ASK QUESTIONS",
         "HAVE FUN",
         ]
     
-    //MARK: View Methods
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setUpUIElements()
-        updateUIForStatus(.homeDefault)
+    private func updateLabelsTexts(forStatus status: ActivityCardStatus) {
+        switch status {
+        case .homeDefault:
+            headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "RULES").attributedText
+            footerLabel?.attributedText = CandyComponents.attributedString(title: "PRESS CONNECT BELOW TO START CHATTING")
+        case .inactiveDay:
+            headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "COMEBACK LATER").attributedText
+            bodyLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "CANDY IS AVAILABLE ON FRIDAYS AND SATURDAYS BETWEEN 7-9PM LOCAL TIME").attributedText
+        case .connecting:
+            headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "CONNECTING").attributedText
+            footerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "LOTS OF CANDY OUT THERE").attributedText
+        }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //MARK: Methods
-    private func setUpUIElements() {
-        rulesStackView = setUpRulesAndBulletPointsWithStackView()
-        addSubview(rulesStackView)
-        addSubview(headerLabel)
-        addSubview(bodyLabel)
-        addSubview(footerLabel)
-        addSubview(connectingActivityIndicator)
+    private func setUpView() {
+        layer.masksToBounds = false
+        layer.cornerRadius = 16
+        layer.shadowColor = UIColor.candyNavigationBarShadow.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowRadius = CGFloat(38)
+        layer.shadowOpacity = 1.0
         
-        updateTextForLabelsWithStatus(.homeDefault)
-        setUpLabelsAndConstraints()
-        addBulletPointConstraints()
-        addRulesStackViewConstraints()
-        addActivityIndicatorConstraints()
+        backgroundColor = .candyActivityCardBackground
     }
     
-    func updateUIForStatus(_ status: ActivityCardStatus) {
-        switch status {
-        case .homeDefault:
-            rulesStackView.isHidden = false
-            footerLabel.isHidden = false
-            bodyLabel.isHidden = true
-            connectingActivityIndicator.isHidden = true
-            connectingActivityIndicator.endIndicator()
-            updateTextForLabelsWithStatus(.homeDefault)
-        case .inactiveDay:
-            rulesStackView.isHidden = true
-            footerLabel.isHidden = true
-            bodyLabel.isHidden = false
-            connectingActivityIndicator.isHidden = true
-            connectingActivityIndicator.endIndicator()
-            updateTextForLabelsWithStatus(.inactiveDay)
-        case .connecting:
-            rulesStackView.isHidden = true
-            bodyLabel.isHidden = true
-            footerLabel.isHidden = false
-            headerLabel.isHidden = false
-            connectingActivityIndicator.isHidden = false
-            connectingActivityIndicator.startIndicator()
-            updateTextForLabelsWithStatus(.connecting)
-        }
-    }
-    
-    private func updateTextForLabelsWithStatus(_ status: ActivityCardStatus) {
-        switch status {
-        case .homeDefault:
-            headerLabel.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "RULES").attributedText
-            footerLabel.attributedText = CandyComponents.avenirAttributedString(title: "PRESS CONNECT BELOW TO START CHATTING")
-        case .inactiveDay:
-            headerLabel.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "COMBACK LATER").attributedText
-            bodyLabel.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "CANDY IS AVAILABLE ON FRIDAY'S AND SATURDAY'S BETWEEN 7-9PM LOCAL TIME").attributedText
-        case .connecting:
-            headerLabel.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "CONNECTING").attributedText
-            footerLabel.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "LOTS OF CANDY OUT THERE").attributedText
-        }
-    }
-    
-    private func setUpRulesAndBulletPointsWithStackView() -> UIStackView{
+    private func buildRules(withRules rules: [String]) {
         let allRulesStackView = UIStackView()
+        self.rulesStackView = allRulesStackView
+        addSubview(allRulesStackView)
         allRulesStackView.axis = .vertical
         allRulesStackView.alignment = .fill
         allRulesStackView.distribution = .fill
         allRulesStackView.spacing = 20
         
-        rules.forEach { (rule) in
+        allRulesStackView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(20)
+            maker.top.equalToSuperview().offset(70)
+        }
+        
+        rules.forEach { rule in
             let label = UILabel()
-            let bulletPoint = BulletPoint()
-            let rulesStackView = UIStackView(arrangedSubviews: [bulletPoint, label])
-            rulesStackView.axis = .horizontal
-            rulesStackView.alignment = .fill
-            rulesStackView.distribution = .fill
-            rulesStackView.spacing = 8.0
-            
-            label.attributedText = CandyComponents.avenirAttributedString(title: rule)
-            ruleLabels.append(label)
-            bulletPoints.append(bulletPoint)
-            allRulesStackView.addArrangedSubview(rulesStackView)
-        }
-        return allRulesStackView
-    }
+            label.attributedText = CandyComponents.attributedString(title: rule)
+            let bulletPoint = UIView()
+            bulletPoint.layer.cornerRadius = 5
+            bulletPoint.backgroundColor = .candyBackgroundBlue
+            bulletPoint.snp.makeConstraints { maker in
+                maker.size.equalTo(CGSize(width: 17, height: 17))
+            }
     
-    private func addBulletPointConstraints() {
-        bulletPoints.forEach { (point) in
-            point.widthAnchor.constraint(equalToConstant: 17).isActive = true
-            point.heightAnchor.constraint(equalToConstant: 17).isActive = true
+            let ruleStackView = UIStackView(arrangedSubviews: [bulletPoint, label])
+            ruleStackView.axis = .horizontal
+            ruleStackView.alignment = .fill
+            ruleStackView.distribution = .fill
+            ruleStackView.spacing = 8.0
+            allRulesStackView.addArrangedSubview(ruleStackView)
         }
     }
     
-    private func addActivityIndicatorConstraints() {
-        connectingActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        connectingActivityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        connectingActivityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        connectingActivityIndicator.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
-        connectingActivityIndicator.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
+    /// Builds header, body, and footer labels
+    private func buildLabels() {
+        let labelMaker: () -> UILabel = {
+            let label = UILabel()
+            self.addSubview(label)
+            label.textAlignment = .center
+            return label
+        }
+        
+        let header = labelMaker()
+        self.headerLabel = header
+        header.numberOfLines = 1
+        header.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(20)
+            maker.top.equalToSuperview().offset(17)
+        }
+        let body = labelMaker()
+        self.bodyLabel = body
+        body.numberOfLines = 4
+        body.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(10)
+            maker.top.bottom.equalToSuperview()
+        }
+        let footer = labelMaker()
+        self.footerLabel = footer
+        footer.numberOfLines = 3
+        footer.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(17)
+            maker.bottom.equalToSuperview().inset(25)
+        }
     }
     
-    /// Sets up constraints and core properties for Header, Body, and Footer labels of the Activity Card
-    private func setUpLabelsAndConstraints() {
-        headerLabel.numberOfLines = 1
-        headerLabel.textAlignment = .center
-        headerLabel.translatesAutoresizingMaskIntoConstraints = false
-        headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 17).isActive = true
-        headerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        headerLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        
-        bodyLabel.numberOfLines = 4
-        bodyLabel.textAlignment = .center
-        bodyLabel.translatesAutoresizingMaskIntoConstraints = false
-        bodyLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        bodyLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        bodyLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        bodyLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-        
-        footerLabel.numberOfLines = 3
-        footerLabel.textAlignment = .center
-        footerLabel.translatesAutoresizingMaskIntoConstraints = false
-        footerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 17).isActive = true
-        footerLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -17).isActive = true
-        footerLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -25).isActive = true
-    }
-    
-    private func addRulesStackViewConstraints() {
-        rulesStackView.translatesAutoresizingMaskIntoConstraints = false
-        rulesStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        rulesStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        rulesStackView.topAnchor.constraint(equalTo: topAnchor, constant: 70).isActive = true
+    private func buildActivityIndicator() {
+        let indicator = ActivityIndicatorView()
+        addSubview(indicator)
+        self.connectingIndicator = indicator
+        indicator.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.size.equalTo(CGSize(width: 80, height: 80))
+        }
     }
 }

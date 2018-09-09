@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum UserError: Error {
+    case instantiationFailed([String: Any])
+}
+
 class User: NSObject {
     let id: Int
     let firstName: String
@@ -75,6 +79,3 @@ extension User{
         }
     }
 }
-
-
-

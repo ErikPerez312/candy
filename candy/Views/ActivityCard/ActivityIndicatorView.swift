@@ -8,11 +8,7 @@
 
 import UIKit
 
-// TODO: Refactor
-
 class ActivityIndicatorView: UIView {
-    var backgroundCircleLayer: CAShapeLayer!
-    var circleLayer: CAShapeLayer!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,52 +16,45 @@ class ActivityIndicatorView: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        fatalError("Init not implemented")
-    }
-    
-    /// Start the activity indicator
-    func startIndicator() {
-        animateCircle()
-    }
-    
-    /// End the activity indicator
-    func endIndicator() {
-        layer.removeAllAnimations()
-    }
-    
-    private func setUpBackgroundCircleLayer() {
-        backgroundCircleLayer = CAShapeLayer()
-        backgroundCircleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
-        backgroundCircleLayer.lineCap = kCALineCapRound
-        backgroundCircleLayer.fillColor = UIColor.clear.cgColor
-        backgroundCircleLayer.strokeColor = UIColor.candyBackgroundPink.cgColor
-        backgroundCircleLayer.lineWidth = 4.0
-        layer.addSublayer(backgroundCircleLayer)
-    }
-    
-    private func setUpCircleLayer() {
-        circleLayer = CAShapeLayer()
-        circleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
-        circleLayer.lineCap = kCALineCapRound
-        circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.strokeColor = UIColor.candyBackgroundBlue.cgColor
-        circleLayer.lineWidth = 4.0
-        circleLayer.strokeEnd = 0.95
-        layer.addSublayer(circleLayer)
+        fatalError("Method not supported")
     }
     
     override func draw(_ rect: CGRect) {
-        setUpBackgroundCircleLayer()
-        setUpCircleLayer()
+        buildAnimationCircleLayers()
     }
     
-    func animateCircle() {
+    func startAnimation() {
+        animateCircle()
+    }
+    
+    func endAnimation() {
+        layer.removeAllAnimations()
+    }
+    
+    // MARK: - Private
+    
+    private func buildAnimationCircleLayers() {
+        let layerMaker: (UIColor) -> CAShapeLayer = { color in
+            let layer = CAShapeLayer()
+            layer.path = UIBezierPath(ovalIn: self.bounds).cgPath
+            layer.lineCap = kCALineCapRound
+            layer.fillColor = UIColor.clear.cgColor
+            layer.strokeColor = color.cgColor
+            layer.lineWidth = 4.0
+            return layer
+        }
+        let backgroundCircle = layerMaker(.candyBackgroundPink)
+        layer.addSublayer(backgroundCircle)
+        
+        let topCircle = layerMaker(.candyBackgroundBlue)
+        topCircle.strokeEnd = 0.95
+        layer.addSublayer(topCircle)
+    }
+    
+    private func animateCircle() {
         // We want to animate the rotation property of the layer
         let animation = CABasicAnimation(keyPath: "transform.rotation")
-        // .keyPath = #kayPath(cashapelayer.strokeend)
         
-        // Set the animation duration appropriately
         animation.duration = 1.0
         animation.repeatCount = .infinity
         

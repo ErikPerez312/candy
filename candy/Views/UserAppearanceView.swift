@@ -7,29 +7,28 @@
 //
 
 import UIKit
-
-// TODO: Refactor
+import SnapKit
 
 class UserAppearanceView: UIView {
-    private var titleLabel: UILabel!
-    private var onlineUserCountLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpView()
-        setUpLabels()
-        updateOnlineUserCountLabel(with: 0)
-        
-        
+        buildLabels()
+        updateUserCountLabel(withCount: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) not implemented")
+        fatalError("Method not supported")
     }
     
-    func updateOnlineUserCountLabel(with count: Int) {
-        onlineUserCountLabel.attributedText = CandyComponents.avenirAttributedString(title: "\(count)")
+    func updateUserCountLabel(withCount count: Int) {
+        onlineUserCountLabel?.attributedText = CandyComponents.attributedString(title: "\(count)")
     }
+    
+    // MARK: - Private
+    
+    private var onlineUserCountLabel: UILabel?
     
     private func setUpView() {
         backgroundColor = .candyActivityCardBackground
@@ -41,32 +40,27 @@ class UserAppearanceView: UIView {
         layer.shadowOpacity = 1.0
     }
     
-    private func setUpLabels() {
-        titleLabel = UILabel()
+    private func buildLabels() {
+        let titleLabel = UILabel()
         titleLabel.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "ONLINE USERS:").attributedText
         titleLabel.textAlignment = .left
         titleLabel.numberOfLines = 1
         addSubview(titleLabel)
         
+        titleLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().offset(20)
+            maker.top.bottom.equalToSuperview().inset(10)
+        }
         
-        onlineUserCountLabel = UILabel()
-        onlineUserCountLabel.numberOfLines = 1
-        onlineUserCountLabel.textAlignment = .right
-        addSubview(onlineUserCountLabel)
+        let userCountLabel = UILabel()
+        self.onlineUserCountLabel = userCountLabel
+        userCountLabel.numberOfLines = 1
+        userCountLabel.textAlignment = .right
+        addSubview(userCountLabel)
         
-        addConstraintsToLabels()
-    }
-    
-    private func addConstraintsToLabels() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
-        
-        onlineUserCountLabel.translatesAutoresizingMaskIntoConstraints = false
-        onlineUserCountLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true
-        onlineUserCountLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        onlineUserCountLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+        userCountLabel.snp.makeConstraints { maker in
+            maker.trailing.equalToSuperview().inset(15)
+            maker.top.bottom.equalToSuperview().inset(10)
+        }
     }
 }
-
