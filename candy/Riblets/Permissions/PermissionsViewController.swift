@@ -24,11 +24,7 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
 
     weak var listener: PermissionsPresentableListener?
     
-    init(cameraAccessStatus: AVAuthorizationStatus,
-         microphoneAccessStatus: AVAuthorizationStatus) {
-        
-        self.cameraAccessStatus = cameraAccessStatus
-        self.microphoneAccessStatus = microphoneAccessStatus
+    init() {
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .overCurrentContext
         let cardView = buildBackgroundViews()
@@ -58,7 +54,7 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func updateUIForAuthorizationStatus(forCamera camera: AVAuthorizationStatus, microphone: AVAuthorizationStatus) {
+    func updateUIWithAuthorizationStatus(forCamera camera: AVAuthorizationStatus, microphone: AVAuthorizationStatus) {
         cameraAccessButton?.isEnabled = !(camera == .authorized)
         microphoneAccessButton?.isEnabled = !(microphone == .authorized)
         cameraAccessButton?.backgroundColor = (camera == .authorized) ? .candyBackgroundBlue : .white
@@ -71,8 +67,6 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
     private var microphoneAccessButton: UIButton?
     
     private let bag = DisposeBag()
-    private let cameraAccessStatus: AVAuthorizationStatus
-    private let microphoneAccessStatus: AVAuthorizationStatus
     
     private func buildBackgroundViews() -> UIView {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
@@ -106,7 +100,7 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
         
         let closeButton = UIButton()
         closeButton.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
-        closeButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "Close"), for: .normal)
+        closeButton.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "Close"), for: .normal)
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
             maker.trailing.equalTo(card).inset(4)
@@ -137,7 +131,6 @@ final class PermissionsViewController: UIViewController, PermissionsPresentable,
         self.microphoneAccessButton = microphoneButton
         microphoneButton.addTarget(self, action: #selector(microphoneButtonPressed), for: .touchUpInside)
         
-        updateUIForAuthorizationStatus(forCamera: cameraAccessStatus, microphone: microphoneAccessStatus)
         view.addSubview(cameraButton)
         view.addSubview(microphoneButton)
         cameraButton.snp.makeConstraints { maker in

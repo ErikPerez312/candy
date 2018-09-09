@@ -37,7 +37,6 @@ final class LoggedOutRouter: Router<LoggedOutInteractable>, LoggedOutRouting {
     }
     
     override func didLoad() {
-        print("\n* didLoadLoggedOut*\n")
         attachLogin()
     }
 
@@ -50,7 +49,6 @@ final class LoggedOutRouter: Router<LoggedOutInteractable>, LoggedOutRouting {
     }
     
     func routeToRegister() {
-        print("Should route to register")
         detachCurrentChild()
         let register = registerBuilder.build(withListener: interactor)
         attachChild(register)

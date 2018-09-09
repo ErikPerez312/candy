@@ -9,6 +9,7 @@
 import RIBs
 import RxSwift
 import ActionCableClient
+import AVFoundation
 
 protocol HomeRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
@@ -36,8 +37,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
 
     // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    init(presenter: HomePresentable, isRequiredMediaAccessGranted: Bool) {
-        self.isRequiredMediaAccessGranted = isRequiredMediaAccessGranted
+    override init(presenter: HomePresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -60,7 +60,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         chatChannel?.action("connect")
     }
     
-    @objc func canceledConnection() {
+    func canceledConnection() {
         appearanceChannel?.action("away")
         presenter.updateActivityCard(withStatus: .homeDefault)
     }
@@ -89,7 +89,13 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     private var appearanceChannel: Channel?
     private var chatChannel: Channel?
     
-    private let isRequiredMediaAccessGranted: Bool
+    private var isRequiredMediaAccessGranted: Bool {
+        // Authorization status checks shouldn't be dependencies created by parent
+        // b/c an updated authorization status check is needed everytime.
+        let cameraAccessStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        let microphoneAccessStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+        return cameraAccessStatus == .authorized && microphoneAccessStatus == .authorized
+    }
     
     private var isActiveDay: Bool {
         // TODO: Refactor - This should be done in backend to

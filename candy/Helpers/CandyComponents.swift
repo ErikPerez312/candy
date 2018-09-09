@@ -23,7 +23,7 @@ struct CandyComponents {
         return titleLabel
     }
     
-    static func underlinedAvenirAttributedString(withTitle title: String) -> NSAttributedString {
+    static func underlinedAttributedString(withTitle title: String) -> NSAttributedString {
         let font = UIFont(name: "Avenir-Heavy", size: 14)!
         let attributes: [NSAttributedStringKey : Any] = [
             NSAttributedStringKey.font: font,
@@ -32,11 +32,10 @@ struct CandyComponents {
             NSAttributedStringKey.underlineStyle: 1,
             ]
         
-        let title = NSAttributedString(string: title, attributes: attributes)
-        return title
+        return NSAttributedString(string: title, attributes: attributes)
     }
     
-    static func avenirAttributedString(title: String, fontSize size: CGFloat = 14.0) -> NSAttributedString {
+    static func attributedString(title: String, fontSize size: CGFloat = 14.0) -> NSAttributedString {
         let font = UIFont(name: "Avenir-Black", size: size)!
         let attributes: [NSAttributedStringKey : Any] = [
             NSAttributedStringKey.font: font,

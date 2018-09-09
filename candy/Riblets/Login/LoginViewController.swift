@@ -156,14 +156,18 @@ final class LoginViewController: UIViewController, LoginPresentable, LoginViewCo
         loginButton.layer.cornerRadius = 6
         loginButton.rx.tap
             .subscribe(onNext: { [weak self] in
+                let firstResponder = phoneNumberField.isFirstResponder ? phoneNumberField : passwordField
+                firstResponder.resignFirstResponder()
                 self?.listener?.login(withPhoneNumber: phoneNumberField.text, password: passwordField.text)
             })
             .disposed(by: bag)
         
         let registerButton = UIButton(frame: .zero)
-        registerButton.setAttributedTitle(CandyComponents.underlinedAvenirAttributedString(withTitle: "New user? Register here"), for: .normal)
+        registerButton.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "New user? Register here"), for: .normal)
         registerButton.rx.tap
             .subscribe(onNext: { [weak self] in
+                let firstResponder = phoneNumberField.isFirstResponder ? phoneNumberField : passwordField
+                firstResponder.resignFirstResponder()
                 self?.listener?.register()
             })
             .disposed(by: bag)

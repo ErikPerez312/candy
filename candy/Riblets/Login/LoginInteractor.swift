@@ -54,8 +54,8 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
         guard let password = password,
             !password.isEmptyOrWhitespace else {
                 DispatchQueue.main.async {
-                    self.presenter.presentAlert(withTitle: "Invalid Password",
-                                                 description: "Password can not be blank.")
+                    self.presenter.presentAlert(withTitle: "Enter your password",
+                                                 description: nil)
                 }
                 return
         }
@@ -73,37 +73,34 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
                     }
                 return
             }
-            if let user = User(json: validJSON) {
-                print("Successful login with user: \(user.description)")
-                self?.cacheUser(user)
-                self?.listener?.didLogin()
-            } else {
+            
+            guard let user = User(json: validJSON) else {
                 let title = validJSON["error"] as? String ?? "Oops, Something went wrong."
                 DispatchQueue.main.async {
                     self?.presenter.presentAlert(withTitle: title, description: nil)
                 }
+                return
             }
+            print("\n * Successful login with user: \n\(user.description) \n")
+            self?.cacheUser(user)
+            self?.listener?.didLogin()
         }
     }
     
     func register() {
-        print("Should signup")
         listener?.register()
     }
     
     // MARK: - Private
     
     private func cacheUser(_ user: User) {
-        KeychainHelper.save(value: user.token, as: .authToken)
-        UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        let userFileURL = cachedFileURL("user.plist")
-        user.dictionary.write(to: userFileURL, atomically: true)
-    }
-    
-    private func cachedFileURL(_ fileName: String) -> URL {
-        return FileManager.default
+        let userFileURL = FileManager.default
             .urls(for: .cachesDirectory, in: .allDomainsMask)
             .first!
-            .appendingPathComponent(fileName)
+            .appendingPathComponent("user.plist")
+        KeychainHelper.save(value: user.token, as: .authToken)
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        let didSaveUserToFile = user.dictionary.write(to: userFileURL, atomically: true)
+        print("\n* didSaveUserToFile: \(didSaveUserToFile)")
     }
 }
