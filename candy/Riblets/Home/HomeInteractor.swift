@@ -44,7 +44,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
 
     override func didBecomeActive() {
         super.didBecomeActive()
-        // Implement business logic here.
         setUpClient()
     }
     
@@ -121,6 +120,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         self.client = candyClient
         candyClient.headers = ["Authorization": userToken]
         candyClient.origin = CandyAPI.webSocketOrigin
+        candyClient.reconnectionStrategy = .linear(maxRetries: 5, intervalTime: 3)
         candyClient.connect()
         candyClient.onConnected = {
             self.buildAppearanceChannel(withClient: candyClient)
@@ -145,7 +145,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
                     return
             }
             self?.presenter.presentAppearanceCount(onlineCount)
-            print("\n ****** OnlineCount: \(onlineCount), AvailableCount: \(availableCount)")
         }
     }
     
@@ -159,7 +158,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
                 let token = chatRoom["twilio_token"] else {
                     return
             }
-            print("\n** did receive room info from chatchannel", chatRoom)
             self?.router?.routeToVideoChat(withRoomName: roomName, roomToken: token)
         }
     }

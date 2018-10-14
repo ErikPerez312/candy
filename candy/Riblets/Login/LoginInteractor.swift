@@ -101,6 +101,5 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
         KeychainHelper.save(value: user.token, as: .authToken)
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
         let didSaveUserToFile = user.dictionary.write(to: userFileURL, atomically: true)
-        print("\n* didSaveUserToFile: \(didSaveUserToFile)")
     }
 }
