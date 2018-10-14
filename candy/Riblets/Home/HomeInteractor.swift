@@ -145,7 +145,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
                     return
             }
             self?.presenter.presentAppearanceCount(onlineCount)
-            print("\n ****** OnlineCount: \(onlineCount), AvailableCount: \(availableCount)")
         }
     }
     
@@ -159,7 +158,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
                 let token = chatRoom["twilio_token"] else {
                     return
             }
-            print("\n** did receive room info from chatchannel", chatRoom)
             self?.router?.routeToVideoChat(withRoomName: roomName, roomToken: token)
         }
     }
