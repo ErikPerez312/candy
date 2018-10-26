@@ -137,14 +137,14 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     private func buildAppearanceChannel(withClient client: ActionCableClient) {
         let channel = client.create("AppearanceChannel")
         self.appearanceChannel = channel
-        channel.onReceive = { [weak self] (data: Any?, error: Error?) in
+        channel.onReceive = { (data: Any?, error: Error?) in
             guard let data = data,
                 let appearanceDictionary = data as? [String: Int],
                 let onlineCount = appearanceDictionary["online_user_count"],
                 let availableCount = appearanceDictionary["online_available_user_count"] else {
                     return
             }
-            self?.presenter.presentAppearanceCount(onlineCount)
+            self.presenter.presentAppearanceCount(onlineCount)
         }
     }
     

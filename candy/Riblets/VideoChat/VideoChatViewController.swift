@@ -63,9 +63,10 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     
     private func buildChatViews() {
         let remoteUserView = TVIVideoView()
-        self.remoteUserView = remoteUserView
-        remoteUserView.backgroundColor = .green
         remoteUserView.contentMode = .scaleAspectFill
+        remoteUserView.backgroundColor = .black
+        remoteUserView.contentMode = .scaleAspectFill
+        self.remoteUserView = remoteUserView
         view.addSubview(remoteUserView)
         remoteUserView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -75,6 +76,7 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
         let localUserView = TVIVideoView()
         localUserView.shouldMirror = true
         localUserView.addGestureRecognizer(endCallGesture)
+        localUserView.contentMode = .scaleAspectFill
         self.localUserView = localUserView
         localUserView.backgroundColor = .gray
         localUserView.layer.cornerRadius = 8
