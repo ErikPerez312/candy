@@ -13,7 +13,7 @@ import AVFoundation
 
 protocol HomeRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
-    func routeToVideoChat(withRoomName roomName: String, roomToken: String)
+    func routeToVideoChat(withRoomName roomName: String, roomToken: String, remoteUserFirstName: String)
     func routeToHome()
     func routeToPermissions()
 }
@@ -66,7 +66,8 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func viewWillAppear() {
         addActiveApplicationObservers()
-        presenter.updateActivityCard(withStatus: isActiveDay ? .homeDefault : .inactiveDay, firstName: nil, imageName: nil)
+        presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
+        // isActiveDay ? .homeDefault : .inactiveDay
     }
     func viewWillDisappear() {
         removeActiveApplicationObservers()
@@ -78,8 +79,10 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func startChatButtonPressed() {
         print("\n * HomeInteractor -> startChatButtonPressed()")
-        guard let roomName = chatRoomName, let roomToken = chatRoomToken else { return }
-        router?.routeToVideoChat(withRoomName: roomName, roomToken: roomToken)
+        guard let roomName = chatRoomName,
+            let roomToken = chatRoomToken,
+            let firstName = remoteUserFirstName else { return }
+        router?.routeToVideoChat(withRoomName: roomName, roomToken: roomToken, remoteUserFirstName: firstName)
     }
     
     func nextUserButtonPressed() {
@@ -98,6 +101,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     private var chatRoomName: String?
     private var chatRoomToken: String?
+    private var remoteUserFirstName: String?
     
     private var client: ActionCableClient?
     private var appearanceChannel: Channel?
@@ -180,6 +184,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             // TODO: Cache remote user info. Check for image cache before attempting download
             self?.chatRoomName = roomName
             self?.chatRoomToken = token
+            self?.remoteUserFirstName = remoteUserFirstName
             self?.presenter.updateActivityCard(withStatus: .profileView,
                                                firstName: remoteUserFirstName.uppercased(),
                                                imageName: remoteUserProfileImageURL)

@@ -78,12 +78,12 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         // connectButton should be visible-disabled on 'connecting' status,
         // visible-enabled on 'homeDefault' status, and hidden-disabled on
         // 'inactiveDay' status.
-        connectButton?.isHidden = status == .inactiveDay
-        connectButton?.isEnabled = status == .homeDefault
+        connectButton?.isHidden = (status == .inactiveDay) || (status == .profileView)
+        connectButton?.isEnabled = (status == .homeDefault)
         // cancelButton should be visible-enabled on 'connecting', and
         // hidden-disabled on any other status.
-        cancelButton?.isHidden = status != .connecting
-        cancelButton?.isEnabled = status == .connecting
+        cancelButton?.isHidden = (status != .connecting)
+        cancelButton?.isEnabled = (status == .connecting)
         
         guard let firstName = firstName, let imageName = imageName else {
             return

@@ -36,10 +36,11 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     
     // MARK: HomeRouting
     
-    func routeToVideoChat(withRoomName roomName: String, roomToken: String) {
+    func routeToVideoChat(withRoomName roomName: String, roomToken: String, remoteUserFirstName: String) {
         let videoChat = videoChatBuilder.build(withListener: interactor,
                                                roomName: roomName,
-                                               roomToken: roomToken)
+                                               roomToken: roomToken,
+                                               remoteUserFirstName: remoteUserFirstName)
         attachChild(videoChat)
         self.currentChild = videoChat
         viewController.presentModally(viewController: videoChat.viewControllable)
