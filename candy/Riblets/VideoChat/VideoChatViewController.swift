@@ -29,8 +29,11 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
         }
     }
     
-    init() {
+    init(remoteUserFirstName: String) {
+        self.remoteUserFirstName = remoteUserFirstName
         super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .candyBackgroundPink
+        buildWaitingForConnectionLabel()
         buildChatViews()
     }
     
@@ -45,6 +48,7 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     }
     
     func showRemoteVideoTrack(_ videoTrack: TVIVideoTrack) {
+        remoteUserView.isHidden = false
         videoTrack.addRenderer(remoteUserView)
         chatTimer?.startTimer()
     }
@@ -55,17 +59,35 @@ final class VideoChatViewController: UIViewController, VideoChatPresentable, Vid
     
     // MARK: - Private
     
+    private var remoteUserFirstName: String
+    
     private var localUserView: TVIVideoView!
     private var remoteUserView: TVIVideoView!
     
     private var chatTimer: ChatTimer?
     private var questionsView: QuestionsView?
+    private var waitingForConnectionLabel: UILabel?
+    
+    private func buildWaitingForConnectionLabel() {
+        let label = UILabel()
+        self.waitingForConnectionLabel = label
+        label.numberOfLines = 4
+        label.textAlignment = .center
+        let title = "waiting for \(remoteUserFirstName) to connect".uppercased()
+        label.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: title).attributedText
+        view.addSubview(label)
+        label.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(10)
+            maker.centerY.equalToSuperview()
+        }
+    }
     
     private func buildChatViews() {
         let remoteUserView = TVIVideoView()
         remoteUserView.contentMode = .scaleAspectFill
         remoteUserView.backgroundColor = .black
         remoteUserView.contentMode = .scaleAspectFill
+        remoteUserView.isHidden = true
         self.remoteUserView = remoteUserView
         view.addSubview(remoteUserView)
         remoteUserView.snp.makeConstraints { maker in
