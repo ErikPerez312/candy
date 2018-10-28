@@ -67,7 +67,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     func viewWillAppear() {
         addActiveApplicationObservers()
         presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
-        // isActiveDay ? .homeDefault : .inactiveDay
     }
     func viewWillDisappear() {
         removeActiveApplicationObservers()
@@ -113,21 +112,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         let cameraAccessStatus = AVCaptureDevice.authorizationStatus(for: .video)
         let microphoneAccessStatus = AVCaptureDevice.authorizationStatus(for: .audio)
         return cameraAccessStatus == .authorized && microphoneAccessStatus == .authorized
-    }
-    
-    private var isActiveDay: Bool {
-        // TODO: Refactor - This should be done in backend to
-        // prevent manual datetime change within settings.
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        let currentDateString = dateFormatter.string(from: date)
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let time = hour - 12
-        let isTimeValid = time >= 7 && time < 9
-        
-        return (currentDateString == "Friday" || currentDateString == "Saturday") && isTimeValid == true
     }
     
     private func setUpClient() {

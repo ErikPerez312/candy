@@ -17,8 +17,6 @@ protocol HomeActivityCardDelegate: class {
 enum ActivityCardStatus {
     /// Default state for activity card. Card displays app rules.
     case homeDefault
-    /// User's local device date time indicate inactive day for candy.
-    case inactiveDay
     /// Use when user is attempting to find a chat partner
     case connecting
     /// Use to display remote user's info. This allows local user to initiate or decline the video chat.
@@ -57,24 +55,10 @@ final class HomeActivityCard: UIView {
             remoteUserFirstNameLabel?.isHidden = true
             profileImageView?.isHidden = true
             
-            bodyLabel?.isHidden = true
             connectingIndicator?.isHidden = true
             connectingIndicator?.endAnimation()
-        case .inactiveDay:
-            rulesStackView?.isHidden = true
-            footerLabel?.isHidden = true
-            bodyLabel?.isHidden = false
-            connectingIndicator?.isHidden = true
-            connectingIndicator?.endAnimation()
-            startChatButton?.isHidden = true
-            startChatButton?.isEnabled = false
-            nextUserButton?.isHidden = true
-            nextUserButton?.isEnabled = false
-            remoteUserFirstNameLabel?.isHidden = true
-            profileImageView?.isHidden = true
         case .connecting:
             rulesStackView?.isHidden = true
-            bodyLabel?.isHidden = true
             startChatButton?.isHidden = true
             startChatButton?.isEnabled = false
             nextUserButton?.isHidden = true
@@ -87,7 +71,6 @@ final class HomeActivityCard: UIView {
             connectingIndicator?.isHidden = false
             connectingIndicator?.startAnimation()
         case .profileView:
-            bodyLabel?.isHidden = true
             footerLabel?.isHidden = true
             rulesStackView?.isHidden = true
             connectingIndicator?.isHidden = true
@@ -124,8 +107,6 @@ final class HomeActivityCard: UIView {
     
     /// Single line title label
     private var headerLabel: UILabel?
-    /// Locatated at center of activity card. Allows up to 4 lines of text.
-    private var bodyLabel: UILabel?
     /// Located at the bottom center of activity card. Allows up to 3 lines of text.
     private var footerLabel:UILabel?
     /// Soley used for displaying a remote user's first name.
@@ -153,9 +134,6 @@ final class HomeActivityCard: UIView {
         case .homeDefault:
             headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "RULES").attributedText
             footerLabel?.attributedText = CandyComponents.attributedString(title: "PRESS CONNECT BELOW TO START CHATTING")
-        case .inactiveDay:
-            headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "COMEBACK LATER").attributedText
-            bodyLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "CANDY IS AVAILABLE ON FRIDAYS AND SATURDAYS BETWEEN 7-9PM LOCAL TIME").attributedText
         case .connecting:
             headerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "CONNECTING").attributedText
             footerLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "LOTS OF CANDY OUT THERE").attributedText
@@ -223,13 +201,6 @@ final class HomeActivityCard: UIView {
         header.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(20)
             maker.top.equalToSuperview().offset(17)
-        }
-        let body = labelMaker()
-        self.bodyLabel = body
-        body.numberOfLines = 4
-        body.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(10)
-            maker.top.bottom.equalToSuperview()
         }
         let footer = labelMaker()
         self.footerLabel = footer
@@ -300,6 +271,7 @@ final class HomeActivityCard: UIView {
             button.setTitle(title, for: .normal)
             return button
         }
+        
         let start = buttonMaker("Start")
         start.addTarget(self, action: #selector(startChatButtonPressed), for: .touchUpInside)
         self.startChatButton = start
@@ -309,7 +281,6 @@ final class HomeActivityCard: UIView {
             maker.size.equalTo(CGSize(width: 155, height: 35))
             maker.centerX.equalToSuperview()
         }
-        
         let next = buttonMaker("Next")
         next.addTarget(self, action: #selector(nextUserButtonPressed), for: .touchUpInside)
         self.nextUserButton = next
