@@ -55,6 +55,7 @@ final class HomeActivityCard: UIView {
             nextUserButton?.isHidden = true
             nextUserButton?.isEnabled = false
             remoteUserFirstNameLabel?.isHidden = true
+            profileImageView?.isHidden = true
             
             bodyLabel?.isHidden = true
             connectingIndicator?.isHidden = true
@@ -65,6 +66,12 @@ final class HomeActivityCard: UIView {
             bodyLabel?.isHidden = false
             connectingIndicator?.isHidden = true
             connectingIndicator?.endAnimation()
+            startChatButton?.isHidden = true
+            startChatButton?.isEnabled = false
+            nextUserButton?.isHidden = true
+            nextUserButton?.isEnabled = false
+            remoteUserFirstNameLabel?.isHidden = true
+            profileImageView?.isHidden = true
         case .connecting:
             rulesStackView?.isHidden = true
             bodyLabel?.isHidden = true
@@ -73,6 +80,7 @@ final class HomeActivityCard: UIView {
             nextUserButton?.isHidden = true
             nextUserButton?.isEnabled = false
             remoteUserFirstNameLabel?.isHidden = true
+            profileImageView?.isHidden = true
             
             footerLabel?.isHidden = false
             headerLabel?.isHidden = false
