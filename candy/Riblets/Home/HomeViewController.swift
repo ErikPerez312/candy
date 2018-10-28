@@ -10,7 +10,7 @@ import RIBs
 import RxSwift
 import UIKit
 
-protocol HomePresentableListener: class {
+protocol HomePresentableListener: HomeActivityCardDelegate {
     // Declare properties and methods that the view controller can invoke to perform
     // business logic, such as signIn(). This protocol is implemented by the corresponding
     // interactor class.
@@ -73,7 +73,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         appearanceView?.updateUserCountLabel(withCount: count)
     }
     
-    func updateActivityCard(withStatus status: ActivityCardStatus) {
+    func updateActivityCard(withStatus status: ActivityCardStatus, firstName: String?, imageName: String?) {
         activityCard?.updateUIForStatus(status)
         // connectButton should be visible-disabled on 'connecting' status,
         // visible-enabled on 'homeDefault' status, and hidden-disabled on
@@ -84,6 +84,11 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         // hidden-disabled on any other status.
         cancelButton?.isHidden = status != .connecting
         cancelButton?.isEnabled = status == .connecting
+        
+        guard let firstName = firstName, let imageName = imageName else {
+            return
+        }
+        activityCard?.updateProfileViews(withName: firstName, imageLink: imageName)
     }
     
     // MARK: - Private
@@ -105,6 +110,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         }
         
         let card = HomeActivityCard(frame: .zero)
+        card.delegate = listener
         self.activityCard = card
         view.addSubview(card)
         card.snp.makeConstraints { maker in

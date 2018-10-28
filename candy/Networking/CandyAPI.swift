@@ -49,6 +49,23 @@ class CandyAPI {
                 completionHandler: handler)
     }
     
+    static func downloadImage(withLink link: String, completionHandler handler: @escaping (UIImage?) -> Void) {
+        guard let imageURL = URL(string: link) else {
+            handler(nil)
+            return
+        }
+        URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+            guard let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data) else {
+                    handler(nil)
+                    return
+            }
+            handler(image)
+        }.resume()
+    }
+    
     // MARK: - Private
     
     private static let baseURLString = "https://video-dating.herokuapp.com"
