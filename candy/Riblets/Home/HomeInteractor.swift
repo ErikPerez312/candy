@@ -23,7 +23,7 @@ protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
     
     func presentAppearanceCount(_ count: Int)
-    func updateActivityCard(withStatus status: ActivityCardStatus)
+    func updateActivityCard(withStatus status: ActivityCardStatus, firstName: String?, imageName: String?)
 }
 
 protocol HomeListener: class {
@@ -54,19 +54,19 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             router?.routeToPermissions()
             return
         }
-        presenter.updateActivityCard(withStatus: .connecting)
+        presenter.updateActivityCard(withStatus: .connecting, firstName: nil, imageName: nil)
         appearanceChannel?.action("appear")
         chatChannel?.action("connect")
     }
     
     func canceledConnection() {
         appearanceChannel?.action("away")
-        presenter.updateActivityCard(withStatus: .homeDefault)
+        presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
     }
     
     func viewWillAppear() {
         addActiveApplicationObservers()
-        presenter.updateActivityCard(withStatus: isActiveDay ? .homeDefault : .inactiveDay)
+        presenter.updateActivityCard(withStatus: isActiveDay ? .homeDefault : .inactiveDay, firstName: nil, imageName: nil)
     }
     func viewWillDisappear() {
         removeActiveApplicationObservers()
@@ -76,6 +76,18 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         router?.routeToHome()
     }
     
+    func startChatButtonPressed() {
+        print("\n * HomeInteractor -> startChatButtonPressed()")
+        guard let roomName = chatRoomName, let roomToken = chatRoomToken else { return }
+        router?.routeToVideoChat(withRoomName: roomName, roomToken: roomToken)
+    }
+    
+    func nextUserButtonPressed() {
+        print("\n * HomeInteractor -> nextUserButtonPressed()")
+        // User wants another user to chat with
+        connect()
+    }
+    
     // MARK: PermissionsListener
     
     func shouldRouteToHome() {
@@ -83,6 +95,9 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     }
     
     // MARK: - Private
+    
+    private var chatRoomName: String?
+    private var chatRoomToken: String?
     
     private var client: ActionCableClient?
     private var appearanceChannel: Channel?
@@ -141,7 +156,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             guard let data = data,
                 let appearanceDictionary = data as? [String: Int],
                 let onlineCount = appearanceDictionary["online_user_count"],
-                let availableCount = appearanceDictionary["online_available_user_count"] else {
+                let _ = appearanceDictionary["online_available_user_count"] else {
                     return
             }
             self.presenter.presentAppearanceCount(onlineCount)
@@ -155,10 +170,19 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             guard let data = data,
                 let chatRoom = data as? [String: String],
                 let roomName = chatRoom["room_name"],
-                let token = chatRoom["twilio_token"] else {
+                let token = chatRoom["twilio_token"],
+                let remoteUserID = chatRoom["remote_user_id"],
+                let remoteUserFirstName = chatRoom["remote_user_first_name"],
+                let remoteUserProfileImageURL = chatRoom["remote_user_profile_image_url"] else {
                     return
             }
-            self?.router?.routeToVideoChat(withRoomName: roomName, roomToken: token)
+            print("\n * Chat room data", chatRoom)
+            // TODO: Cache remote user info. Check for image cache before attempting download
+            self?.chatRoomName = roomName
+            self?.chatRoomToken = token
+            self?.presenter.updateActivityCard(withStatus: .profileView,
+                                               firstName: remoteUserFirstName.uppercased(),
+                                               imageName: remoteUserProfileImageURL)
         }
     }
     
