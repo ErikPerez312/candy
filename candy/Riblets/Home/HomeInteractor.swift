@@ -29,6 +29,7 @@ protocol HomePresentable: Presentable {
 
 protocol HomeListener: class {
     // Declare methods the interactor can invoke to communicate with other RIBs.
+    func shouldRouteToLoggedOut()
 }
 
 final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteractable, HomePresentableListener {
@@ -46,6 +47,14 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     override func didBecomeActive() {
         super.didBecomeActive()
         setUpClient()
+    }
+    
+    override func willResignActive() {
+        super.willResignActive()
+    }
+    
+    deinit {
+        print("did deint")
     }
     
     // MARK: HomePresentableListener
@@ -101,6 +110,11 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         router?.routeToHome()
     }
     
+    // MARK: SettingsListener
+    
+    func shouldRouteToLoggedOut() {
+        listener?.shouldRouteToLoggedOut()
+    }
     
     // MARK: - Private
     
@@ -131,29 +145,26 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         candyClient.origin = CandyAPI.webSocketOrigin
         candyClient.reconnectionStrategy = .linear(maxRetries: 5, intervalTime: 3)
         candyClient.connect()
-        candyClient.onConnected = {
-            self.buildAppearanceChannel(withClient: candyClient)
-            self.buildChatChannel(withClient: candyClient)
+        candyClient.onConnected = { [weak self] in
+            self?.buildAppearanceChannel(withClient: candyClient)
+            self?.buildChatChannel(withClient: candyClient)
         }
-        candyClient.onDisconnected = { (error: ConnectionError?) in
-            self.appearanceChannel?.action("away", with: nil)
-        }
-        candyClient.willReconnect = {
-            return true
+        candyClient.onDisconnected = { [weak self] (error: ConnectionError?) in
+            self?.appearanceChannel?.action("away", with: nil)
         }
     }
     
     private func buildAppearanceChannel(withClient client: ActionCableClient) {
         let channel = client.create("AppearanceChannel")
         self.appearanceChannel = channel
-        channel.onReceive = { (data: Any?, error: Error?) in
+        channel.onReceive = { [weak self](data: Any?, error: Error?) in
             guard let data = data,
                 let appearanceDictionary = data as? [String: Int],
                 let onlineCount = appearanceDictionary["online_user_count"],
                 let _ = appearanceDictionary["online_available_user_count"] else {
                     return
             }
-            self.presenter.presentAppearanceCount(onlineCount)
+            self?.presenter.presentAppearanceCount(onlineCount)
         }
     }
     
