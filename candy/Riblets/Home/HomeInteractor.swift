@@ -16,6 +16,7 @@ protocol HomeRouting: ViewableRouting {
     func routeToVideoChat(withRoomName roomName: String, roomToken: String, remoteUserFirstName: String)
     func routeToHome()
     func routeToPermissions()
+    func routeToSettings()
 }
 
 protocol HomePresentable: Presentable {
@@ -64,6 +65,10 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
     }
     
+    func settingsbuttonPressed() {
+        router?.routeToSettings()
+    }
+    
     func viewWillAppear() {
         addActiveApplicationObservers()
         presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
@@ -90,11 +95,12 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         connect()
     }
     
-    // MARK: PermissionsListener
+    // MARK: PermissionsListener and SettingsListener
     
     func shouldRouteToHome() {
         router?.routeToHome()
     }
+    
     
     // MARK: - Private
     

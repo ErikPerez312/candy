@@ -16,6 +16,7 @@ protocol HomePresentableListener: HomeActivityCardDelegate {
     // interactor class.
     func connect()
     func canceledConnection()
+    func settingsbuttonPressed()
     func viewWillAppear()
     func viewWillDisappear()
 }
@@ -42,6 +43,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         
         let views = buildMainViews()
         buildButtons(withAppearanceView: views.appearanceView, activityCard: views.activityCard)
+        buildSettingsButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,10 +56,6 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     }
     
     // MARK: HomeViewControllable
-    
-    func push(viewController: ViewControllable) {
-        navigationController?.pushViewController(viewController.uiviewController, animated: true)
-    }
 
     func presentModally(viewController: ViewControllable) {
         present(viewController.uiviewController, animated: true, completion: nil)
@@ -157,11 +155,24 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         }
     }
     
+    private func buildSettingsButton() {
+        let button = UIBarButtonItem(image: UIImage(named: "settings-button"),
+                                     style: .done,
+                                     target: self,
+                                     action: #selector(settingsButtonPressed))
+        navigationItem.leftBarButtonItem = button
+        navigationItem.leftBarButtonItem?.tintColor = .candyBackgroundBlue
+    }
+    
     @objc private func connectButtonPressed() {
         listener?.connect()
     }
     
     @objc private func cancelButtonPressed() {
         listener?.canceledConnection()
+    }
+    
+    @objc private func settingsButtonPressed() {
+        listener?.settingsbuttonPressed()
     }
 }
