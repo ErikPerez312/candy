@@ -26,6 +26,7 @@ protocol SettingsPresentable: Presentable {
 protocol SettingsListener: class {
     // Declare methods the interactor can invoke to communicate with other RIBs.
     func shouldRouteToHome()
+    func shouldRouteToLoggedOut()
 }
 
 final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, SettingsInteractable, SettingsPresentableListener {
@@ -47,8 +48,8 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
     }
     
     func logout() {
-        // TODO: Implement body
-        return
+        UserDefaults.standard.set(false, forKey: "isLoggedIn")
+        listener?.shouldRouteToLoggedOut()
     }
     
     func deleteProfile() {
