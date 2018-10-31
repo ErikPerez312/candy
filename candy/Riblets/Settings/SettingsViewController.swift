@@ -78,11 +78,23 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
         
     }
     
+    func presentActivityIndicator() {
+        deleteAccountButton?.isEnabled = false
+        deletingAccountActitvityIndicator?.isHidden = false
+        deletingAccountActitvityIndicator?.startAnimating()
+    }
+    
+    func hideActivityIndicator() {
+        deleteAccountButton?.isEnabled = true
+        deletingAccountActitvityIndicator?.stopAnimating()
+    }
+    
     // MARK: - Private
     
     private var deleteAccountButton: UIButton?
     private var photoLibraryImagePicker: UIImagePickerController?
     private var profileImageView: UIImageView?
+    private var deletingAccountActitvityIndicator: UIActivityIndicatorView?
     
     private func setUpView() {
         let navigationBar = navigationController?.navigationBar
@@ -207,6 +219,13 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
             maker.bottom.equalToSuperview().inset(17).priority(900)
         }
         
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        self.deletingAccountActitvityIndicator = indicator
+        deleteAccountButton.addSubview(indicator)
+        indicator.snp.makeConstraints { maker in
+            maker.size.equalTo(CGSize(width: 30, height: 30))
+            maker.center.equalToSuperview()
+        }
     }
     
     private func buildImagePicker() {
@@ -230,6 +249,13 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
     }
     
     @objc private func deleteAccountButtonPressed() {
-        listener?.deleteProfile()
+        let alertController = UIAlertController(title: "Are you sure you want to delete your account?", message: "This will permanently delete all your account data.", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            self.listener?.deleteProfile()
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

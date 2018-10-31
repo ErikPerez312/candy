@@ -21,6 +21,7 @@ enum Resource {
     case logIn(withPhoneNumber: String, password: String)
     case requestVerificationCode(withNumber: String)
     case verifyVerificationCode(code: String, number: String)
+    case deleteUser(id: String)
     
     var httpRequest: HTTPRequest {
         switch self {
@@ -30,11 +31,16 @@ enum Resource {
             return .post
         case .logIn:
             return .get
+        case .deleteUser:
+            return .delete
         }
     }
     
     var header: [String: String] {
         switch self {
+        case .deleteUser:
+            guard let token = KeychainHelper.fetch(.authToken) else { fallthrough }
+            return ["Authorization": "Bearer \(token)"]
         default:
             return ["Content-Type": "application/json"]
         }
@@ -46,6 +52,7 @@ enum Resource {
         case .register: return "/users"
         case .requestVerificationCode: return "/verification/code"
         case .verifyVerificationCode: return "/verification/verify"
+        case let .deleteUser(id): return "/users/\(id)"
         }
     }
     

@@ -21,6 +21,8 @@ protocol SettingsPresentable: Presentable {
     func presentDeniedPermissionsAlert()
     func presentOkAlert(title: String, message: String?)
     func presentImagePicker()
+    func presentActivityIndicator()
+    func hideActivityIndicator()
 }
 
 protocol SettingsListener: class {
@@ -53,8 +55,23 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
     }
     
     func deleteProfile() {
-        // TODO: Implement body
-        return
+        presenter.presentActivityIndicator()
+        guard let id = KeychainHelper.fetch(.userID) else { return }
+        CandyAPI.deleteUser(withID: id) { (code) in
+            DispatchQueue.main.async {
+                self.presenter.hideActivityIndicator()
+            }
+            guard let statusCode = code , statusCode == 204 else {
+                DispatchQueue.main.async {
+                    self.presenter.presentOkAlert(title: "Oops", message: "Something went wrong on our end. Please try again later")
+                }
+                return
+            }
+            print("Did delete")
+            DispatchQueue.main.async {
+                self.listener?.shouldRouteToLoggedOut()
+            }
+        }
     }
     
     func cacheImage(_ image: UIImage) {
