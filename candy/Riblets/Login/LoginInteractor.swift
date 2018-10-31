@@ -99,6 +99,7 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
             .first!
             .appendingPathComponent("user.plist")
         KeychainHelper.save(value: user.token, as: .authToken)
+        KeychainHelper.save(value: "\(user.id)", as: .userID)
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
         let didSaveUserToFile = user.dictionary.write(to: userFileURL, atomically: true)
     }
