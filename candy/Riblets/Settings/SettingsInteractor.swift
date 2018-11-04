@@ -20,9 +20,12 @@ protocol SettingsPresentable: Presentable {
     
     func presentDeniedPermissionsAlert()
     func presentOkAlert(title: String, message: String?)
+    func presentProfileImage(_ image: UIImage)
     func presentImagePicker()
-    func presentActivityIndicator()
-    func hideActivityIndicator()
+    func presentDeletingAccountActivityIndicator()
+    func hideDeletingAccountActivityIndicator()
+    func presentProfileImageActivityIndicator()
+    func hideProfileImageActivityIndicator()
 }
 
 protocol SettingsListener: class {
@@ -55,11 +58,11 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
     }
     
     func deleteProfile() {
-        presenter.presentActivityIndicator()
+        presenter.presentDeletingAccountActivityIndicator()
         guard let id = KeychainHelper.fetch(.userID) else { return }
         CandyAPI.deleteUser(withID: id) { (code) in
             DispatchQueue.main.async {
-                self.presenter.hideActivityIndicator()
+                self.presenter.hideDeletingAccountActivityIndicator()
             }
             guard let statusCode = code , statusCode == 204 else {
                 DispatchQueue.main.async {
@@ -74,9 +77,63 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
         }
     }
     
-    func cacheImage(_ image: UIImage) {
-        // TODO: Upload image to AWS
+    func uploadImage(_ imageInfo: [String: Any]) {
+        guard let imageURL = imageInfo[UIImagePickerControllerImageURL] as? URL,
+            let image = imageInfo[UIImagePickerControllerOriginalImage] as? UIImage,
+            let imageData = UIImagePNGRepresentation(image) else {
+                DispatchQueue.main.async {
+                    self.presenter.presentOkAlert(title: "Upload Failed", message: "Please try again")
+                }
+                return
+        }
         
+        presenter.presentProfileImageActivityIndicator()
+        let candyImageInfo = CandyImageInfo(filename: imageURL.lastPathComponent, imageData: imageData)
+
+        // Upload image to AWS
+        CandyAPI.uploadProfileImage(withImageInfo: candyImageInfo) { (json, error) in
+            DispatchQueue.main.async {
+                self.presenter.hideProfileImageActivityIndicator()
+            }
+            guard let validJSON = json,
+                let imageSourceURL = validJSON["url"] as? String else {
+                    DispatchQueue.main.async {
+                        self.presenter.presentOkAlert(title: "Upload Failed", message: "Please try again")
+                    }
+                    return
+            }
+            UserDefaults.standard.set(imageSourceURL, forKey: "profile-image-aws-url")
+            self.cacheImage(image)
+            DispatchQueue.main.async {
+                self.presenter.presentProfileImage(image)
+            }
+        }
+    }
+    
+    func fetchProfileImage() -> UIImage? {
+        // Try to load image cache or download if cache is nil
+        if let imageCacheURL = UserDefaults.standard.url(forKey: "profile-image") {
+            return UIImage(contentsOfFile: imageCacheURL.path)
+        }
+        
+        var downloadedImage: UIImage? = nil
+        if let imageAWSURL = UserDefaults.standard.value(forKey: "profile-image-aws-url") as? String {
+            presenter.presentProfileImageActivityIndicator()
+            CandyAPI.downloadImage(withLink: imageAWSURL) { (image) in
+                DispatchQueue.main.async {
+                    self.presenter.hideProfileImageActivityIndicator()
+                }
+                guard let image = image else { return }
+                downloadedImage = image
+                self.cacheImage(image)
+            }
+        }
+        return downloadedImage
+    }
+    
+    // MARK: - Private
+    
+    private func cacheImage(_ image: UIImage) {
         let directoryPath =  NSHomeDirectory().appending("/Documents/")
         // Create documents directory if non-existant.
         if !FileManager.default.fileExists(atPath: directoryPath) {
@@ -97,14 +154,8 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
             try UIImageJPEGRepresentation(image, 1.0)?.write(to: url, options: .atomic)
             UserDefaults.standard.set(url, forKey: "profile-image")
             print("did save")
-            
         } catch {
-            print("file cant not be save at path \(filepath), with error : \(error)");
+            print("file cant not be save at path \(filepath), with error : \(error)")
         }
-    }
-    
-    func fetchProfileImage() -> UIImage? {
-        guard let imageURL = UserDefaults.standard.url(forKey: "profile-image") else { return nil }
-        return UIImage(contentsOfFile: imageURL.path)
     }
 }

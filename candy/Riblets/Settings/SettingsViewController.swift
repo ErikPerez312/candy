@@ -10,6 +10,7 @@ import RIBs
 import RxSwift
 import UIKit
 import SnapKit
+import Photos
 
 protocol SettingsPresentableListener: class {
     // Declare properties and methods that the view controller can invoke to perform
@@ -20,7 +21,7 @@ protocol SettingsPresentableListener: class {
     func logout()
     func deleteProfile()
     func fetchProfileImage() -> UIImage?
-    func cacheImage(_ image: UIImage)
+    func uploadImage(_ imageInfo: [String:Any])
 }
 
 final class SettingsViewController: UIViewController, SettingsPresentable, SettingsViewControllable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -68,25 +69,40 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        // FIXME: Bug when double tapping an image. Causes dismiss to be called twice
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            profileImageView?.image = pickedImage
-            listener?.cacheImage(pickedImage)
-        }
-        dismiss(animated: true, completion: nil)
-        
+    func presentProfileImage(_ image: UIImage) {
+        profileImageView?.image = image
     }
     
-    func presentActivityIndicator() {
+    func presentDeletingAccountActivityIndicator() {
         deleteAccountButton?.isEnabled = false
         deletingAccountActitvityIndicator?.isHidden = false
         deletingAccountActitvityIndicator?.startAnimating()
     }
     
-    func hideActivityIndicator() {
+    func hideDeletingAccountActivityIndicator() {
         deleteAccountButton?.isEnabled = true
         deletingAccountActitvityIndicator?.stopAnimating()
+    }
+    
+    func presentProfileImageActivityIndicator() {
+        print("\n * Will show profile indicaator")
+        profileImageActivityIndicator?.isHidden = false
+        profileImageActivityIndicator?.startAnimating()
+    }
+    
+    func hideProfileImageActivityIndicator() {
+        print("\n * Will hide profile indicaator")
+        profileImageActivityIndicator?.stopAnimating()
+    }
+    
+    // MARK: UIImagePickerControllerDelegate
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        // FIXME: Bug when double tapping an image. Causes dismiss to be called twice
+        // TODO: Create a handler for image picker
+        listener?.uploadImage(info)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Private
@@ -95,6 +111,7 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
     private var photoLibraryImagePicker: UIImagePickerController?
     private var profileImageView: UIImageView?
     private var deletingAccountActitvityIndicator: UIActivityIndicatorView?
+    private var profileImageActivityIndicator: UIActivityIndicatorView?
     
     private func setUpView() {
         let navigationBar = navigationController?.navigationBar
@@ -163,6 +180,15 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
             maker.size.equalTo(CGSize(width: 129, height: 129))
             maker.centerX.equalToSuperview()
             maker.top.equalTo(card.snp.topMargin).offset(40)
+        }
+        
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        self.profileImageActivityIndicator = indicator
+        indicator.isHidden = true
+        imageView.addSubview(indicator)
+        indicator.snp.makeConstraints { maker in
+            maker.size.equalTo(CGSize(width: 40, height: 40))
+            maker.center.equalToSuperview()
         }
         
         let firstNameLabel = UILabel()
