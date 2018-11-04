@@ -51,8 +51,8 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
     func routeToLoggedOut() {
         if let home = home {
             detachChild(home)
-            viewController.dismiss(viewController: home.viewControllable, animated: true)
             self.home = nil
+            viewController.dismiss(viewController: home.viewControllable, animated: true)
         }
         let loggedOut = loggedOutBuilder.build(withListener: interactor)
         attachChild(loggedOut)

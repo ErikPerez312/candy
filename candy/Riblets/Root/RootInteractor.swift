@@ -42,12 +42,20 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
         routeToInitialRib()
     }
     
+    // MARK: LoggedOutListener
+    
     func didLogin() {
         router?.routeToHome()
     }
     
     func didRegister() {
         router?.routeToHome()
+    }
+    
+    // MARK: HomeListener
+    
+    func shouldRouteToLoggedOut() {
+        router?.routeToLoggedOut()
     }
     
     // MARK: - Private

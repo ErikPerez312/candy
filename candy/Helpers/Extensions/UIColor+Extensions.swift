@@ -43,4 +43,7 @@ extension UIColor {
     static var candyProgressBarPink: UIColor {
         return UIColor(red: 235, green: 176, blue: 176)
     }
+    static var deletingRed: UIColor {
+        return UIColor(red: 214, green: 52, blue: 72)
+    }
 }

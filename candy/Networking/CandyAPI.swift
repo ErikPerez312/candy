@@ -26,17 +26,20 @@ class CandyAPI {
     
     static func signIn(withPhoneNumber phoneNumber: String, password: String,
                        completionHandler handler: @escaping CompletionHandler) {
+        
         request(withResource: .logIn(withPhoneNumber: phoneNumber, password: password),
                 completionHandler: handler)
     }
     
     static func register(withUserDict userDict: [String: Any],
                          completionHandler handler: @escaping CompletionHandler) {
+        
         request(withResource: .register(withUserObject: userDict), completionHandler: handler)
     }
     
     static func requestVerificationCode(withPhoneNumber phoneNumber: String,
                                         completionHandler handler: CompletionHandler?) {
+        
         let defaultHandler: (JSONDictionary?, Error?) -> Void = { json, error in
         }
         request(withResource: .requestVerificationCode(withNumber: phoneNumber), completionHandler: handler ?? defaultHandler)
@@ -45,8 +48,40 @@ class CandyAPI {
     static func verifyVerificationCode(withPhoneNumber phoneNumber: String,
                                        code: String,
                                        completionHandler handler: @escaping CompletionHandler) {
+        
         request(withResource: .verifyVerificationCode(code: code, number: phoneNumber),
                 completionHandler: handler)
+    }
+    
+    static func uploadProfileImage(withImageInfo imageInfo: CandyImageInfo,
+                                   completionHandler handler: @escaping CompletionHandler) {
+        
+        request(withResource: .uploadProfileImage(imageInfo: imageInfo), completionHandler: handler)
+    }
+    
+    static func deleteUser(withID id: String, completionHandler handler: @escaping (Int?) -> Void) {
+        // TODO: Refactor. Breaking DRY principle. Update basic request method.
+        do {
+            let resource = Resource.deleteUser(id: id)
+            let url = try buildURL(withBaseURLString: baseURLString, resource: resource)
+            var request = URLRequest(url: url)
+            request.httpMethod = resource.httpRequest.rawValue
+            request.httpBody = resource.body
+            request.allHTTPHeaderFields = resource.header
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                guard error == nil, let urlResponse = response as? HTTPURLResponse else {
+                    handler(nil)
+                    return
+                }
+                
+                handler(urlResponse.statusCode)
+
+                }.resume()
+        } catch {
+            // Catches possible errors thrown by buildURL(withBaseURLString:resource:)
+            handler(nil)
+        }
     }
     
     static func downloadImage(withLink link: String, completionHandler handler: @escaping (UIImage?) -> Void) {
@@ -70,6 +105,7 @@ class CandyAPI {
     
     private static let baseURLString = "https://video-dating.herokuapp.com"
     
+    // TODO: Refactor to return data instead of JSON
     private static func request(withResource resource: Resource,
                                 completionHandler handler: @escaping CompletionHandler) {
         do {
