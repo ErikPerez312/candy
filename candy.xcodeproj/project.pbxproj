@@ -12,6 +12,8 @@
 		8603D421218782E100464384 /* SettingsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D41D218782E100464384 /* SettingsBuilder.swift */; };
 		8603D422218782E100464384 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D41E218782E100464384 /* SettingsInteractor.swift */; };
 		8603D4242187839900464384 /* HomeComponent+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D4232187839900464384 /* HomeComponent+Settings.swift */; };
+		8603D426218991F300464384 /* CandyImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D425218991F300464384 /* CandyImageInfo.swift */; };
+		8603D428218994BE00464384 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D427218994BE00464384 /* Data+Extensions.swift */; };
 		8609C41C21277F0000F41D30 /* ChatTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8609C41B21277F0000F41D30 /* ChatTimer.swift */; };
 		8609C41E21277F9A00F41D30 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8609C41D21277F9A00F41D30 /* QuestionsView.swift */; };
 		8616300B2118BA3C00B3EF33 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630072118BA3C00B3EF33 /* RootRouter.swift */; };
@@ -79,6 +81,8 @@
 		8603D41D218782E100464384 /* SettingsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBuilder.swift; sourceTree = "<group>"; };
 		8603D41E218782E100464384 /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
 		8603D4232187839900464384 /* HomeComponent+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeComponent+Settings.swift"; sourceTree = "<group>"; };
+		8603D425218991F300464384 /* CandyImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyImageInfo.swift; sourceTree = "<group>"; };
+		8603D427218994BE00464384 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		8609C41B21277F0000F41D30 /* ChatTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTimer.swift; sourceTree = "<group>"; };
 		8609C41D21277F9A00F41D30 /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
 		861630072118BA3C00B3EF33 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
@@ -244,6 +248,7 @@
 				8687CA6A212229C9006B5C41 /* Statement.swift */,
 				8662337B212A5F0F00425F92 /* TwilioHandler.swift */,
 				8648CB4821406415001C150A /* Questions.swift */,
+				8603D425218991F300464384 /* CandyImageInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				861630402118D83000B3EF33 /* UINavigationController+RIBs.swift */,
 				8625D66A211DFFB900621FA8 /* UIAlertController+RIBs.swift */,
 				86D79CDA211CF33A00765C30 /* String+Extensions.swift */,
+				8603D427218994BE00464384 /* Data+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -575,6 +581,8 @@
 				8679ED6821346A2D003125D6 /* PermissionsInteractor.swift in Sources */,
 				86CDEEA22115318000C65879 /* AppComponent.swift in Sources */,
 				8679ED6A21346F9E003125D6 /* HomeComponent+Permissions.swift in Sources */,
+				8603D426218991F300464384 /* CandyImageInfo.swift in Sources */,
+				8603D428218994BE00464384 /* Data+Extensions.swift in Sources */,
 				8609C41E21277F9A00F41D30 /* QuestionsView.swift in Sources */,
 				8616304C2118EE5B00B3EF33 /* ActivityIndicatorView.swift in Sources */,
 			);

@@ -53,6 +53,12 @@ class CandyAPI {
                 completionHandler: handler)
     }
     
+    static func uploadProfileImage(withImageInfo imageInfo: CandyImageInfo,
+                                   completionHandler handler: @escaping CompletionHandler) {
+        
+        request(withResource: .uploadProfileImage(imageInfo: imageInfo), completionHandler: handler)
+    }
+    
     static func deleteUser(withID id: String, completionHandler handler: @escaping (Int?) -> Void) {
         // TODO: Refactor. Breaking DRY principle. Update basic request method.
         do {
