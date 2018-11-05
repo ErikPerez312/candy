@@ -1,4 +1,4 @@
-![](https://github.com/ErikPerez312/video-dating/blob/master/images/github-image.png)
+![](https://github.com/ErikPerez312/candy/blob/master/images/github-image.png?raw=true)
 # Candy
 Candy brings video chat to dating. The days of catfishing are **OVER**. On every Friday and Saturday between 7PM-9PM Local Time, users
 can get on and video chat with people of their interest. Each call only lasts 120 seconds. What can you do with that time? - **Candy is available for people of ages 18-22.**
