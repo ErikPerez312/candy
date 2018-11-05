@@ -12,7 +12,7 @@ enum UserError: Error {
     case instantiationFailed([String: Any])
 }
 
-class User: NSObject {
+final class User: NSObject {
     let id: Int
     let firstName: String
     let lastName: String

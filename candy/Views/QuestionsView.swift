@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class QuestionsView: UIView {
+final class QuestionsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
