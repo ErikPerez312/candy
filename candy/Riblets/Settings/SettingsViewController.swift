@@ -37,6 +37,8 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
         let firstNameLabel = buildUserInfoViews(withCard: settingViews.settingsCard, title: settingViews.title)
         buildOptionButtons(withCard: settingViews.settingsCard, firstNameLabel: firstNameLabel)
         profileImageView?.image = listener?.fetchProfileImage() ?? UIImage(named: "default-user")
+        let firstName = UserDefaults.standard.value(forKey: "userFirstName") as? String ?? ""
+        firstNameLabel.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: firstName.uppercased()).attributedText
     }
     
     // MARK: SettingsPresentable

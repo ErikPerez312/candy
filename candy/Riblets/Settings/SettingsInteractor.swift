@@ -113,22 +113,25 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
     func fetchProfileImage() -> UIImage? {
         // Try to load image cache or download if cache is nil
         if let imageCacheURL = UserDefaults.standard.url(forKey: "profile-image") {
+            print("\n * SettingsInteractor->fetchProfileImage: did Find URL For Local Image Cache")
             return UIImage(contentsOfFile: imageCacheURL.path)
         }
         
-        var downloadedImage: UIImage? = nil
         if let imageAWSURL = UserDefaults.standard.value(forKey: "profile-image-aws-url") as? String {
+            print("\n * SettingsInteractor->fetchProfileImage: did Find URL For aws Image Cache")
             presenter.presentProfileImageActivityIndicator()
             CandyAPI.downloadImage(withLink: imageAWSURL) { (image) in
                 DispatchQueue.main.async {
                     self.presenter.hideProfileImageActivityIndicator()
                 }
                 guard let image = image else { return }
-                downloadedImage = image
+                DispatchQueue.main.async {
+                    self.presenter.presentProfileImage(image)
+                }
                 self.cacheImage(image)
             }
         }
-        return downloadedImage
+        return nil
     }
     
     // MARK: - Private
