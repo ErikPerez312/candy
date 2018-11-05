@@ -53,10 +53,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         super.willResignActive()
     }
     
-    deinit {
-        print("did deint")
-    }
-    
     // MARK: HomePresentableListener
     
     func connect() {
@@ -91,7 +87,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     }
     
     func startChatButtonPressed() {
-        print("\n * HomeInteractor -> startChatButtonPressed()")
         guard let roomName = chatRoomName,
             let roomToken = chatRoomToken,
             let firstName = remoteUserFirstName else { return }
@@ -99,7 +94,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     }
     
     func nextUserButtonPressed() {
-        print("\n * HomeInteractor -> nextUserButtonPressed()")
         // User wants another user to chat with
         connect()
     }
@@ -113,6 +107,9 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     // MARK: SettingsListener
     
     func shouldRouteToLoggedOut() {
+        // Delete cached image. Fixes issue when signing into another account
+        // and previous accounts profile image is loaded.
+        UserDefaults.standard.removeObject(forKey: "profile-image")
         listener?.shouldRouteToLoggedOut()
     }
     
@@ -176,13 +173,12 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
                 let chatRoom = data as? [String: String],
                 let roomName = chatRoom["room_name"],
                 let token = chatRoom["twilio_token"],
-                let remoteUserID = chatRoom["remote_user_id"],
+                let _ = chatRoom["remote_user_id"],
                 let remoteUserFirstName = chatRoom["remote_user_first_name"],
                 let remoteUserProfileImageURL = chatRoom["remote_user_profile_image_url"] else {
                     return
             }
             print("\n * Chat room data", chatRoom)
-            // TODO: Cache remote user info. Check for image cache before attempting download
             self?.chatRoomName = roomName
             self?.chatRoomToken = token
             self?.remoteUserFirstName = remoteUserFirstName

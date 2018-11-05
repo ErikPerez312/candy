@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class UserAppearanceView: UIView {
+final class UserAppearanceView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

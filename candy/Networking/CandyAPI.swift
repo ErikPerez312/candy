@@ -13,7 +13,7 @@ enum CandyAPIError: Error {
     case invalidURL(String), invalidParameter(String, Any), invalidJSON(String)
 }
 
-class CandyAPI {
+final class CandyAPI {
     
     typealias JSONDictionary = [String: Any]
     typealias CompletionHandler = (JSONDictionary?, Error?) -> Void

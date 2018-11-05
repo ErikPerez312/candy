@@ -70,7 +70,6 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
                 }
                 return
             }
-            print("Did delete")
             DispatchQueue.main.async {
                 self.listener?.shouldRouteToLoggedOut()
             }
@@ -113,12 +112,10 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
     func fetchProfileImage() -> UIImage? {
         // Try to load image cache or download if cache is nil
         if let imageCacheURL = UserDefaults.standard.url(forKey: "profile-image") {
-            print("\n * SettingsInteractor->fetchProfileImage: did Find URL For Local Image Cache")
             return UIImage(contentsOfFile: imageCacheURL.path)
         }
         
         if let imageAWSURL = UserDefaults.standard.value(forKey: "profile-image-aws-url") as? String {
-            print("\n * SettingsInteractor->fetchProfileImage: did Find URL For aws Image Cache")
             presenter.presentProfileImageActivityIndicator()
             CandyAPI.downloadImage(withLink: imageAWSURL) { (image) in
                 DispatchQueue.main.async {
@@ -156,7 +153,6 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
         do {
             try UIImageJPEGRepresentation(image, 1.0)?.write(to: url, options: .atomic)
             UserDefaults.standard.set(url, forKey: "profile-image")
-            print("did save")
         } catch {
             print("file cant not be save at path \(filepath), with error : \(error)")
         }

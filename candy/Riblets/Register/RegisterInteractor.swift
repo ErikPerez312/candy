@@ -187,7 +187,6 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
         KeychainHelper.save(value: user.token, as: .authToken)
         KeychainHelper.save(value: "\(user.id)", as: .userID)
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        let didSaveUserToFile = user.dictionary.write(to: userFileURL, atomically: true)
-        print("\n* didSaveUserToFile: \(didSaveUserToFile)")
+        let _ = user.dictionary.write(to: userFileURL, atomically: true)
     }
 }

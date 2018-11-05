@@ -10,11 +10,11 @@ import RIBs
 
 /// The dependencies needed from the parent scope of Home to provide for the Settings scope.
 protocol HomeDependencySettings: Dependency {
-    // TODO: Declare dependencies needed from the parent scope of Home to provide dependencies
+    // Declare dependencies needed from the parent scope of Home to provide dependencies
     // for the Settings scope.
 }
 
 extension HomeComponent: SettingsDependency {
 
-    // TODO: Implement properties to provide for Settings scope.
+    // Implement properties to provide for Settings scope.
 }

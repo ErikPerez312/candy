@@ -18,7 +18,7 @@ protocol TwilioHandlerDelegate: class {
     func remoteParticipantDidDisconnect()
 }
 
-class TwilioHandler: NSObject {
+final class TwilioHandler: NSObject {
     
     weak var delegate: TwilioHandlerDelegate? {
         didSet {
