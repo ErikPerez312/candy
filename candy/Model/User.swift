@@ -25,6 +25,7 @@ class User: NSObject {
     var fullName: String {
         return "\(firstName) \(lastName)"
     }
+    
     var dictionary: NSDictionary {
         return ["id": self.id,
                 "first_name": self.firstName,
@@ -47,7 +48,8 @@ class User: NSObject {
             let phoneNumber = json["phone_number"] as? String,
             let gender = json["gender"] as? Int,
             let seeking = json["seeking"] as? Int,
-            let token = json["token"] as? String
+            let token = json["token"] as? String,
+            let profileImageJSON = json["profile_images"] as? [[String: Any]]
             else { return nil }
         
         self.id = id
@@ -58,6 +60,12 @@ class User: NSObject {
         self.gender = gender
         self.seeking = seeking
         self.token = token
+        
+        let profileImages = profileImageJSON.compactMap(ProfileImage.init)
+        print("User -> Init: profile images: \(profileImages.last!.description)")
+        guard let recentImage = profileImages.last else { return }
+        UserDefaults.standard.set(recentImage.imageURL, forKey: "profile-image-aws-url")
+        // TODO: Cache user first name and display in settings
     }
 }
 
