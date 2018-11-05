@@ -87,13 +87,11 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
     }
     
     func presentProfileImageActivityIndicator() {
-        print("\n * Will show profile indicaator")
         profileImageActivityIndicator?.isHidden = false
         profileImageActivityIndicator?.startAnimating()
     }
     
     func hideProfileImageActivityIndicator() {
-        print("\n * Will hide profile indicaator")
         profileImageActivityIndicator?.stopAnimating()
     }
     

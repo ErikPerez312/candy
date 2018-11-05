@@ -15,7 +15,6 @@ final class ProfileImage: NSObject {
     init?(json: [String: Any]) {
         guard let id = json["id"] as? Int,
             let url = json["url"] as? String else {
-                print("\n * ProfileImage -> Init: Failed")
                 return nil
         }
         self.id = id

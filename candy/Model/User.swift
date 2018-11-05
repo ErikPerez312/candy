@@ -62,7 +62,6 @@ final class User: NSObject {
         self.token = token
         
         let profileImages = profileImageJSON.compactMap(ProfileImage.init)
-        print("User -> Init: profile images: \(profileImages.last!.description)")
         guard let recentImage = profileImages.last else { return }
         UserDefaults.standard.set(recentImage.imageURL, forKey: "profile-image-aws-url")
         UserDefaults.standard.set(firstName, forKey: "userFirstName")
