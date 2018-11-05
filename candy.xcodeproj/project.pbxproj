@@ -59,6 +59,7 @@
 		86575450211BD1AE00AF1F9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544F211BD1AE00AF1F9B /* User.swift */; };
 		86575452211BD3AB00AF1F9B /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86575451211BD3AB00AF1F9B /* KeychainHelper.swift */; };
 		8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8662337B212A5F0F00425F92 /* TwilioHandler.swift */; };
+		867420FA218F660E0059A652 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867420F9218F660E0059A652 /* ProfileImage.swift */; };
 		8679ED6521346A2D003125D6 /* PermissionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6121346A2D003125D6 /* PermissionsRouter.swift */; };
 		8679ED6621346A2D003125D6 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6221346A2D003125D6 /* PermissionsViewController.swift */; };
 		8679ED6721346A2D003125D6 /* PermissionsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6321346A2D003125D6 /* PermissionsBuilder.swift */; };
@@ -128,6 +129,7 @@
 		8657544F211BD1AE00AF1F9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		86575451211BD3AB00AF1F9B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		8662337B212A5F0F00425F92 /* TwilioHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwilioHandler.swift; sourceTree = "<group>"; };
+		867420F9218F660E0059A652 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		8679ED6121346A2D003125D6 /* PermissionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsRouter.swift; sourceTree = "<group>"; };
 		8679ED6221346A2D003125D6 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
 		8679ED6321346A2D003125D6 /* PermissionsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsBuilder.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				8657544F211BD1AE00AF1F9B /* User.swift */,
+				867420F9218F660E0059A652 /* ProfileImage.swift */,
 				8687CA6A212229C9006B5C41 /* Statement.swift */,
 				8662337B212A5F0F00425F92 /* TwilioHandler.swift */,
 				8648CB4821406415001C150A /* Questions.swift */,
@@ -561,6 +564,7 @@
 				86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */,
 				8616303F2118D5D600B3EF33 /* HomeInteractor.swift in Sources */,
 				8616302A2118C93600B3EF33 /* RegisterBuilder.swift in Sources */,
+				867420FA218F660E0059A652 /* ProfileImage.swift in Sources */,
 				861630132118BC3500B3EF33 /* LoggedOutRouter.swift in Sources */,
 				8679ED6721346A2D003125D6 /* PermissionsBuilder.swift in Sources */,
 				861630462118EE0100B3EF33 /* HomeActivityCard.swift in Sources */,
