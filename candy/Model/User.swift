@@ -65,7 +65,7 @@ class User: NSObject {
         print("User -> Init: profile images: \(profileImages.last!.description)")
         guard let recentImage = profileImages.last else { return }
         UserDefaults.standard.set(recentImage.imageURL, forKey: "profile-image-aws-url")
-        // TODO: Cache user first name and display in settings
+        UserDefaults.standard.set(firstName, forKey: "userFirstName")
     }
 }
 
