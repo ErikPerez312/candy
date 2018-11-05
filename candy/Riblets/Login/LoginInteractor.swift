@@ -41,7 +41,6 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
     }
     
     func login(withPhoneNumber phoneNumber: String?, password: String?) {
-        print("\n-Attempted Login with phone: \(phoneNumber ?? "none") and pass: \(password ?? "none") ")
         guard let number = phoneNumber,
             !number.isEmptyOrWhitespace,
             number.count == 10 else {
@@ -99,7 +98,8 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
             .first!
             .appendingPathComponent("user.plist")
         KeychainHelper.save(value: user.token, as: .authToken)
+        KeychainHelper.save(value: "\(user.id)", as: .userID)
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        let didSaveUserToFile = user.dictionary.write(to: userFileURL, atomically: true)
+        let _ = user.dictionary.write(to: userFileURL, atomically: true)
     }
 }

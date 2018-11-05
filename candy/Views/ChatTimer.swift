@@ -14,7 +14,7 @@ protocol ChatTimerDelegate: class {
     func timerDidEnd()
 }
 
-class ChatTimer: UIView {
+final class ChatTimer: UIView {
     
     weak var delegate: ChatTimerDelegate?
     

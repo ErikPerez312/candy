@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ActivityIndicatorView: UIView {
+final class ActivityIndicatorView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

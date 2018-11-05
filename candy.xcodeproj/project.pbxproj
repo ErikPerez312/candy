@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8603D41F218782E100464384 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D41B218782E100464384 /* SettingsRouter.swift */; };
+		8603D420218782E100464384 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D41C218782E100464384 /* SettingsViewController.swift */; };
+		8603D421218782E100464384 /* SettingsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D41D218782E100464384 /* SettingsBuilder.swift */; };
+		8603D422218782E100464384 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D41E218782E100464384 /* SettingsInteractor.swift */; };
+		8603D4242187839900464384 /* HomeComponent+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D4232187839900464384 /* HomeComponent+Settings.swift */; };
+		8603D426218991F300464384 /* CandyImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D425218991F300464384 /* CandyImageInfo.swift */; };
+		8603D428218994BE00464384 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603D427218994BE00464384 /* Data+Extensions.swift */; };
 		8609C41C21277F0000F41D30 /* ChatTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8609C41B21277F0000F41D30 /* ChatTimer.swift */; };
 		8609C41E21277F9A00F41D30 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8609C41D21277F9A00F41D30 /* QuestionsView.swift */; };
 		8616300B2118BA3C00B3EF33 /* RootRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861630072118BA3C00B3EF33 /* RootRouter.swift */; };
@@ -52,6 +59,7 @@
 		86575450211BD1AE00AF1F9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8657544F211BD1AE00AF1F9B /* User.swift */; };
 		86575452211BD3AB00AF1F9B /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86575451211BD3AB00AF1F9B /* KeychainHelper.swift */; };
 		8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8662337B212A5F0F00425F92 /* TwilioHandler.swift */; };
+		867420FA218F660E0059A652 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867420F9218F660E0059A652 /* ProfileImage.swift */; };
 		8679ED6521346A2D003125D6 /* PermissionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6121346A2D003125D6 /* PermissionsRouter.swift */; };
 		8679ED6621346A2D003125D6 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6221346A2D003125D6 /* PermissionsViewController.swift */; };
 		8679ED6721346A2D003125D6 /* PermissionsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6321346A2D003125D6 /* PermissionsBuilder.swift */; };
@@ -69,6 +77,13 @@
 /* Begin PBXFileReference section */
 		184A8F48A21F66FCA25AE3CC /* Pods_candy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_candy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		683C089ADB629F3D50C0FD0F /* Pods-candy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-candy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-candy/Pods-candy.debug.xcconfig"; sourceTree = "<group>"; };
+		8603D41B218782E100464384 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
+		8603D41C218782E100464384 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8603D41D218782E100464384 /* SettingsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBuilder.swift; sourceTree = "<group>"; };
+		8603D41E218782E100464384 /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
+		8603D4232187839900464384 /* HomeComponent+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeComponent+Settings.swift"; sourceTree = "<group>"; };
+		8603D425218991F300464384 /* CandyImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyImageInfo.swift; sourceTree = "<group>"; };
+		8603D427218994BE00464384 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		8609C41B21277F0000F41D30 /* ChatTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTimer.swift; sourceTree = "<group>"; };
 		8609C41D21277F9A00F41D30 /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
 		861630072118BA3C00B3EF33 /* RootRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootRouter.swift; sourceTree = "<group>"; };
@@ -114,6 +129,7 @@
 		8657544F211BD1AE00AF1F9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		86575451211BD3AB00AF1F9B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		8662337B212A5F0F00425F92 /* TwilioHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwilioHandler.swift; sourceTree = "<group>"; };
+		867420F9218F660E0059A652 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		8679ED6121346A2D003125D6 /* PermissionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsRouter.swift; sourceTree = "<group>"; };
 		8679ED6221346A2D003125D6 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
 		8679ED6321346A2D003125D6 /* PermissionsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsBuilder.swift; sourceTree = "<group>"; };
@@ -159,6 +175,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8603D41A218782BA00464384 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8603D41B218782E100464384 /* SettingsRouter.swift */,
+				8603D41C218782E100464384 /* SettingsViewController.swift */,
+				8603D41D218782E100464384 /* SettingsBuilder.swift */,
+				8603D41E218782E100464384 /* SettingsInteractor.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		8616300F2118BB4A00B3EF33 /* LoggedOut */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +229,7 @@
 				8616303B2118D5D600B3EF33 /* HomeInteractor.swift */,
 				8616305B2118F74D00B3EF33 /* HomeComponent+VideoChat.swift */,
 				8679ED6921346F9E003125D6 /* HomeComponent+Permissions.swift */,
+				8603D4232187839900464384 /* HomeComponent+Settings.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -219,9 +247,11 @@
 			isa = PBXGroup;
 			children = (
 				8657544F211BD1AE00AF1F9B /* User.swift */,
+				867420F9218F660E0059A652 /* ProfileImage.swift */,
 				8687CA6A212229C9006B5C41 /* Statement.swift */,
 				8662337B212A5F0F00425F92 /* TwilioHandler.swift */,
 				8648CB4821406415001C150A /* Questions.swift */,
+				8603D425218991F300464384 /* CandyImageInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -254,6 +284,7 @@
 				861630402118D83000B3EF33 /* UINavigationController+RIBs.swift */,
 				8625D66A211DFFB900621FA8 /* UIAlertController+RIBs.swift */,
 				86D79CDA211CF33A00765C30 /* String+Extensions.swift */,
+				8603D427218994BE00464384 /* Data+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -291,6 +322,7 @@
 		8657544A211BD0D700AF1F9B /* Riblets */ = {
 			isa = PBXGroup;
 			children = (
+				8603D41A218782BA00464384 /* Settings */,
 				8679ED6021346A13003125D6 /* Permissions */,
 				861630522118F60600B3EF33 /* VideoChat */,
 				861630372118D5C000B3EF33 /* Home */,
@@ -496,15 +528,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				8616300B2118BA3C00B3EF33 /* RootRouter.swift in Sources */,
+				8603D4242187839900464384 /* HomeComponent+Settings.swift in Sources */,
 				8616303E2118D5D600B3EF33 /* HomeBuilder.swift in Sources */,
 				861630282118C93600B3EF33 /* RegisterRouter.swift in Sources */,
 				861630572118F61A00B3EF33 /* VideoChatRouter.swift in Sources */,
+				8603D41F218782E100464384 /* SettingsRouter.swift in Sources */,
 				861630202118C33B00B3EF33 /* LoginInteractor.swift in Sources */,
 				8616305A2118F61A00B3EF33 /* VideoChatInteractor.swift in Sources */,
 				8616303C2118D5D600B3EF33 /* HomeRouter.swift in Sources */,
 				8616303D2118D5D600B3EF33 /* HomeViewController.swift in Sources */,
 				8679ED6621346A2D003125D6 /* PermissionsViewController.swift in Sources */,
 				8616302D2118CD2700B3EF33 /* LoggedOutComponent+Register.swift in Sources */,
+				8603D422218782E100464384 /* SettingsInteractor.swift in Sources */,
+				8603D421218782E100464384 /* SettingsBuilder.swift in Sources */,
 				8642B157211563BD00C2D13B /* CandyComponents.swift in Sources */,
 				8609C41C21277F0000F41D30 /* ChatTimer.swift in Sources */,
 				8679ED6521346A2D003125D6 /* PermissionsRouter.swift in Sources */,
@@ -517,6 +553,7 @@
 				8616300C2118BA3C00B3EF33 /* RootViewController.swift in Sources */,
 				8657544C211BD0FF00AF1F9B /* CandyAPI.swift in Sources */,
 				861630152118BC3500B3EF33 /* LoggedOutInteractor.swift in Sources */,
+				8603D420218782E100464384 /* SettingsViewController.swift in Sources */,
 				8616301D2118C33B00B3EF33 /* LoginRouter.swift in Sources */,
 				8657544E211BD16700AF1F9B /* Resource.swift in Sources */,
 				86575450211BD1AE00AF1F9B /* User.swift in Sources */,
@@ -527,6 +564,7 @@
 				86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */,
 				8616303F2118D5D600B3EF33 /* HomeInteractor.swift in Sources */,
 				8616302A2118C93600B3EF33 /* RegisterBuilder.swift in Sources */,
+				867420FA218F660E0059A652 /* ProfileImage.swift in Sources */,
 				861630132118BC3500B3EF33 /* LoggedOutRouter.swift in Sources */,
 				8679ED6721346A2D003125D6 /* PermissionsBuilder.swift in Sources */,
 				861630462118EE0100B3EF33 /* HomeActivityCard.swift in Sources */,
@@ -547,6 +585,8 @@
 				8679ED6821346A2D003125D6 /* PermissionsInteractor.swift in Sources */,
 				86CDEEA22115318000C65879 /* AppComponent.swift in Sources */,
 				8679ED6A21346F9E003125D6 /* HomeComponent+Permissions.swift in Sources */,
+				8603D426218991F300464384 /* CandyImageInfo.swift in Sources */,
+				8603D428218994BE00464384 /* Data+Extensions.swift in Sources */,
 				8609C41E21277F9A00F41D30 /* QuestionsView.swift in Sources */,
 				8616304C2118EE5B00B3EF33 /* ActivityIndicatorView.swift in Sources */,
 			);

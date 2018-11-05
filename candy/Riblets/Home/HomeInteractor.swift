@@ -13,9 +13,10 @@ import AVFoundation
 
 protocol HomeRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
-    func routeToVideoChat(withRoomName roomName: String, roomToken: String)
+    func routeToVideoChat(withRoomName roomName: String, roomToken: String, remoteUserFirstName: String)
     func routeToHome()
     func routeToPermissions()
+    func routeToSettings()
 }
 
 protocol HomePresentable: Presentable {
@@ -23,11 +24,12 @@ protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
     
     func presentAppearanceCount(_ count: Int)
-    func updateActivityCard(withStatus status: ActivityCardStatus)
+    func updateActivityCard(withStatus status: ActivityCardStatus, firstName: String?, imageName: String?)
 }
 
 protocol HomeListener: class {
     // Declare methods the interactor can invoke to communicate with other RIBs.
+    func shouldRouteToLoggedOut()
 }
 
 final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteractable, HomePresentableListener {
@@ -47,6 +49,10 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         setUpClient()
     }
     
+    override func willResignActive() {
+        super.willResignActive()
+    }
+    
     // MARK: HomePresentableListener
     
     func connect() {
@@ -54,19 +60,23 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             router?.routeToPermissions()
             return
         }
-        presenter.updateActivityCard(withStatus: .connecting)
+        presenter.updateActivityCard(withStatus: .connecting, firstName: nil, imageName: nil)
         appearanceChannel?.action("appear")
         chatChannel?.action("connect")
     }
     
     func canceledConnection() {
         appearanceChannel?.action("away")
-        presenter.updateActivityCard(withStatus: .homeDefault)
+        presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
+    }
+    
+    func settingsbuttonPressed() {
+        router?.routeToSettings()
     }
     
     func viewWillAppear() {
         addActiveApplicationObservers()
-        presenter.updateActivityCard(withStatus: isActiveDay ? .homeDefault : .inactiveDay)
+        presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
     }
     func viewWillDisappear() {
         removeActiveApplicationObservers()
@@ -76,13 +86,38 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         router?.routeToHome()
     }
     
-    // MARK: PermissionsListener
+    func startChatButtonPressed() {
+        guard let roomName = chatRoomName,
+            let roomToken = chatRoomToken,
+            let firstName = remoteUserFirstName else { return }
+        router?.routeToVideoChat(withRoomName: roomName, roomToken: roomToken, remoteUserFirstName: firstName)
+    }
+    
+    func nextUserButtonPressed() {
+        // User wants another user to chat with
+        connect()
+    }
+    
+    // MARK: PermissionsListener and SettingsListener
     
     func shouldRouteToHome() {
         router?.routeToHome()
     }
     
+    // MARK: SettingsListener
+    
+    func shouldRouteToLoggedOut() {
+        // Delete cached image. Fixes issue when signing into another account
+        // and previous accounts profile image is loaded.
+        UserDefaults.standard.removeObject(forKey: "profile-image")
+        listener?.shouldRouteToLoggedOut()
+    }
+    
     // MARK: - Private
+    
+    private var chatRoomName: String?
+    private var chatRoomToken: String?
+    private var remoteUserFirstName: String?
     
     private var client: ActionCableClient?
     private var appearanceChannel: Channel?
@@ -96,21 +131,6 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         return cameraAccessStatus == .authorized && microphoneAccessStatus == .authorized
     }
     
-    private var isActiveDay: Bool {
-        // TODO: Refactor - This should be done in backend to
-        // prevent manual datetime change within settings.
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        let currentDateString = dateFormatter.string(from: date)
-        let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let time = hour - 12
-        let isTimeValid = time >= 7 && time < 9
-        
-        return (currentDateString == "Friday" || currentDateString == "Saturday") && isTimeValid == true
-    }
-    
     private func setUpClient() {
         guard let userToken = KeychainHelper.fetch(.authToken) else {
             // TODO: If token not found, we should send to login screen
@@ -122,26 +142,23 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         candyClient.origin = CandyAPI.webSocketOrigin
         candyClient.reconnectionStrategy = .linear(maxRetries: 5, intervalTime: 3)
         candyClient.connect()
-        candyClient.onConnected = {
-            self.buildAppearanceChannel(withClient: candyClient)
-            self.buildChatChannel(withClient: candyClient)
+        candyClient.onConnected = { [weak self] in
+            self?.buildAppearanceChannel(withClient: candyClient)
+            self?.buildChatChannel(withClient: candyClient)
         }
-        candyClient.onDisconnected = { (error: ConnectionError?) in
-            self.appearanceChannel?.action("away", with: nil)
-        }
-        candyClient.willReconnect = {
-            return true
+        candyClient.onDisconnected = { [weak self] (error: ConnectionError?) in
+            self?.appearanceChannel?.action("away", with: nil)
         }
     }
     
     private func buildAppearanceChannel(withClient client: ActionCableClient) {
         let channel = client.create("AppearanceChannel")
         self.appearanceChannel = channel
-        channel.onReceive = { [weak self] (data: Any?, error: Error?) in
+        channel.onReceive = { [weak self](data: Any?, error: Error?) in
             guard let data = data,
                 let appearanceDictionary = data as? [String: Int],
                 let onlineCount = appearanceDictionary["online_user_count"],
-                let availableCount = appearanceDictionary["online_available_user_count"] else {
+                let _ = appearanceDictionary["online_available_user_count"] else {
                     return
             }
             self?.presenter.presentAppearanceCount(onlineCount)
@@ -155,10 +172,19 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             guard let data = data,
                 let chatRoom = data as? [String: String],
                 let roomName = chatRoom["room_name"],
-                let token = chatRoom["twilio_token"] else {
+                let token = chatRoom["twilio_token"],
+                let _ = chatRoom["remote_user_id"],
+                let remoteUserFirstName = chatRoom["remote_user_first_name"],
+                let remoteUserProfileImageURL = chatRoom["remote_user_profile_image_url"] else {
                     return
             }
-            self?.router?.routeToVideoChat(withRoomName: roomName, roomToken: token)
+            print("\n * Chat room data", chatRoom)
+            self?.chatRoomName = roomName
+            self?.chatRoomToken = token
+            self?.remoteUserFirstName = remoteUserFirstName
+            self?.presenter.updateActivityCard(withStatus: .profileView,
+                                               firstName: remoteUserFirstName.uppercased(),
+                                               imageName: remoteUserProfileImageURL)
         }
     }
     

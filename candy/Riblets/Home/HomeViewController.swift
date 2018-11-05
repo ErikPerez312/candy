@@ -10,12 +10,13 @@ import RIBs
 import RxSwift
 import UIKit
 
-protocol HomePresentableListener: class {
+protocol HomePresentableListener: HomeActivityCardDelegate {
     // Declare properties and methods that the view controller can invoke to perform
     // business logic, such as signIn(). This protocol is implemented by the corresponding
     // interactor class.
     func connect()
     func canceledConnection()
+    func settingsbuttonPressed()
     func viewWillAppear()
     func viewWillDisappear()
 }
@@ -42,6 +43,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         
         let views = buildMainViews()
         buildButtons(withAppearanceView: views.appearanceView, activityCard: views.activityCard)
+        buildSettingsButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,10 +56,6 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
     }
     
     // MARK: HomeViewControllable
-    
-    func push(viewController: ViewControllable) {
-        navigationController?.pushViewController(viewController.uiviewController, animated: true)
-    }
 
     func presentModally(viewController: ViewControllable) {
         present(viewController.uiviewController, animated: true, completion: nil)
@@ -73,17 +71,22 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         appearanceView?.updateUserCountLabel(withCount: count)
     }
     
-    func updateActivityCard(withStatus status: ActivityCardStatus) {
+    func updateActivityCard(withStatus status: ActivityCardStatus, firstName: String?, imageName: String?) {
         activityCard?.updateUIForStatus(status)
         // connectButton should be visible-disabled on 'connecting' status,
         // visible-enabled on 'homeDefault' status, and hidden-disabled on
         // 'inactiveDay' status.
-        connectButton?.isHidden = status == .inactiveDay
-        connectButton?.isEnabled = status == .homeDefault
+        connectButton?.isHidden = (status == .profileView)
+        connectButton?.isEnabled = (status == .homeDefault)
         // cancelButton should be visible-enabled on 'connecting', and
         // hidden-disabled on any other status.
-        cancelButton?.isHidden = status != .connecting
-        cancelButton?.isEnabled = status == .connecting
+        cancelButton?.isHidden = (status != .connecting)
+        cancelButton?.isEnabled = (status == .connecting)
+        
+        guard let firstName = firstName, let imageName = imageName else {
+            return
+        }
+        activityCard?.updateProfileViews(withName: firstName, imageLink: imageName)
     }
     
     // MARK: - Private
@@ -105,6 +108,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         }
         
         let card = HomeActivityCard(frame: .zero)
+        card.delegate = listener
         self.activityCard = card
         view.addSubview(card)
         card.snp.makeConstraints { maker in
@@ -151,11 +155,24 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         }
     }
     
+    private func buildSettingsButton() {
+        let button = UIBarButtonItem(image: UIImage(named: "settings-button"),
+                                     style: .done,
+                                     target: self,
+                                     action: #selector(settingsButtonPressed))
+        navigationItem.leftBarButtonItem = button
+        navigationItem.leftBarButtonItem?.tintColor = .candyBackgroundBlue
+    }
+    
     @objc private func connectButtonPressed() {
         listener?.connect()
     }
     
     @objc private func cancelButtonPressed() {
         listener?.canceledConnection()
+    }
+    
+    @objc private func settingsButtonPressed() {
+        listener?.settingsbuttonPressed()
     }
 }

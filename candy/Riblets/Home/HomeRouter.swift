@@ -8,14 +8,13 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, VideoChatListener, PermissionsListener {
+protocol HomeInteractable: Interactable, VideoChatListener, PermissionsListener, SettingsListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
 
 protocol HomeViewControllable: ViewControllable {
     // Declare methods the router invokes to manipulate the view hierarchy.
-    func push(viewController: ViewControllable)
     func presentModally(viewController: ViewControllable)
     func dismissModally(viewController: ViewControllable)
 }
@@ -26,20 +25,23 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
     init(interactor: HomeInteractable,
                   viewController: HomeViewControllable,
                   videoChatBuilder: VideoChatBuildable,
-                  permissionsBuilder: PermissionsBuildable) {
+                  permissionsBuilder: PermissionsBuildable,
+                  settingsBuilder: SettingsBuildable) {
         
         self.videoChatBuilder = videoChatBuilder
         self.permissionsBuilder = permissionsBuilder
+        self.settingsBuilder = settingsBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
     
     // MARK: HomeRouting
     
-    func routeToVideoChat(withRoomName roomName: String, roomToken: String) {
+    func routeToVideoChat(withRoomName roomName: String, roomToken: String, remoteUserFirstName: String) {
         let videoChat = videoChatBuilder.build(withListener: interactor,
                                                roomName: roomName,
-                                               roomToken: roomToken)
+                                               roomToken: roomToken,
+                                               remoteUserFirstName: remoteUserFirstName)
         attachChild(videoChat)
         self.currentChild = videoChat
         viewController.presentModally(viewController: videoChat.viewControllable)
@@ -56,10 +58,21 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
         detachCurrentChild()
     }
     
+    func routeToSettings() {
+        detachCurrentChild()
+        
+        let settings = settingsBuilder.build(withListener: interactor)
+        attachChild(settings)
+        self.currentChild = settings
+        let navigationController = UINavigationController(root: settings.viewControllable)
+        viewController.presentModally(viewController: navigationController)
+    }
+    
     // MARK: Private
     
     private let videoChatBuilder: VideoChatBuildable
     private let permissionsBuilder: PermissionsBuildable
+    private let settingsBuilder: SettingsBuildable
     
     private var currentChild: ViewableRouting?
     

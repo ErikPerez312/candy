@@ -16,7 +16,7 @@ enum KeychainProperty: String {
     case userID
 }
 
-class KeychainHelper {
+final class KeychainHelper {
     
     static func save(value: String, as property: KeychainProperty) {
         shared.set(value, forKey: property.rawValue, withAccess: .accessibleAlwaysThisDeviceOnly)
