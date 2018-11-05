@@ -6,8 +6,8 @@ can get on and video chat with people of their interest. Each call only lasts 12
 **View on [App Store](https://itunes.apple.com/us/app/candy-dating/id1401090082?ls=1&mt=8)**
 
 ## Screen shots
-<img src="https://github.com/ErikPerez312/video-dating/blob/master/images/iphone-5.8-login.png" width="400" height="800"><img src="https://github.com/ErikPerez312/video-dating/blob/master/images/iphone-5.8-home.png" width="400" height="800">
-<img src="https://github.com/ErikPerez312/video-dating/blob/master/images/iphone-5.8-chat.png" width="400" height="800">
+<img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-login.png?raw=true" width="400" height="800"><img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-home.png?raw=true" width="400" height="800">
+<img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-chat.png?raw=true" width="400" height="800">
 
 ## Built With
 * [Twilio Programmable Video](https://www.twilio.com/video) - Used to connect users with real-time video and audio
@@ -21,6 +21,7 @@ tasks to Keychain's secure storage
 * Adding in-app messaging
 * Adding matches system. User's will only be able to have 3 matches at a time
 * Camera effects to use while on a video call
+* Profiles - DONE
 
 ## Authors
 * **Erik Perez**: [LinkedIn](https://www.linkedin.com/in/erik-perez-solano)
