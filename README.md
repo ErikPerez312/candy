@@ -1,13 +1,13 @@
 ![](https://github.com/ErikPerez312/candy/blob/master/images/github-image.png?raw=true)
 # Candy
-Candy brings video chat to dating. The days of catfishing are **OVER**. On every Friday and Saturday between 7PM-9PM Local Time, users
-can get on and video chat with people of their interest. Each call only lasts 120 seconds. What can you do with that time? - **Candy is available for people of ages 18-22.**
+Candy brings video chat to dating. The days of catfishing are **OVER**. Users can get on and video chat with people of their interest. Each call only lasts 120 seconds. What can you do with that time? - **Candy is available for people of ages 18-22.**
 
-**View on [App Store](https://itunes.apple.com/us/app/candy-dating/id1401090082?ls=1&mt=8)**
-
-## Screen shots
-<img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-login.png?raw=true" width="400" height="800"><img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-home.png?raw=true" width="400" height="800">
-<img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-chat.png?raw=true" width="400" height="800">
+## Preview
+  ![Alt Text](https://j.gifs.com/E9Jq0K.gif)
+  
+## Screenshots
+<img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-login.png?raw=true" width="200" height="400"><img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-home.png?raw=true" width="200" height="400">
+<img src="https://github.com/ErikPerez312/candy/blob/master/images/iphone-5.8-chat.png?raw=true" width="200" height="400">
 
 ## Built With
 * [Twilio Programmable Video](https://www.twilio.com/video) - Used to connect users with real-time video and audio
