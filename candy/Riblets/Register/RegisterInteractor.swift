@@ -11,6 +11,8 @@ import RxSwift
 
 protocol RegisterRouting: ViewableRouting {
     // Declare methods the interactor can invoke to manage sub-tree via the router.
+    func routeToTermsAndConditions()
+    func routeToRegister()
 }
 
 protocol RegisterPresentable: Presentable {
@@ -130,6 +132,15 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
     
     func cancelRegistration() {
         listener?.didCancelRegistration()
+    }
+    
+    func showTermsandConditions() {
+        router?.routeToTermsAndConditions()
+    }
+    
+    // MARK: EULAListener
+    func shouldDismiss() {
+        router?.routeToRegister()
     }
     
     // MARK: - Private

@@ -20,6 +20,7 @@ protocol RegisterPresentableListener: class {
     func verifyVerificationCode(_ code: String?)
     func cancelRegistration()
     func resendVerificationCode()
+    func showTermsandConditions()
 }
 
 final class RegisterViewController: UIViewController, RegisterPresentable, RegisterViewControllable {
@@ -51,6 +52,16 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         textField?.becomeFirstResponder()
     }
     
+    // MARK: RegisterViewControllable
+    
+    func present(viewController: ViewControllable) {
+        present(viewController.uiviewController, animated: true, completion: nil)
+    }
+    
+    func dismiss(viewController: ViewControllable) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: RegisterPresentable
     
     func presentAlert(withTitle title: String, description: String?, handler: ((UIAlertAction) -> Void)?) {
@@ -74,6 +85,8 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         disclaimerLabel?.isEnabled = statement.key == .phoneVerification
         resendCodeButton?.isHidden = !(statement.key == .phoneVerification)
         resendCodeButton?.isEnabled = statement.key == .phoneVerification
+        termsAndConditionsButton?.isHidden = !(statement.key == .phoneVerification)
+        termsAndConditionsButton?.isEnabled = statement.key == .phoneVerification
         progressView?.setProgress(progress, animated: true)
         
         textField?.text = ""
@@ -120,10 +133,15 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     private var disclaimerLabel: UILabel?
     private var textField: UITextField?
     private var pickerView: UIPickerView?
+    
     private var verifyCodeButton: UIButton?
     private var resendCodeButton: UIButton?
+    private var termsAndConditionsButton: UIButton?
     private var activityIndicator: UIActivityIndicatorView?
     private var progressView: UIProgressView?
+    
+    
+    // MARK: Methods
     
     private func buildCancelButton() -> UIButton {
         let button = UIButton(frame: .zero)
@@ -237,12 +255,12 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         
         let disclaimer = UILabel(frame: .zero)
         self.disclaimerLabel = disclaimer
-        disclaimer.numberOfLines = 4
+        disclaimer.numberOfLines = 7
         disclaimer.font = UIFont.systemFont(ofSize: 12)
         disclaimer.textAlignment = .center
         disclaimer.text = """
             We sent a verification code to this number to verify your identity. It can take up to 1 minute to receive.
-            You can try to resend if it takes longer.
+            You can try to resend if it takes longer. \n\nBy pressing "Verify Code" you are agreeing to the terms and conditions below
         """
         view.addSubview(disclaimer)
         disclaimer.snp.makeConstraints { maker in
@@ -263,8 +281,24 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
                     maker.height.equalTo(30)
                     maker.centerX.equalToSuperview()
                     maker.top.equalTo(disclaimer.snp.bottom).offset(15)
-                    maker.bottom.lessThanOrEqualToSuperview().priority(999)
                 }
+        
+        let termsAndConditionsButton = UIButton()
+        self.termsAndConditionsButton = termsAndConditionsButton
+        termsAndConditionsButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.listener?.showTermsandConditions()
+            })
+            .disposed(by: bag)
+        termsAndConditionsButton.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "Terms and Conditions"),
+                                                    for: .normal)
+        view.addSubview(termsAndConditionsButton)
+        termsAndConditionsButton.snp.makeConstraints { maker in
+            maker.top.equalTo(resendCodeButton).offset(30)
+            maker.bottom.lessThanOrEqualToSuperview().priority(999)
+            maker.height.equalTo(30)
+            maker.centerX.equalToSuperview()
+        }
         return verifyCodeButton
     }
     

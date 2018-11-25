@@ -66,6 +66,12 @@
 		8679ED6821346A2D003125D6 /* PermissionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6421346A2D003125D6 /* PermissionsInteractor.swift */; };
 		8679ED6A21346F9E003125D6 /* HomeComponent+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6921346F9E003125D6 /* HomeComponent+Permissions.swift */; };
 		8687CA6B212229C9006B5C41 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8687CA6A212229C9006B5C41 /* Statement.swift */; };
+		86BFB3FC21A9C9880072B915 /* CandyEULA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB3FB21A9C9880072B915 /* CandyEULA.swift */; };
+		86BFB40221A9D3D00072B915 /* EULARouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB3FE21A9D3D00072B915 /* EULARouter.swift */; };
+		86BFB40321A9D3D00072B915 /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB3FF21A9D3D00072B915 /* EULAViewController.swift */; };
+		86BFB40421A9D3D00072B915 /* EULABuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB40021A9D3D00072B915 /* EULABuilder.swift */; };
+		86BFB40521A9D3D00072B915 /* EULAInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB40121A9D3D00072B915 /* EULAInteractor.swift */; };
+		86BFB40721A9D4EA0072B915 /* RegisterComponent+EULA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB40621A9D4EA0072B915 /* RegisterComponent+EULA.swift */; };
 		86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CDEE792114FC9400C65879 /* AppDelegate.swift */; };
 		86CDEE812114FC9600C65879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE802114FC9600C65879 /* Assets.xcassets */; };
 		86CDEE842114FC9600C65879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86CDEE822114FC9600C65879 /* LaunchScreen.storyboard */; };
@@ -136,6 +142,12 @@
 		8679ED6421346A2D003125D6 /* PermissionsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsInteractor.swift; sourceTree = "<group>"; };
 		8679ED6921346F9E003125D6 /* HomeComponent+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeComponent+Permissions.swift"; sourceTree = "<group>"; };
 		8687CA6A212229C9006B5C41 /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
+		86BFB3FB21A9C9880072B915 /* CandyEULA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyEULA.swift; sourceTree = "<group>"; };
+		86BFB3FE21A9D3D00072B915 /* EULARouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULARouter.swift; sourceTree = "<group>"; };
+		86BFB3FF21A9D3D00072B915 /* EULAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
+		86BFB40021A9D3D00072B915 /* EULABuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULABuilder.swift; sourceTree = "<group>"; };
+		86BFB40121A9D3D00072B915 /* EULAInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAInteractor.swift; sourceTree = "<group>"; };
+		86BFB40621A9D4EA0072B915 /* RegisterComponent+EULA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegisterComponent+EULA.swift"; sourceTree = "<group>"; };
 		86CDEE762114FC9400C65879 /* candy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = candy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CDEE792114FC9400C65879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86CDEE802114FC9600C65879 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -216,6 +228,7 @@
 				861630262118C93600B3EF33 /* RegisterBuilder.swift */,
 				861630252118C93600B3EF33 /* RegisterViewController.swift */,
 				861630272118C93600B3EF33 /* RegisterInteractor.swift */,
+				86BFB40621A9D4EA0072B915 /* RegisterComponent+EULA.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -249,6 +262,7 @@
 				8657544F211BD1AE00AF1F9B /* User.swift */,
 				867420F9218F660E0059A652 /* ProfileImage.swift */,
 				8687CA6A212229C9006B5C41 /* Statement.swift */,
+				86BFB3FB21A9C9880072B915 /* CandyEULA.swift */,
 				8662337B212A5F0F00425F92 /* TwilioHandler.swift */,
 				8648CB4821406415001C150A /* Questions.swift */,
 				8603D425218991F300464384 /* CandyImageInfo.swift */,
@@ -326,6 +340,7 @@
 				8679ED6021346A13003125D6 /* Permissions */,
 				861630522118F60600B3EF33 /* VideoChat */,
 				861630372118D5C000B3EF33 /* Home */,
+				86BFB3FD21A9D39A0072B915 /* EULA */,
 				861630232118C90000B3EF33 /* Register */,
 				861630182118C30600B3EF33 /* Login */,
 				8616300F2118BB4A00B3EF33 /* LoggedOut */,
@@ -343,6 +358,17 @@
 				8679ED6421346A2D003125D6 /* PermissionsInteractor.swift */,
 			);
 			path = Permissions;
+			sourceTree = "<group>";
+		};
+		86BFB3FD21A9D39A0072B915 /* EULA */ = {
+			isa = PBXGroup;
+			children = (
+				86BFB3FE21A9D3D00072B915 /* EULARouter.swift */,
+				86BFB3FF21A9D3D00072B915 /* EULAViewController.swift */,
+				86BFB40021A9D3D00072B915 /* EULABuilder.swift */,
+				86BFB40121A9D3D00072B915 /* EULAInteractor.swift */,
+			);
+			path = EULA;
 			sourceTree = "<group>";
 		};
 		86CDEE6D2114FC9400C65879 = {
@@ -543,9 +569,11 @@
 				8603D421218782E100464384 /* SettingsBuilder.swift in Sources */,
 				8642B157211563BD00C2D13B /* CandyComponents.swift in Sources */,
 				8609C41C21277F0000F41D30 /* ChatTimer.swift in Sources */,
+				86BFB40421A9D3D00072B915 /* EULABuilder.swift in Sources */,
 				8679ED6521346A2D003125D6 /* PermissionsRouter.swift in Sources */,
 				8616300E2118BA3C00B3EF33 /* RootInteractor.swift in Sources */,
 				861630142118BC3500B3EF33 /* LoggedOutBuilder.swift in Sources */,
+				86BFB40221A9D3D00072B915 /* EULARouter.swift in Sources */,
 				8625D66B211DFFB900621FA8 /* UIAlertController+RIBs.swift in Sources */,
 				861630592118F61A00B3EF33 /* VideoChatBuilder.swift in Sources */,
 				86575452211BD3AB00AF1F9B /* KeychainHelper.swift in Sources */,
@@ -563,9 +591,11 @@
 				8642B155211545D800C2D13B /* TextFieldEffects.swift in Sources */,
 				86CDEE7A2114FC9400C65879 /* AppDelegate.swift in Sources */,
 				8616303F2118D5D600B3EF33 /* HomeInteractor.swift in Sources */,
+				86BFB40521A9D3D00072B915 /* EULAInteractor.swift in Sources */,
 				8616302A2118C93600B3EF33 /* RegisterBuilder.swift in Sources */,
 				867420FA218F660E0059A652 /* ProfileImage.swift in Sources */,
 				861630132118BC3500B3EF33 /* LoggedOutRouter.swift in Sources */,
+				86BFB40321A9D3D00072B915 /* EULAViewController.swift in Sources */,
 				8679ED6721346A2D003125D6 /* PermissionsBuilder.swift in Sources */,
 				861630462118EE0100B3EF33 /* HomeActivityCard.swift in Sources */,
 				861630172118C00800B3EF33 /* RootComponent+LoggedOut.swift in Sources */,
@@ -576,6 +606,7 @@
 				8616301F2118C33B00B3EF33 /* LoginBuilder.swift in Sources */,
 				8616305E2118FF8100B3EF33 /* UserAppearanceView.swift in Sources */,
 				8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */,
+				86BFB40721A9D4EA0072B915 /* RegisterComponent+EULA.swift in Sources */,
 				8616302B2118C93600B3EF33 /* RegisterInteractor.swift in Sources */,
 				8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */,
 				8648CB4921406415001C150A /* Questions.swift in Sources */,
@@ -589,6 +620,7 @@
 				8603D428218994BE00464384 /* Data+Extensions.swift in Sources */,
 				8609C41E21277F9A00F41D30 /* QuestionsView.swift in Sources */,
 				8616304C2118EE5B00B3EF33 /* ActivityIndicatorView.swift in Sources */,
+				86BFB3FC21A9C9880072B915 /* CandyEULA.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
