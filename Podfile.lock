@@ -4,12 +4,14 @@ PODS:
   - KeychainSwift (11.0.0)
   - RIBs (0.9.1):
     - RxSwift (~> 4.0)
-  - RxCocoa (4.2.0):
+  - RxAtomic (4.4.0)
+  - RxCocoa (4.4.0):
     - RxSwift (~> 4.0)
-  - RxSwift (4.2.0)
-  - SnapKit (4.0.0)
+  - RxSwift (4.4.0):
+    - RxAtomic (~> 4.4)
+  - SnapKit (4.0.1)
   - Starscream (2.0.4)
-  - TwilioVideo (1.4.0)
+  - TwilioVideo (1.4.3)
 
 DEPENDENCIES:
   - ActionCableClient
@@ -24,6 +26,7 @@ SPEC REPOS:
     - ActionCableClient
     - KeychainSwift
     - RIBs
+    - RxAtomic
     - RxCocoa
     - RxSwift
     - SnapKit
@@ -34,11 +37,12 @@ SPEC CHECKSUMS:
   ActionCableClient: c8a466410d31bfa14e7a9c209b539c1e2d026a5f
   KeychainSwift: bea6bd9f98af7b8d7ca4aa79fe105c00fab532db
   RIBs: 879184fbca567425c488d6b3d14a9c5abfbf9d47
-  RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
-  RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
+  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Starscream: df5974ee928b157c8eda8af8de7c620276b7dfcc
-  TwilioVideo: d2c6c2d0e3aa058ef10e9639c1f864129205dfca
+  TwilioVideo: d80537bf7fc0b31a7d2d6640adf86fd125f4ca5d
 
 PODFILE CHECKSUM: 64bab38602f6510b65e51cddcf8a501fe99f4d99
 
