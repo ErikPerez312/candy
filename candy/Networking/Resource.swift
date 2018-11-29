@@ -84,9 +84,6 @@ enum Resource {
                 "first_name": userObject["firstName"] as! String,
                 "last_name": userObject["lastName"] as! String,
                 "phone_number": userObject["phoneNumber"] as! String,
-                "age": userObject["age"] as! String,
-                "gender": userObject["gender"] as! Int,
-                "seeking": userObject["seeking"] as! Int,
                 "password": userObject["password"] as! String,
                 ]
             return serialize(json)
