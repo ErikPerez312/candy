@@ -36,7 +36,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         let currentEntryLabel = buildProgessViews(withLabel: entryViews.questionLabel, textField: entryViews.textField)
         let verifyCodeButton = buildConfirmationCodeViews(withLabel: currentEntryLabel)
         buildActivityIndicator(withButton: verifyCodeButton)
-        buildPickerView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -101,15 +100,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
             textField?.inputView = nil
             refreshInputView()
         }
-        if statement.key == .age || statement.key == .gender || statement.key == .seeking {
-            // Hides blinking text cursor
-            textField?.tintColor = .clear
-            textField?.inputView = pickerView
-            refreshInputView()
-            pickerView?.reloadAllComponents()
-            pickerView?.selectRow(0, inComponent: 0, animated: true)
-            textField?.text = statement.key.values?.first
-        }
     }
     
     func showActivityIndicator() {
@@ -132,7 +122,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     private var questionLabel: UILabel?
     private var disclaimerLabel: UILabel?
     private var textField: UITextField?
-    private var pickerView: UIPickerView?
     
     private var verifyCodeButton: UIButton?
     private var resendCodeButton: UIButton?
@@ -302,13 +291,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         return verifyCodeButton
     }
     
-    private func buildPickerView() {
-        let picker = UIPickerView()
-        picker.delegate = self
-        picker.dataSource = self
-        self.pickerView = picker
-    }
-    
     private func buildActivityIndicator(withButton button: UIButton) {
         let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         indicator.activityIndicatorViewStyle = .white
@@ -319,27 +301,5 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         indicator.snp.makeConstraints { maker in
             maker.centerX.centerY.equalTo(button)
         }
-    }
-}
-
-extension RegisterViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        guard let statement = statement else { return nil }
-        return statement.key.values?[row] ?? nil
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        textField?.text = statement?.key.values?[row]
-    }
-}
-
-extension RegisterViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        guard let statement = statement else { return 0 }
-        return statement.key.values?.count ?? 0
     }
 }

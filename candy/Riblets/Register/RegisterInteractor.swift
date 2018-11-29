@@ -69,9 +69,6 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
             }
             userEntries[statement.key.rawValue] = entry
             requestVerificationCode(withPhoneNumber: entry)
-        case .gender, .seeking:
-            let genderIntValue = User.convertGenderToInt(entry)
-            userEntries[statement.key.rawValue] = genderIntValue
         default:
             userEntries[statement.key.rawValue] = entry
         }
@@ -174,7 +171,7 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
                 return
             }
             print("\n* Successfully registered User: \n\(user.description)\n")
-            self?.cacheUser(user)
+            user.cache()
             DispatchQueue.main.async {
                 self?.presenter.hideActivityIndicator()
                 self?.listener?.didRegister()
@@ -188,16 +185,5 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
             self?.presenter.hideActivityIndicator()
             self?.presenter.presentAlert(withTitle: "Oops", description: "Something went wrong on our end", handler: nil)
         }
-    }
-    
-    private func cacheUser(_ user: User) {
-        let userFileURL = FileManager.default
-            .urls(for: .cachesDirectory, in: .allDomainsMask)
-            .first!
-            .appendingPathComponent("user.plist")
-        KeychainHelper.save(value: user.token, as: .authToken)
-        KeychainHelper.save(value: "\(user.id)", as: .userID)
-        UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        let _ = user.dictionary.write(to: userFileURL, atomically: true)
     }
 }
