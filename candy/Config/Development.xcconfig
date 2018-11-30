@@ -11,5 +11,5 @@
 
 #include "Pods/Target Support Files/Pods-candy/Pods-candy.development.xcconfig"
 
-CANDY_API_URL = https://localhost:3000/
-CANDY_WEBSOCKET_URL = ws://localhost:3000/cable
+CANDY_API_URL = http:/$()/localhost:3000
+CANDY_WEBSOCKET_URL = ws:/$()/localhost:3000/cable

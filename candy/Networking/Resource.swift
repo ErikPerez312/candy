@@ -39,13 +39,16 @@ enum Resource {
     }
     
     var header: [String: String] {
-        guard let token = KeychainHelper.fetch(.authToken) else {
-            fatalError("\n * Resource -> header: Failed to fetch user token")
-        }
         switch self {
         case .deleteUser:
+            guard let token = KeychainHelper.fetch(.authToken) else {
+                fatalError("\n * Resource -> header: Failed to fetch user token")
+            }
             return ["Authorization": "Bearer \(token)"]
         case let .uploadProfileImage(imageInfo):
+            guard let token = KeychainHelper.fetch(.authToken) else {
+                fatalError("\n * Resource -> header: Failed to fetch user token")
+            }
             return ["Content-Type": "multipart/form-data; boundary=Boundary-\(imageInfo.boundary)",
                     "Authorization": "Bearer \(token)"]
         default:
