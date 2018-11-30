@@ -61,12 +61,11 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             return
         }
         presenter.updateActivityCard(withStatus: .connecting, firstName: nil, imageName: nil)
-        appearanceChannel?.action("appear")
         chatChannel?.action("connect")
     }
     
     func canceledConnection() {
-        appearanceChannel?.action("away")
+        chatChannel?.action("cancel_connection")
         presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
     }
     
@@ -146,15 +145,12 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             self?.buildAppearanceChannel(withClient: candyClient)
             self?.buildChatChannel(withClient: candyClient)
         }
-        candyClient.onDisconnected = { [weak self] (error: ConnectionError?) in
-            self?.appearanceChannel?.action("away", with: nil)
-        }
     }
     
     private func buildAppearanceChannel(withClient client: ActionCableClient) {
         let channel = client.create("AppearanceChannel")
         self.appearanceChannel = channel
-        channel.onReceive = { [weak self](data: Any?, error: Error?) in
+        channel.onReceive = { [weak self] (data: Any?, error: Error?) in
             guard let data = data,
                 let appearanceDictionary = data as? [String: Int],
                 let onlineCount = appearanceDictionary["online_user_count"],
