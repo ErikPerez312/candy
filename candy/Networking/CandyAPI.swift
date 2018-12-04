@@ -18,10 +18,18 @@ final class CandyAPI {
     typealias JSONDictionary = [String: Any]
     typealias CompletionHandler = (JSONDictionary?, Error?) -> Void
     
-    static let webSocketURL = URL(string: "wss://video-dating.herokuapp.com/cable")!
+    static var webSocketURL: URL {
+        get {
+            guard let socketStringURL = fetchFromPLIST(withKey: "CANDY_WEBSOCKET_URL"),
+                let url = URL(string: socketStringURL) else {
+                    fatalError(" \n*** Failed to fetch CANDY_WEBSOCKET_URL")
+            }
+            return url
+        }
+    }
 
     static var webSocketOrigin: String {
-        return baseURLString
+        return baseCandyAPIURLString
     }
     
     static func signIn(withPhoneNumber phoneNumber: String, password: String,
@@ -63,7 +71,7 @@ final class CandyAPI {
         // TODO: Refactor. Breaking DRY principle. Update basic request method.
         do {
             let resource = Resource.deleteUser(id: id)
-            let url = try buildURL(withBaseURLString: baseURLString, resource: resource)
+            let url = try buildURL(withBaseURLString: baseCandyAPIURLString, resource: resource)
             var request = URLRequest(url: url)
             request.httpMethod = resource.httpRequest.rawValue
             request.httpBody = resource.body
@@ -103,13 +111,21 @@ final class CandyAPI {
     
     // MARK: - Private
     
-    private static let baseURLString = "https://video-dating.herokuapp.com"
+    private static var baseCandyAPIURLString: String {
+        get {
+            guard let stringURL = fetchFromPLIST(withKey: "CANDY_API_URL") else {
+                    fatalError("\n*** failed to fetch candy api url")
+            }
+            return stringURL
+        }
+    }
     
     // TODO: Refactor to return data instead of JSON
     private static func request(withResource resource: Resource,
                                 completionHandler handler: @escaping CompletionHandler) {
         do {
-            let url = try buildURL(withBaseURLString: baseURLString, resource: resource)
+            let url = try buildURL(withBaseURLString: baseCandyAPIURLString, resource: resource)
+            print("\n ****** Attemped request to url: \(baseCandyAPIURLString)")
             var request = URLRequest(url: url)
             request.httpMethod = resource.httpRequest.rawValue
             request.httpBody = resource.body
@@ -150,5 +166,13 @@ final class CandyAPI {
             throw CandyAPIError.invalidURL(resource.path)
         }
         return finalURL
+    }
+    
+    static func fetchFromPLIST(withKey key: String) -> String?{
+        guard let dict = Bundle.main.infoDictionary,
+            let value = dict[key] as? String else {
+                return nil
+        }
+        return value
     }
 }

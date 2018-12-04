@@ -113,6 +113,8 @@ final class SettingsViewController: UIViewController, SettingsPresentable, Setti
     private var deletingAccountActitvityIndicator: UIActivityIndicatorView?
     private var profileImageActivityIndicator: UIActivityIndicatorView?
     
+    // MARK: Methods
+    
     private func setUpView() {
         let navigationBar = navigationController?.navigationBar
         // Removes UINavigationBar bottom hairline

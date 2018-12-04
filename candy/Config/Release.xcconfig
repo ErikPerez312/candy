@@ -1,0 +1,15 @@
+//
+//  Release.xcconfig
+//  candy
+//
+//  Created by Erik Perez on 11/29/18.
+//  Copyright © 2018 Erik Perez. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Pods/Target Support Files/Pods-candy/Pods-candy.release.xcconfig"
+
+CANDY_API_URL = https:/$()/video-dating.herokuapp.com
+CANDY_WEBSOCKET_URL = wss:/$()/video-dating.herokuapp.com/cable

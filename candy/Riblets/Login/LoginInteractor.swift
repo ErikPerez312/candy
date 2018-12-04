@@ -81,8 +81,10 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
                 return
             }
             print("\n * Successful login with user: \n\(user.description) \n")
-            self?.cacheUser(user)
-            self?.listener?.didLogin()
+            user.cache()
+            DispatchQueue.main.async {
+                self?.listener?.didLogin()
+            }
         }
     }
     
@@ -91,15 +93,4 @@ final class LoginInteractor: PresentableInteractor<LoginPresentable>, LoginInter
     }
     
     // MARK: - Private
-    
-    private func cacheUser(_ user: User) {
-        let userFileURL = FileManager.default
-            .urls(for: .cachesDirectory, in: .allDomainsMask)
-            .first!
-            .appendingPathComponent("user.plist")
-        KeychainHelper.save(value: user.token, as: .authToken)
-        KeychainHelper.save(value: "\(user.id)", as: .userID)
-        UserDefaults.standard.set(true, forKey: "isLoggedIn")
-        let _ = user.dictionary.write(to: userFileURL, atomically: true)
-    }
 }

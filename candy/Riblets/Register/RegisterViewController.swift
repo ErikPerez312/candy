@@ -20,6 +20,7 @@ protocol RegisterPresentableListener: class {
     func verifyVerificationCode(_ code: String?)
     func cancelRegistration()
     func resendVerificationCode()
+    func showTermsandConditions()
 }
 
 final class RegisterViewController: UIViewController, RegisterPresentable, RegisterViewControllable {
@@ -35,7 +36,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         let currentEntryLabel = buildProgessViews(withLabel: entryViews.questionLabel, textField: entryViews.textField)
         let verifyCodeButton = buildConfirmationCodeViews(withLabel: currentEntryLabel)
         buildActivityIndicator(withButton: verifyCodeButton)
-        buildPickerView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,6 +49,16 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         textField?.becomeFirstResponder()
+    }
+    
+    // MARK: RegisterViewControllable
+    
+    func present(viewController: ViewControllable) {
+        present(viewController.uiviewController, animated: true, completion: nil)
+    }
+    
+    func dismiss(viewController: ViewControllable) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: RegisterPresentable
@@ -74,6 +84,8 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         disclaimerLabel?.isEnabled = statement.key == .phoneVerification
         resendCodeButton?.isHidden = !(statement.key == .phoneVerification)
         resendCodeButton?.isEnabled = statement.key == .phoneVerification
+        termsAndConditionsButton?.isHidden = !(statement.key == .phoneVerification)
+        termsAndConditionsButton?.isEnabled = statement.key == .phoneVerification
         progressView?.setProgress(progress, animated: true)
         
         textField?.text = ""
@@ -87,15 +99,6 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         if textField?.inputView != nil || statement.key == .phoneNumber {
             textField?.inputView = nil
             refreshInputView()
-        }
-        if statement.key == .age || statement.key == .gender || statement.key == .seeking {
-            // Hides blinking text cursor
-            textField?.tintColor = .clear
-            textField?.inputView = pickerView
-            refreshInputView()
-            pickerView?.reloadAllComponents()
-            pickerView?.selectRow(0, inComponent: 0, animated: true)
-            textField?.text = statement.key.values?.first
         }
     }
     
@@ -119,11 +122,15 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
     private var questionLabel: UILabel?
     private var disclaimerLabel: UILabel?
     private var textField: UITextField?
-    private var pickerView: UIPickerView?
+    
     private var verifyCodeButton: UIButton?
     private var resendCodeButton: UIButton?
+    private var termsAndConditionsButton: UIButton?
     private var activityIndicator: UIActivityIndicatorView?
     private var progressView: UIProgressView?
+    
+    
+    // MARK: Methods
     
     private func buildCancelButton() -> UIButton {
         let button = UIButton(frame: .zero)
@@ -237,12 +244,12 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         
         let disclaimer = UILabel(frame: .zero)
         self.disclaimerLabel = disclaimer
-        disclaimer.numberOfLines = 4
+        disclaimer.numberOfLines = 7
         disclaimer.font = UIFont.systemFont(ofSize: 12)
         disclaimer.textAlignment = .center
         disclaimer.text = """
             We sent a verification code to this number to verify your identity. It can take up to 1 minute to receive.
-            You can try to resend if it takes longer.
+            You can try to resend if it takes longer. \n\nBy pressing "Verify Code" you are agreeing to the terms and conditions below
         """
         view.addSubview(disclaimer)
         disclaimer.snp.makeConstraints { maker in
@@ -263,16 +270,25 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
                     maker.height.equalTo(30)
                     maker.centerX.equalToSuperview()
                     maker.top.equalTo(disclaimer.snp.bottom).offset(15)
-                    maker.bottom.lessThanOrEqualToSuperview().priority(999)
                 }
+        
+        let termsAndConditionsButton = UIButton()
+        self.termsAndConditionsButton = termsAndConditionsButton
+        termsAndConditionsButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.listener?.showTermsandConditions()
+            })
+            .disposed(by: bag)
+        termsAndConditionsButton.setAttributedTitle(CandyComponents.underlinedAttributedString(withTitle: "Terms and Conditions"),
+                                                    for: .normal)
+        view.addSubview(termsAndConditionsButton)
+        termsAndConditionsButton.snp.makeConstraints { maker in
+            maker.top.equalTo(resendCodeButton).offset(30)
+            maker.bottom.lessThanOrEqualToSuperview().priority(999)
+            maker.height.equalTo(30)
+            maker.centerX.equalToSuperview()
+        }
         return verifyCodeButton
-    }
-    
-    private func buildPickerView() {
-        let picker = UIPickerView()
-        picker.delegate = self
-        picker.dataSource = self
-        self.pickerView = picker
     }
     
     private func buildActivityIndicator(withButton button: UIButton) {
@@ -285,27 +301,5 @@ final class RegisterViewController: UIViewController, RegisterPresentable, Regis
         indicator.snp.makeConstraints { maker in
             maker.centerX.centerY.equalTo(button)
         }
-    }
-}
-
-extension RegisterViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        guard let statement = statement else { return nil }
-        return statement.key.values?[row] ?? nil
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        textField?.text = statement?.key.values?[row]
-    }
-}
-
-extension RegisterViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        guard let statement = statement else { return 0 }
-        return statement.key.values?.count ?? 0
     }
 }

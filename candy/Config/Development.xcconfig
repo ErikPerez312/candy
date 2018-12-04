@@ -1,0 +1,15 @@
+//
+//  Development.xcconfig
+//  candy
+//
+//  Created by Erik Perez on 11/29/18.
+//  Copyright © 2018 Erik Perez. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Pods/Target Support Files/Pods-candy/Pods-candy.development.xcconfig"
+
+CANDY_API_URL = http:/$()/localhost:3000
+CANDY_WEBSOCKET_URL = ws:/$()/localhost:3000/cable

@@ -39,13 +39,16 @@ enum Resource {
     }
     
     var header: [String: String] {
-        guard let token = KeychainHelper.fetch(.authToken) else {
-            fatalError("\n * Resource -> header: Failed to fetch user token")
-        }
         switch self {
         case .deleteUser:
+            guard let token = KeychainHelper.fetch(.authToken) else {
+                fatalError("\n * Resource -> header: Failed to fetch user token")
+            }
             return ["Authorization": "Bearer \(token)"]
         case let .uploadProfileImage(imageInfo):
+            guard let token = KeychainHelper.fetch(.authToken) else {
+                fatalError("\n * Resource -> header: Failed to fetch user token")
+            }
             return ["Content-Type": "multipart/form-data; boundary=Boundary-\(imageInfo.boundary)",
                     "Authorization": "Bearer \(token)"]
         default:
@@ -84,9 +87,6 @@ enum Resource {
                 "first_name": userObject["firstName"] as! String,
                 "last_name": userObject["lastName"] as! String,
                 "phone_number": userObject["phoneNumber"] as! String,
-                "age": userObject["age"] as! String,
-                "gender": userObject["gender"] as! Int,
-                "seeking": userObject["seeking"] as! Int,
                 "password": userObject["password"] as! String,
                 ]
             return serialize(json)
