@@ -171,6 +171,8 @@ final class RegisterInteractor: PresentableInteractor<RegisterPresentable>, Regi
                 return
             }
             print("\n* Successfully registered User: \n\(user.description)\n")
+            // Clear cache first in case user deleted account and created another one.
+            User.clearCache()
             user.cache()
             DispatchQueue.main.async {
                 self?.presenter.hideActivityIndicator()

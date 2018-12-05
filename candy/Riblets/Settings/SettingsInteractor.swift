@@ -71,6 +71,7 @@ final class SettingsInteractor: PresentableInteractor<SettingsPresentable>, Sett
                 return
             }
             DispatchQueue.main.async {
+                User.clearCache()
                 self.listener?.shouldRouteToLoggedOut()
             }
         }
