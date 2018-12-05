@@ -109,6 +109,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         // Delete cached image. Fixes issue when signing into another account
         // and previous accounts profile image is loaded.
         UserDefaults.standard.removeObject(forKey: "profile-image")
+        appearanceChannel?.unsubscribe()
         listener?.shouldRouteToLoggedOut()
     }
     

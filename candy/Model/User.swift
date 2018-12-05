@@ -19,6 +19,8 @@ final class User: NSObject {
     let phoneNumber: String
     var token: String
     
+    var profileImages: [ProfileImage]?
+    
     var fullName: String {
         return "\(firstName) \(lastName)"
     }
@@ -39,18 +41,25 @@ final class User: NSObject {
         self.lastName = lastName
         self.phoneNumber = phoneNumber
         self.token = token
-        
-        let profileImages = profileImageJSON.compactMap(ProfileImage.init)
-        guard let recentImage = profileImages.last else { return }
-        UserDefaults.standard.set(recentImage.imageURL, forKey: "profile-image-aws-url")
-        UserDefaults.standard.set(firstName, forKey: "userFirstName")
+        self.profileImages = profileImageJSON.compactMap(ProfileImage.init)
     }
     
     func cache() {
         KeychainHelper.save(value: token, as: .authToken)
         KeychainHelper.save(value: "\(id)", as: .userID)
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        UserDefaults.standard.set(firstName, forKey: "userFirstName")
+        guard let recentImage = profileImages?.last else { return }
+        UserDefaults.standard.set(recentImage.imageURL, forKey: "profile-image-aws-url")
     }
+    
+    static func clearCache() {
+        KeychainHelper.remove(.authToken)
+        KeychainHelper.remove(.userID)
+        UserDefaults.standard.removeObject(forKey: "userFirstName")
+        UserDefaults.standard.removeObject(forKey: "profile-image-aws-url")
+    }
+    
 }
 
 // MARK: - Extension

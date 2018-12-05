@@ -6,11 +6,6 @@
 	<string>$(CANDY_API_URL)</string>
 	<key>CANDY_WEBSOCKET_URL</key>
 	<string>$(CANDY_WEBSOCKET_URL)</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -26,11 +21,16 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.0</string>
+	<string>3.0.2</string>
 	<key>CFBundleVersion</key>
-	<string>2.0.0</string>
+	<string>3.0.2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Use your camera to video chat with people</string>
 	<key>NSMicrophoneUsageDescription</key>
