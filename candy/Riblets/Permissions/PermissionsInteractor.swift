@@ -60,16 +60,16 @@ final class PermissionsInteractor: PresentableInteractor<PermissionsPresentable>
                 DispatchQueue.main.async {
                     self.presenter.updateUIWithAuthorizationStatus(forCamera: self.cameraAccessStatus,
                                                                   microphone: self.microphoneAccessStatus)
-                }
-                if !didAuthorize {
-                    self.presenter.presentDeniedPermissionsAlert(withTitle: deniedAccessMessage,
-                                                                 message: nil,
-                                                                 handler: deniedAccessHandler)
+                    if !didAuthorize {
+                        self.presenter.presentDeniedPermissionsAlert(withTitle: "Permission Needed",
+                                                                     message: deniedAccessMessage,
+                                                                     handler: deniedAccessHandler)
+                    }
                 }
             }
         case .denied:
-            self.presenter.presentDeniedPermissionsAlert(withTitle: deniedAccessMessage,
-                                                         message: nil,
+            self.presenter.presentDeniedPermissionsAlert(withTitle: "Permission Needed",
+                                                         message: deniedAccessMessage,
                                                          handler: deniedAccessHandler)
         case .restricted:
             self.presenter.presentAlert(withTitle: "Sorry, your device is restricted and can't grant \(mediaTypeString) access",
