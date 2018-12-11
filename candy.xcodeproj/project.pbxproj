@@ -65,6 +65,11 @@
 		8679ED6721346A2D003125D6 /* PermissionsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6321346A2D003125D6 /* PermissionsBuilder.swift */; };
 		8679ED6821346A2D003125D6 /* PermissionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6421346A2D003125D6 /* PermissionsInteractor.swift */; };
 		8679ED6A21346F9E003125D6 /* HomeComponent+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679ED6921346F9E003125D6 /* HomeComponent+Permissions.swift */; };
+		8685AF4521B9AEE00031D882 /* ReviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685AF4121B9AEE00031D882 /* ReviewRouter.swift */; };
+		8685AF4621B9AEE00031D882 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685AF4221B9AEE00031D882 /* ReviewViewController.swift */; };
+		8685AF4721B9AEE00031D882 /* ReviewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685AF4321B9AEE00031D882 /* ReviewBuilder.swift */; };
+		8685AF4821B9AEE10031D882 /* ReviewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685AF4421B9AEE00031D882 /* ReviewInteractor.swift */; };
+		8685AF4A21B9AF100031D882 /* HomeComponent+Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685AF4921B9AF100031D882 /* HomeComponent+Review.swift */; };
 		8687CA6B212229C9006B5C41 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8687CA6A212229C9006B5C41 /* Statement.swift */; };
 		86BFB3FC21A9C9880072B915 /* CandyEULA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB3FB21A9C9880072B915 /* CandyEULA.swift */; };
 		86BFB40221A9D3D00072B915 /* EULARouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BFB3FE21A9D3D00072B915 /* EULARouter.swift */; };
@@ -141,6 +146,11 @@
 		8679ED6321346A2D003125D6 /* PermissionsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsBuilder.swift; sourceTree = "<group>"; };
 		8679ED6421346A2D003125D6 /* PermissionsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsInteractor.swift; sourceTree = "<group>"; };
 		8679ED6921346F9E003125D6 /* HomeComponent+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeComponent+Permissions.swift"; sourceTree = "<group>"; };
+		8685AF4121B9AEE00031D882 /* ReviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRouter.swift; sourceTree = "<group>"; };
+		8685AF4221B9AEE00031D882 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		8685AF4321B9AEE00031D882 /* ReviewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewBuilder.swift; sourceTree = "<group>"; };
+		8685AF4421B9AEE00031D882 /* ReviewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewInteractor.swift; sourceTree = "<group>"; };
+		8685AF4921B9AF100031D882 /* HomeComponent+Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeComponent+Review.swift"; sourceTree = "<group>"; };
 		8687CA6A212229C9006B5C41 /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		86BFB3FB21A9C9880072B915 /* CandyEULA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandyEULA.swift; sourceTree = "<group>"; };
 		86BFB3FE21A9D3D00072B915 /* EULARouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULARouter.swift; sourceTree = "<group>"; };
@@ -245,6 +255,7 @@
 				8616305B2118F74D00B3EF33 /* HomeComponent+VideoChat.swift */,
 				8679ED6921346F9E003125D6 /* HomeComponent+Permissions.swift */,
 				8603D4232187839900464384 /* HomeComponent+Settings.swift */,
+				8685AF4921B9AF100031D882 /* HomeComponent+Review.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -338,6 +349,7 @@
 		8657544A211BD0D700AF1F9B /* Riblets */ = {
 			isa = PBXGroup;
 			children = (
+				8685AF4021B9AEB50031D882 /* Review */,
 				8603D41A218782BA00464384 /* Settings */,
 				8679ED6021346A13003125D6 /* Permissions */,
 				861630522118F60600B3EF33 /* VideoChat */,
@@ -360,6 +372,17 @@
 				8679ED6421346A2D003125D6 /* PermissionsInteractor.swift */,
 			);
 			path = Permissions;
+			sourceTree = "<group>";
+		};
+		8685AF4021B9AEB50031D882 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				8685AF4121B9AEE00031D882 /* ReviewRouter.swift */,
+				8685AF4221B9AEE00031D882 /* ReviewViewController.swift */,
+				8685AF4321B9AEE00031D882 /* ReviewBuilder.swift */,
+				8685AF4421B9AEE00031D882 /* ReviewInteractor.swift */,
+			);
+			path = Review;
 			sourceTree = "<group>";
 		};
 		86BFB3FD21A9D39A0072B915 /* EULA */ = {
@@ -569,6 +592,7 @@
 			files = (
 				8616300B2118BA3C00B3EF33 /* RootRouter.swift in Sources */,
 				8603D4242187839900464384 /* HomeComponent+Settings.swift in Sources */,
+				8685AF4621B9AEE00031D882 /* ReviewViewController.swift in Sources */,
 				8616303E2118D5D600B3EF33 /* HomeBuilder.swift in Sources */,
 				861630282118C93600B3EF33 /* RegisterRouter.swift in Sources */,
 				861630572118F61A00B3EF33 /* VideoChatRouter.swift in Sources */,
@@ -581,7 +605,9 @@
 				8616302D2118CD2700B3EF33 /* LoggedOutComponent+Register.swift in Sources */,
 				8603D422218782E100464384 /* SettingsInteractor.swift in Sources */,
 				8603D421218782E100464384 /* SettingsBuilder.swift in Sources */,
+				8685AF4A21B9AF100031D882 /* HomeComponent+Review.swift in Sources */,
 				8642B157211563BD00C2D13B /* CandyComponents.swift in Sources */,
+				8685AF4721B9AEE00031D882 /* ReviewBuilder.swift in Sources */,
 				8609C41C21277F0000F41D30 /* ChatTimer.swift in Sources */,
 				86BFB40421A9D3D00072B915 /* EULABuilder.swift in Sources */,
 				8679ED6521346A2D003125D6 /* PermissionsRouter.swift in Sources */,
@@ -619,8 +645,10 @@
 				8616300D2118BA3C00B3EF33 /* RootBuilder.swift in Sources */,
 				8616301F2118C33B00B3EF33 /* LoginBuilder.swift in Sources */,
 				8616305E2118FF8100B3EF33 /* UserAppearanceView.swift in Sources */,
+				8685AF4821B9AEE10031D882 /* ReviewInteractor.swift in Sources */,
 				8642B14F211542C600C2D13B /* UIColor+Extensions.swift in Sources */,
 				86BFB40721A9D4EA0072B915 /* RegisterComponent+EULA.swift in Sources */,
+				8685AF4521B9AEE00031D882 /* ReviewRouter.swift in Sources */,
 				8616302B2118C93600B3EF33 /* RegisterInteractor.swift in Sources */,
 				8662337C212A5F0F00425F92 /* TwilioHandler.swift in Sources */,
 				8648CB4921406415001C150A /* Questions.swift in Sources */,

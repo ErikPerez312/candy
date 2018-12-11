@@ -54,6 +54,7 @@ final class HomeActivityCard: UIView {
             nextUserButton?.isEnabled = false
             remoteUserFirstNameLabel?.isHidden = true
             profileImageView?.isHidden = true
+            profileImageView?.image = nil
             
             connectingIndicator?.isHidden = true
             connectingIndicator?.endAnimation()
@@ -65,6 +66,7 @@ final class HomeActivityCard: UIView {
             nextUserButton?.isEnabled = false
             remoteUserFirstNameLabel?.isHidden = true
             profileImageView?.isHidden = true
+            profileImageView?.image = nil
             
             footerLabel?.isHidden = false
             headerLabel?.isHidden = false

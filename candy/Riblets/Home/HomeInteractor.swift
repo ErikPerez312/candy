@@ -17,6 +17,8 @@ protocol HomeRouting: ViewableRouting {
     func routeToHome()
     func routeToPermissions()
     func routeToSettings()
+    func routeToChatReview()
+    
 }
 
 protocol HomePresentable: Presentable {
@@ -83,6 +85,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func callEnded() {
         router?.routeToHome()
+        router?.routeToChatReview()
     }
     
     func startChatButtonPressed() {
@@ -95,6 +98,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     func nextUserButtonPressed() {
         // User wants another user to chat with
         connect()
+        
     }
     
     // MARK: PermissionsListener and SettingsListener
@@ -108,9 +112,14 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     func shouldRouteToLoggedOut() {
         // Delete cached image. Fixes issue when signing into another account
         // and previous accounts profile image is loaded.
-        UserDefaults.standard.removeObject(forKey: "profile-image")
+        User.clearCache()
         appearanceChannel?.unsubscribe()
         listener?.shouldRouteToLoggedOut()
+    }
+    
+    // MARK: Review Listener
+    func closeReview() {
+        router?.routeToHome()
     }
     
     // MARK: - Private

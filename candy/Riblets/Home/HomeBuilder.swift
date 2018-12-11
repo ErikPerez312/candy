@@ -37,12 +37,14 @@ final class HomeBuilder: Builder<HomeDependency>, HomeBuildable {
         let videoChatBuilder = VideoChatBuilder(dependency: component)
         let permissionsBuilder = PermissionsBuilder(dependency: component)
         let settingsBuilder = SettingsBuilder(dependency: component)
+        let reviewBuilder = ReviewBuilder(dependency: component)
         
         interactor.listener = listener
         return HomeRouter(interactor: interactor,
                           viewController: viewController,
                           videoChatBuilder: videoChatBuilder,
                           permissionsBuilder: permissionsBuilder,
-                          settingsBuilder: settingsBuilder)
+                          settingsBuilder: settingsBuilder,
+                          reviewBuilder: reviewBuilder)
     }
 }

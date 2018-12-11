@@ -8,7 +8,7 @@
 
 import RIBs
 
-protocol HomeInteractable: Interactable, VideoChatListener, PermissionsListener, SettingsListener {
+protocol HomeInteractable: Interactable, VideoChatListener, PermissionsListener, SettingsListener, ReviewListener {
     var router: HomeRouting? { get set }
     var listener: HomeListener? { get set }
 }
@@ -26,11 +26,13 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
                   viewController: HomeViewControllable,
                   videoChatBuilder: VideoChatBuildable,
                   permissionsBuilder: PermissionsBuildable,
-                  settingsBuilder: SettingsBuildable) {
+                  settingsBuilder: SettingsBuildable,
+                  reviewBuilder: ReviewBuildable) {
         
         self.videoChatBuilder = videoChatBuilder
         self.permissionsBuilder = permissionsBuilder
         self.settingsBuilder = settingsBuilder
+        self.reviewBuilder = reviewBuilder
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -68,11 +70,19 @@ final class HomeRouter: ViewableRouter<HomeInteractable, HomeViewControllable>, 
         viewController.presentModally(viewController: navigationController)
     }
     
+    func routeToChatReview() {
+        let review = reviewBuilder.build(withListener: interactor)
+        attachChild(review)
+        self.currentChild = review
+        viewController.presentModally(viewController: review.viewControllable)
+    }
+    
     // MARK: Private
     
     private let videoChatBuilder: VideoChatBuildable
     private let permissionsBuilder: PermissionsBuildable
     private let settingsBuilder: SettingsBuildable
+    private let reviewBuilder: ReviewBuildable
     
     private var currentChild: ViewableRouting?
     
