@@ -58,6 +58,7 @@ final class User: NSObject {
         KeychainHelper.remove(.userID)
         UserDefaults.standard.removeObject(forKey: "userFirstName")
         UserDefaults.standard.removeObject(forKey: "profile-image-aws-url")
+        UserDefaults.standard.removeObject(forKey: "profile-image")
     }
     
 }
