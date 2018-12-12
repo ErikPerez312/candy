@@ -26,7 +26,12 @@ protocol HomePresentable: Presentable {
     var listener: HomePresentableListener? { get set }
     
     func presentAppearanceCount(_ count: Int)
-    func updateActivityCard(withStatus status: ActivityCardStatus, firstName: String?, imageName: String?)
+    func updateActivityCard(withStatus status: ActivityCardStatus,
+                            firstName: String?,
+                            imageName: String?,
+                            gender: String?,
+                            age: String?,
+                            bio: String?)
 }
 
 protocol HomeListener: class {
@@ -62,13 +67,23 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
             router?.routeToPermissions()
             return
         }
-        presenter.updateActivityCard(withStatus: .connecting, firstName: nil, imageName: nil)
+        presenter.updateActivityCard(withStatus: .connecting,
+                                     firstName: nil,
+                                     imageName: nil,
+                                     gender: nil,
+                                     age: nil,
+                                     bio: nil)
         chatChannel?.action("connect")
     }
     
     func canceledConnection() {
         chatChannel?.action("cancel_connection")
-        presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
+        presenter.updateActivityCard(withStatus: .homeDefault,
+                                     firstName: nil,
+                                     imageName: nil,
+                                     gender: nil,
+                                     age: nil,
+                                     bio: nil)
     }
     
     func settingsbuttonPressed() {
@@ -77,7 +92,12 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     
     func viewWillAppear() {
         addActiveApplicationObservers()
-        presenter.updateActivityCard(withStatus: .homeDefault, firstName: nil, imageName: nil)
+        presenter.updateActivityCard(withStatus: .homeDefault,
+                                     firstName: nil,
+                                     imageName: nil,
+                                     gender: nil,
+                                     age: nil,
+                                     bio: nil)
     }
     func viewWillDisappear() {
         removeActiveApplicationObservers()
@@ -175,22 +195,28 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         let channel = client.create("ChatChannel")
         self.chatChannel = channel
         channel.onReceive = { [weak self] (data: Any?, error: Error?) in
-            guard let data = data,
-                let chatRoom = data as? [String: String],
-                let roomName = chatRoom["room_name"],
-                let token = chatRoom["twilio_token"],
-                let _ = chatRoom["remote_user_id"],
-                let remoteUserFirstName = chatRoom["remote_user_first_name"],
-                let remoteUserProfileImageURL = chatRoom["remote_user_profile_image_url"] else {
+            guard let data = data, let chatRoomData = data as? [String: Any] else {
                     return
             }
-            print("\n * Chat room data", chatRoom)
+            print("\n * HomeInteractor->BuildChatChannel(withClient:): Chat room data", chatRoomData)
+            guard let roomName = chatRoomData["room_name"] as? String,
+                let token = chatRoomData["twilio_token"] as? String,
+                let remoteUserFirstName = chatRoomData["remote_user_first_name"] as? String,
+                let remoteUserProfileImageURL = chatRoomData["remote_user_profile_image_url"] as? String,
+                let remoteUserGenderIntValue = chatRoomData["remote_user_gender"] as? Int,
+                let remoteUserAge = chatRoomData["remote_user_age"] as? String,
+                let remoteUserBio = chatRoomData["remote_user_bio"] as? String else {
+                    return
+            }
             self?.chatRoomName = roomName
             self?.chatRoomToken = token
             self?.remoteUserFirstName = remoteUserFirstName
             self?.presenter.updateActivityCard(withStatus: .profileView,
                                                firstName: remoteUserFirstName.uppercased(),
-                                               imageName: remoteUserProfileImageURL)
+                                               imageName: remoteUserProfileImageURL,
+                                               gender: User.convertGenderIntToString(remoteUserGenderIntValue),
+                                               age: remoteUserAge,
+                                               bio: remoteUserBio)
         }
     }
     

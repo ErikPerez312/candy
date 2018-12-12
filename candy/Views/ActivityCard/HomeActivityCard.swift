@@ -98,8 +98,11 @@ final class HomeActivityCard: UIView {
     /// - Parameters:
     ///   - firstName: Remote user's first name
     ///   - imageLink: String representation  of remote user's profile image URL
-    func updateProfileViews(withName firstName: String, imageLink: String) {
+    func updateProfileViews(withName firstName: String, imageLink: String, gender: String, age: String, bio: String) {
         remoteUserFirstNameLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: firstName).attributedText
+        genderAndAgeLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: "\(gender), \(age)").attributedText
+        bioLabel?.attributedText = CandyComponents.navigationBarTitleLabel(withTitle: bio.uppercased()).attributedText
+        
         imageDownloadActivityIndicator?.isHidden = false
         imageDownloadActivityIndicator?.startAnimating()
         

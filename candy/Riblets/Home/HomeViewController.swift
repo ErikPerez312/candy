@@ -71,7 +71,7 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         appearanceView?.updateUserCountLabel(withCount: count)
     }
     
-    func updateActivityCard(withStatus status: ActivityCardStatus, firstName: String?, imageName: String?) {
+    func updateActivityCard(withStatus status: ActivityCardStatus, firstName: String?, imageName: String?, gender: String?, age: String?, bio: String?) {
         activityCard?.updateUIForStatus(status)
         // connectButton should be visible-disabled on 'connecting' status,
         // visible-enabled on 'homeDefault' status, and hidden-disabled on
@@ -83,10 +83,14 @@ final class HomeViewController: UIViewController, HomePresentable, HomeViewContr
         cancelButton?.isHidden = (status != .connecting)
         cancelButton?.isEnabled = (status == .connecting)
         
-        guard let firstName = firstName, let imageName = imageName else {
+        guard let firstName = firstName,
+            let imageName = imageName,
+            let gender = gender,
+            let age = age,
+            let bio = bio else {
             return
         }
-        activityCard?.updateProfileViews(withName: firstName, imageLink: imageName)
+        activityCard?.updateProfileViews(withName: firstName, imageLink: imageName, gender: gender, age: age, bio: bio)
     }
     
     // MARK: - Private
