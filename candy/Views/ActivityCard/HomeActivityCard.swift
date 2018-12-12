@@ -34,8 +34,8 @@ final class HomeActivityCard: UIView {
         buildLabels()
         buildConnectingActivityIndicator()
         buildRules(withRules: rules)
-        buildUserImageAndNameViews()
-        buildButtons()
+        buildUserInfoViews()
+        buildChatControlButtons()
         updateUIForStatus(.homeDefault)
     }
     
@@ -53,6 +53,8 @@ final class HomeActivityCard: UIView {
             nextUserButton?.isHidden = true
             nextUserButton?.isEnabled = false
             remoteUserFirstNameLabel?.isHidden = true
+            genderAndAgeLabel?.isHidden = true
+            bioLabel?.isHidden = true
             profileImageView?.isHidden = true
             profileImageView?.image = nil
             
@@ -65,6 +67,8 @@ final class HomeActivityCard: UIView {
             nextUserButton?.isHidden = true
             nextUserButton?.isEnabled = false
             remoteUserFirstNameLabel?.isHidden = true
+            genderAndAgeLabel?.isHidden = true
+            bioLabel?.isHidden = true
             profileImageView?.isHidden = true
             profileImageView?.image = nil
             
@@ -83,6 +87,9 @@ final class HomeActivityCard: UIView {
             nextUserButton?.isEnabled = true
             remoteUserFirstNameLabel?.isHidden = false
             profileImageView?.isHidden = false
+            remoteUserFirstNameLabel?.isHidden = false
+            genderAndAgeLabel?.isHidden = false
+            bioLabel?.isHidden = false
         }
         updateLabelsTexts(forStatus: status)
     }
@@ -113,6 +120,10 @@ final class HomeActivityCard: UIView {
     private var footerLabel:UILabel?
     /// Soley used for displaying a remote user's first name.
     private var remoteUserFirstNameLabel: UILabel?
+    /// Soley used for displaying a remote user's gender and age.
+    private var genderAndAgeLabel: UILabel?
+    /// Soley used for displaying a remote user's bio
+    private var bioLabel: UILabel?
     
     private var rulesStackView: UIStackView?
     private var profileImageView: UIImageView?
@@ -203,6 +214,7 @@ final class HomeActivityCard: UIView {
         header.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(20)
             maker.top.equalToSuperview().offset(17)
+            maker.height.equalTo(19)
         }
         let footer = labelMaker()
         self.footerLabel = footer
@@ -223,7 +235,8 @@ final class HomeActivityCard: UIView {
         }
     }
     
-    private func buildUserImageAndNameViews() {
+    /// Builds profile image view, name label, and gender/age label
+    private func buildUserInfoViews() {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 129, height: 129))
         self.profileImageView = imageView
         imageView.layer.borderWidth = 3
@@ -239,7 +252,7 @@ final class HomeActivityCard: UIView {
         imageView.snp.makeConstraints { maker in
             maker.size.equalTo(CGSize(width: 129, height: 129))
             maker.centerX.equalToSuperview()
-            maker.top.equalTo(self.snp.topMargin).offset(90)
+            maker.top.equalTo(headerLabel!.snp.bottom).offset(24)
         }
         
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -251,20 +264,39 @@ final class HomeActivityCard: UIView {
             maker.center.equalTo(imageView.snp.center)
         }
         
-        let firstNameLabel = UILabel()
+        let labelMaker: (String) -> UILabel = { text in
+            let label = UILabel()
+            label.attributedText = CandyComponents.attributedString(title: text)
+            label.textAlignment = .center
+            label.numberOfLines = 1
+            return label
+        }
+        let firstNameLabel = labelMaker("NAME")
         self.remoteUserFirstNameLabel = firstNameLabel
-        firstNameLabel.attributedText = CandyComponents.attributedString(title: "NAME")
-        firstNameLabel.textAlignment = .center
-        firstNameLabel.numberOfLines = 1
-        
         self.addSubview(firstNameLabel)
         firstNameLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(imageView.snp.bottomMargin).offset(10)
+            maker.height.equalTo(19)
+        }
+        let genderAndAgeLabel = labelMaker("GENDER, 00")
+        self.genderAndAgeLabel = genderAndAgeLabel
+        self.addSubview(genderAndAgeLabel)
+        genderAndAgeLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(firstNameLabel)
+            maker.top.equalTo(firstNameLabel.snp.bottom).offset(2)
+            maker.height.equalTo(firstNameLabel)
+        }
+        let bioLabel = labelMaker("One sentance bio".uppercased())
+        self.bioLabel = bioLabel
+        self.addSubview(bioLabel)
+        bioLabel.snp.makeConstraints { maker in
+            maker.leading.trailing.equalTo(firstNameLabel)
+            maker.top.equalTo(genderAndAgeLabel.snp.bottom).offset(9)
         }
     }
     
-    private func buildButtons() {
+    private func buildChatControlButtons() {
         let buttonMaker: (String) -> UIButton = { title in
             let button = UIButton()
             button.layer.cornerRadius = 8
@@ -274,23 +306,25 @@ final class HomeActivityCard: UIView {
             return button
         }
         
-        let start = buttonMaker("Start")
-        start.addTarget(self, action: #selector(startChatButtonPressed), for: .touchUpInside)
-        self.startChatButton = start
-        self.addSubview(start)
-        start.snp.makeConstraints { maker in
-            maker.top.equalTo(remoteUserFirstNameLabel!.snp.bottom).offset(20)
-            maker.size.equalTo(CGSize(width: 155, height: 35))
-            maker.centerX.equalToSuperview()
+        let accept = buttonMaker("Accept")
+        accept.addTarget(self, action: #selector(startChatButtonPressed), for: .touchUpInside)
+        self.startChatButton = accept
+        self.addSubview(accept)
+        accept.snp.makeConstraints { maker in
+            maker.size.equalTo(CGSize(width: 112, height: 36))
+            maker.leading.equalToSuperview().offset(24)
+            maker.bottom.equalToSuperview().offset(-23)
+            maker.top.equalTo(bioLabel!.snp.bottom).offset(13)
         }
         let next = buttonMaker("Next")
         next.addTarget(self, action: #selector(nextUserButtonPressed), for: .touchUpInside)
         self.nextUserButton = next
         self.addSubview(next)
         next.snp.makeConstraints { maker in
-            maker.size.equalTo(CGSize(width: 85, height: 30))
-            maker.top.equalTo(start.snp.bottom).offset(15)
-            maker.centerX.equalToSuperview()
+            maker.size.equalTo(accept)
+            maker.trailing.equalToSuperview().offset(-24)
+            maker.bottom.equalTo(accept)
+            maker.top.equalTo(accept)
         }
     }
     
