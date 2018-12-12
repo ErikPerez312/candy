@@ -61,6 +61,10 @@ final class User: NSObject {
         UserDefaults.standard.removeObject(forKey: "profile-image")
     }
     
+    static func convertGenderIntToString(_ int: Int) -> String {
+        return int == 0 ? "MALE" : "FEMALE"
+    }
+    
 }
 
 // MARK: - Extension
