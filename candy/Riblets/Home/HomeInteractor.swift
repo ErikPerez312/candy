@@ -108,7 +108,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
     func shouldRouteToLoggedOut() {
         // Delete cached image. Fixes issue when signing into another account
         // and previous accounts profile image is loaded.
-        UserDefaults.standard.removeObject(forKey: "profile-image")
+        User.clearCache()
         appearanceChannel?.unsubscribe()
         listener?.shouldRouteToLoggedOut()
     }
